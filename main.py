@@ -1,5 +1,6 @@
 from code.classes import grid
 from code.algorithms import greedy
+import json
 # from code.visualisation import visualise as vis
 
 if __name__ == "__main__":
@@ -18,11 +19,13 @@ if __name__ == "__main__":
     greedy1 = greedy.Greedy(grid1)
     greedy1.run()
 
-    # create output
+    # --------------------------- output --------------------------
     output = list()
-    out_grid = {"district": district_number, "costs-own": grid1.calc_cost()}
+    out_grid = {"district": district_number, "costs-own": "grid1.calc_cost()"}
     output.append(out_grid)
     out_batteries = {"location": "38,12"}
     output.append(out_batteries)
     print(output) 
 
+#with open('smartgrid_output.txt', 'w') as outfile:
+#    json.dump(output, outfile)

@@ -1,5 +1,5 @@
 import copy
-from code.classes import cable
+from code.classes import grid, house, battery, cable
 
 class Greedy:
     """
@@ -12,8 +12,6 @@ class Greedy:
         """
         Calculates the Manhattan distances from each house to a battery
         """
-        # key = house_id, value = battery_id
-        start_end = {}
         
         # Create a dictionary of all the houses with a list of the Manhattan distances to each battery
         for house in self.grid.houses.values():
@@ -23,9 +21,7 @@ class Greedy:
                 distances[battery.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
             # sorted from low to high
             distances = {k: v for k, v in sorted(distances.items(), key=lambda item: item[1])}
-            print(distances.keys(0))
-            start_end[house.id] = distances.keys()[0]
-            closest_battery = self.grid.batteries[distances.keys()[0]]
+            closest_battery = self.grid.batteries[next(iter(distances.keys()))]
 
             # determine cable location
             x = list()
@@ -37,7 +33,8 @@ class Greedy:
             x.append(cable_head_x)
             y.append(cable_head_y)
 
-            diff_x = house.x - battery.x
+            diff_x = house.x - closest_battery.x
+
             # if diff_x is positive, house is right of battery
             if diff_x > 0:
 
@@ -67,13 +64,12 @@ class Greedy:
             # if house is below battery
             elif diff_y < 0:
 
-                while cable_head_y < closest_battery:
+                while cable_head_y < closest_battery.y:
                     cable_head_y += 1
                     x.append(cable_head_x)
                     y.append(cable_head_y)
 
-            cable = Cable(x, y, house, closest_battery, distances[closest_battery.id])
-            house.cable = cable
+            house.cable = cable.Cable(x, y, house, closest_battery, distances[closest_battery.id])
 
 
             
