@@ -6,11 +6,11 @@ import json
 if __name__ == "__main__":
     district_number = "1"
 
-    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    battery_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_batteries.csv"
+    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    #battery_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_batteries.csv"
 
-    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
+    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    #house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
 
     grid1 = grid.Grid(house_file, battery_file)
     
@@ -27,5 +27,5 @@ if __name__ == "__main__":
     output.append(out_batteries)
     print(output) 
 
-#with open('smartgrid_output.txt', 'w') as outfile:
-#    json.dump(output, outfile)
+with open('smartgrid_output.txt', 'w') as outfile:
+    json.dump(output, outfile)
