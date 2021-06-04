@@ -44,5 +44,5 @@ if __name__ == "__main__":
 
         output.append(out_battery)
 
-    with open('/home/thomas61197/SmartGrid/docs/smartgrid_output.txt', 'w') as outfile:
+    with open('/home/thomas61197/SmartGrid/docs/output.json', 'w') as outfile:
         json.dump(output, outfile)
