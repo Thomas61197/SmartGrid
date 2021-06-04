@@ -69,7 +69,8 @@ class Greedy:
                     x.append(cable_head_x)
                     y.append(cable_head_y)
 
-            house.cable = cable.Cable(x, y, house, closest_battery, distances[closest_battery.id])
+            house.add_cable(cable.Cable(x, y, house, closest_battery, distances[closest_battery.id]))
+            print(house.cable)
 
 
             

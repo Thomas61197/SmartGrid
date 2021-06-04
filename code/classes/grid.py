@@ -43,14 +43,12 @@ class Grid():
             # the output should be a dictionary ala {id: Battery (object)}
             return batteries
 
-    def add_cable(self, cable):
-        """
-        add a cable to the grid.
-        """
+    def calc_cost(self):
         pass
-
-    def sum_cable(self):
-        """
-        sum the total length of the cables in the grid
-        """
-        pass
+        # tot = 0
+        
+        # for house in self.houses.values():
+            # print(house.cable)
+            # tot += house.cable.cost()
+        
+        # return tot
