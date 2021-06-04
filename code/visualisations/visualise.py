@@ -6,7 +6,7 @@ d1_houses.plot(kind='scatter',x='x',y='y') # scatter plot
 # print(d1_houses)
 
 
-d1_batteries =  pd.read_csv('district-1_batteries.csv')
+d1_batteries =  pd.read_csv('datat/Huizen&Batterijen/district-1_batteries.csv')
 d1_batteries[['x','y']] = d1_batteries.positie.str.split(",",expand=True)
 
 d1_batteries.plot(kind='scatter',x='x',y='y', color="orange")
