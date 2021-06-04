@@ -1,34 +1,26 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-d1_houses = pd.read_csv("district-1_houses.csv")
-d1_houses.plot(kind='scatter',x='x',y='y') # scatter plot
-# print(d1_houses)
+# load data files
+district_number = '1'
+battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
+dfhouses = pd.read_csv(house_file)
+dfhouses.plot(kind='scatter', x='x', y='y')
 
-d1_batteries =  pd.read_csv('datat/Huizen&Batterijen/district-1_batteries.csv')
-d1_batteries[['x','y']] = d1_batteries.positie.str.split(",",expand=True)
+dfbatteries =  pd.read_csv(battery_file)
+dfbatteries[['x','y']] = dfbatteries.positie.str.split(",",expand=True).astype(str).astype(int)
 
-d1_batteries.plot(kind='scatter',x='x',y='y', color="orange")
-
-
-# plt.scatter(x='x', y='y', label='Generated samples')
-# plt.scatter(d1_batteries, label="Class #1 (Setosa)", color="red", alpha=.3) 
-
-print(d1_batteries)
-
-
+# plot data
+plt.clf()
 plt.title('SmartGrid')
+plt.scatter(dfbatteries['x'], dfbatteries['y'], color='orange', label = "Batteries")
+plt.scatter(dfhouses['x'], dfhouses['y'], color='blue', label = "dfHouses")
 
-
-#grid 
-plt.minorticks_on()
 plt.grid(which='minor', color='lightgrey')
 plt.grid(which='major', color='grey')
-
-# plot size
-px = 1/plt.rcParams['figure.dpi']
-plt.figsize=(800*px, 1200*px)
-
+plt.minorticks_on()
+plt.legend()
 plt.show()
 plt.savefig('result.png')
