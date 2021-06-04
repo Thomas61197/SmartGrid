@@ -4,3 +4,4 @@ class House():
         self.y = y
         self.max_output = max_output
         self.id = id
+        self.cable = None

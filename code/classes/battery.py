@@ -4,6 +4,7 @@ class Battery():
         self.y = y
         self.capacity = capacity
         self.id = id
+
         self.houses = {}
 
     def add_house(self, house):
