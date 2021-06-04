@@ -17,15 +17,15 @@ if __name__ == "__main__":
     # --------------------------- greedy --------------------------
     
     greedy1 = greedy.Greedy(grid1)
-    greedy1.run()
+    grid2 = greedy1.run()
 
     # --------------------------- output --------------------------
     
     output = list()
-    out_grid = {"district": district_number, "costs-own": grid1.calc_cost()}
+    out_grid = {"district": district_number, "costs-own": grid2.calc_cost()}
     output.append(out_grid)
 
-    for battery in grid1.batteries:
+    for battery in grid2.batteries.values():
         out_battery = {}
         out_battery["location"] = f"{battery.x},{battery.y}"
         out_battery["capacity"] = battery.capacity
@@ -44,7 +44,5 @@ if __name__ == "__main__":
 
         output.append(out_battery)
 
-    print(output) 
-
-    with open('smartgrid_output.txt', 'w') as outfile:
+    with open('/home/thomas61197/SmartGrid/docs/smartgrid_output.txt', 'w') as outfile:
         json.dump(output, outfile)

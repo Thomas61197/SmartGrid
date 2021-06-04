@@ -44,11 +44,9 @@ class Grid():
             return batteries
 
     def calc_cost(self):
-        pass
-        # tot = 0
+        tot = 0
         
-        # for house in self.houses.values():
-            # print(house.cable)
-            # tot += house.cable.cost()
+        for house in self.houses.values():
+            tot += house.cable.cost()
         
-        # return tot
+        return tot

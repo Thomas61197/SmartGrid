@@ -1,1 +1,0 @@
-[{"district": "1", "costs-own": "grid1.calc_cost()"}, {"location": "38,12"}]

@@ -22,6 +22,7 @@ class Greedy:
             # sorted from low to high
             distances = {k: v for k, v in sorted(distances.items(), key=lambda item: item[1])}
             closest_battery = self.grid.batteries[next(iter(distances.keys()))]
+            closest_battery.add_house(house)
 
             # determine cable location
             x = list()
@@ -70,7 +71,8 @@ class Greedy:
                     y.append(cable_head_y)
 
             house.add_cable(cable.Cable(x, y, house, closest_battery, distances[closest_battery.id]))
-            print(house.cable)
+        
+        return self.grid
 
 
             
