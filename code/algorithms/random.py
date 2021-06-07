@@ -4,37 +4,29 @@ from code.classes import grid, house, battery, cable
 
 class Random:
     """
-    Calculates the shortest Manhattan distance from each house to a battery
+    Creates a cable between a randomly selected house and a randomly selected battery,
+    taking into account the battery capacity
     """
 
     def __init__(self, grid):
         self.grid = copy.deepcopy(grid)
 
 
-    def shuffle_houses(self):
-        shuffled = random.shuffle(list(self.grid.houses.keys()))
-        print(len(shuffled))
-        return shuffled
-
-
-    def pick_battery(self, battery_id_list):
-        random_battery = random.choice(battery_id_list)
-        print(random_battery)
-        return random_battery
-
-
     def run(self):
-        random_house_list = self.shuffle_houses()
+        random_house_id_list = list(self.grid.houses.keys())
+        random.shuffle(random_house_id_list)
 
-        for house_id in random_house_list:
-            if random_battery.capacity_reached is False:
-                random_battery.add_house(house)
-            else:
-                battery_id_list.remove(random_battery)
-                self.pick_battery(battery_id_list)
-                self.add_houses( )
+        for house_id in random_house_id_list:
+            house = self.grid.houses[house_id]
+            random_battery = self.grid.batteries[random.choice(list(self.grid.batteries.keys()))]
 
-             # determine cable location
+            # keep picking a random battery until you've found one that has not reached capacity yet
+            while random_battery.capacity_reached == True:
+                random_battery = self.grid.batteries[self.get_random_battery_id()]
+            
+            random_battery.add_house(house)
+
+            # determine cable location
             x = list()
             y = list()
 
@@ -79,8 +71,9 @@ class Random:
                     cable_head_y += 1
                     x.append(cable_head_x)
                     y.append(cable_head_y)
-
-            house.add_cable(cable.Cable(x, y, house, random_battery, distances[random_battery.id]))
+            
+            cable_length = abs(house.x - random_battery.x) + abs(house.y - random_battery.y)
+            house.add_cable(cable.Cable(x, y, house, random_battery, cable_length))
         
         return self.grid
 

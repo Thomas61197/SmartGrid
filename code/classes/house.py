@@ -7,7 +7,6 @@ class House():
         self.cable = None
         self.battery_distances = {}
         self.rank = 0
-
     
     def add_cable(self, cable):
         self.cable = cable

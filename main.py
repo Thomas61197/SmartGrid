@@ -1,16 +1,16 @@
 from code.classes import grid
-from code.algorithms import greedy, random
+from code.algorithms import random, original_greedy
 import json
 # from code.visualisation import visualise as vis
 
 if __name__ == "__main__":
     district_number = "1"
 
-    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    battery_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_batteries.csv"
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # battery_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_batteries.csv"
 
-    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
 
     grid1 = grid.Grid(house_file, battery_file)
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     
     # --------------------------- greedy --------------------------
     
-    greedy1 = greedy.Greedy(grid1)
+    greedy1 = original_greedy.Greedy(grid1)
     grid3 = greedy1.run()
 
     # --------------------------- output --------------------------
