@@ -1,5 +1,5 @@
 from code.classes import grid
-from code.algorithms import greedy
+from code.algorithms import greedy, random
 import json
 # from code.visualisation import visualise as vis
 
@@ -13,11 +13,16 @@ if __name__ == "__main__":
     house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
 
     grid1 = grid.Grid(house_file, battery_file)
+
+    # --------------------------- random --------------------------
+    
+    random1 = random.Random(grid1)
+    grid2 = random1.run()
     
     # --------------------------- greedy --------------------------
     
     greedy1 = greedy.Greedy(grid1)
-    grid2 = greedy1.run()
+    grid3 = greedy1.run()
 
     # --------------------------- output --------------------------
     

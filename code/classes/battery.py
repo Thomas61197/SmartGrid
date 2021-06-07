@@ -13,7 +13,7 @@ class Battery():
     def capacity_reached(self):
         cum_output = 0
 
-        for house in self.houses:
+        for house in self.houses.values():
             cum_output += float(house.max_output)
 
         if self.capacity < cum_output:

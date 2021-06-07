@@ -1,9 +1,10 @@
 import copy
+import random
 from code.classes import grid, house, battery, cable
 
 class Greedy:
     """
-    Calculates the shortest Manhattan distance from each house to a battery
+    Calculats the shortest Manhattan distance from each house to a battery
     """
     def __init__(self, grid):
         self.grid = copy.deepcopy(grid)
@@ -18,11 +19,15 @@ class Greedy:
             distances = {}
 
             for battery in self.grid.batteries.values():
-                distances[house.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
+                distances[battery.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
             # Sort distance from low to high
             distances = {k: v for k, v in sorted(distances.items(), key=lambda item: item[1])}
             closest_battery = self.grid.batteries[next(iter(distances.keys()))]
             closest_battery.add_house(house)
+
+
+
+
 
     # alternative
     def get_man_distance(self):
@@ -58,7 +63,7 @@ class Greedy:
 
         return battery_distances
 
-    def run_greedy(self):
+    def run_greedy(self): ## TO BE FIXED
         """
         Reallocate houses to batteries if max capacity of a battery is reached
         """
@@ -73,18 +78,14 @@ class Greedy:
                 house_id = to_be_popped[0]
 
                 self.grid.houses.get(house_id)
+                self.grid.houses[]
                 house.rank = house.rank + 1
                 battery_id = house.battery_distances[house.rank][1]
-
+                # Get battery object somehow
                 add_to_battery = get.battery[battery_id]
                 add_to_battery.add_house(house_id)
 
 
-
-
-
-
-####################################################
             # determine cable location
             x = list()
             y = list()
@@ -134,6 +135,22 @@ class Greedy:
             house.add_cable(cable.Cable(x, y, house, closest_battery, distances[closest_battery.id]))
         
         return self.grid
+
+
+
+
+
+
+####################################################
+            
+
+
+            
+
+
+                    
+            
+       
 
 
             
