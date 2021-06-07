@@ -15,7 +15,6 @@ class Battery():
 
         for house in self.houses:
             cum_output += float(house.max_output)
-                        for house in battery_distances[battery]:
 
         if self.capacity < cum_output:
             return False

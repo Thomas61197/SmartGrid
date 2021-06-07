@@ -60,19 +60,24 @@ class Greedy:
 
     def run_greedy(self):
         """
-        Calculates the Manhattan distances from each house to a battery
+        Reallocate houses to batteries if max capacity of a battery is reached
         """
-
         # If summed power is larger than capacity of battery, ditch the house with largest distance:
         # The ditched house gets connected to the second (or third etc) closest battery
         for battery in self.grid.batteries.values():
-            while battery_power_total[battery.id] > battery.capacity:
+            while battery.capacity_reached():
                 # Pop the last item in the list
-                to_be_popped = battery_distances[battery][-1]
-                battery_distances[battery].pop()
+                to_be_popped = battery.houses[-1]
+                battery.houses.pop()
                 # Connect popped house to second closest battery
-                house = to_be_popped[0]
-                battery_distances[battery][house] = distances[house][n + 1][1]
+                house_id = to_be_popped[0]
+
+                self.grid.houses.get(house_id)
+                house.rank = house.rank + 1
+                battery_id = house.battery_distances[house.rank][1]
+
+                add_to_battery = get.battery[battery_id]
+                add_to_battery.add_house(house_id)
 
 
 
