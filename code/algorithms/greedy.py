@@ -25,6 +25,10 @@ class Greedy:
             closest_battery.add_house(house)
 
     # alternative
+    def get_man_distance(self):
+        """
+        Calculates the Manhattan distances from each house to a battery
+        """
         # Create a dict with for each house a sorted dict of distance to each battery
         distances = {}
         for house in self.grid.houses.values():
@@ -34,9 +38,15 @@ class Greedy:
                 distances[house.id][battery.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
             # Sort distance from low to high
             distances[house.id] = sorted(distances[house.id].items(), key=lambda x: x[1])
+        return distances
 
+    def run_greedy(self):
+        """
+        Calculates the Manhattan distances from each house to a battery
+        """
         # Also for each battery, make a sorted dict of connected houses plus distances
         battery_distances = {}
+        distances = get_man_distance(self)
         for battery in self.grid.batteries.values():
             battery_distances[battery.id] = {}
 
@@ -57,7 +67,12 @@ class Greedy:
         # The ditched house gets connected to the second (or third etc) closest battery
         for battery in self.grid.batteries.values():
             while battery_power_total[battery.id] > battery.capacity:
-                pass
+                # Pop the last item in the list
+                to_be_popped = battery_distances[battery][-1]
+                battery_distances[battery].pop()
+                # Connect popped house to second closest battery
+                house = to_be_popped[0]
+                battery_distances[battery][house] = distances[house][n + 1][1]
 
 
 
