@@ -5,6 +5,9 @@ class House():
         self.max_output = max_output
         self.id = id
         self.cable = None
+        self.battery_distances = {}
+        self.rank = 0
+
     
     def add_cable(self, cable):
         self.cable = cable

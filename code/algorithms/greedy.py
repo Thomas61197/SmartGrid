@@ -38,15 +38,15 @@ class Greedy:
                 distances[house.id][battery.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
             # Sort distance from low to high
             distances[house.id] = sorted(distances[house.id].items(), key=lambda x: x[1])
+            house.battery_distances = distances[house.id]
         return distances
 
-    def run_greedy(self):
+    def battery_distance_list(self):
         """
-        Calculates the Manhattan distances from each house to a battery
+        For each battery, make a sorted dict of connected houses and their distance from that battery
         """
-        # Also for each battery, make a sorted dict of connected houses plus distances
         battery_distances = {}
-        distances = get_man_distance(self)
+        distances = self.get_man_distance()
         for battery in self.grid.batteries.values():
             battery_distances[battery.id] = {}
 
@@ -54,14 +54,14 @@ class Greedy:
                 if distances[house][0][0] is battery:
                     battery_distances[battery][house] = distances[house][0][1]
             battery_distances[battery] = sorted(battery_distances[battery].items(), key=lambda x: x[1])
+            battery.houses = battery_distances[battery]
 
-        # For each battery, calulate the summed power that goes to that battery from the connected houses
-        battery_power_total = {}
-        for battery in battery_distances:
-            sum_power = 0
-            for house in battery_distances[battery]:
-                sum_power += float(house.max_output[next(iter(house))])
-            battery_power_total[battery] = sum_power
+        return battery_distances
+
+    def run_greedy(self):
+        """
+        Calculates the Manhattan distances from each house to a battery
+        """
 
         # If summed power is larger than capacity of battery, ditch the house with largest distance:
         # The ditched house gets connected to the second (or third etc) closest battery
