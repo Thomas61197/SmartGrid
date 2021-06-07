@@ -1,7 +1,7 @@
 from code.classes import grid
 from code.algorithms import random, original_greedy
 import json
-# from code.visualisation import visualise as vis
+from code.visualisations import visualise_costs
 
 if __name__ == "__main__":
     district_number = "1"
@@ -15,14 +15,28 @@ if __name__ == "__main__":
     grid1 = grid.Grid(house_file, battery_file)
 
     # --------------------------- random --------------------------
+    random_costs = list()
+
+    for i in range(1000):
+        random1 = random.Random(grid1)
+        grid2 = random1.run()
+        random_costs.append(grid2.calc_cost())
     
-    random1 = random.Random(grid1)
-    grid2 = random1.run()
+    visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- greedy --------------------------
+    greedy_costs = list()
     
-    greedy1 = original_greedy.Greedy(grid1)
-    grid3 = greedy1.run()
+    for i in range(1000):
+        greedy1 = original_greedy.Greedy(grid1)
+        grid3 = greedy1.run()
+        greedy_costs.append(grid3.calc_cost())
+
+    visualise_costs.visualise_costs(greedy_costs, "greedy")
+
+    # --------------------------- compare --------------------------
+
+    visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
 
     # --------------------------- output --------------------------
     

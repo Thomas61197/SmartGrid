@@ -1,6 +1,6 @@
 import copy
 import random
-from code.classes import grid, house, battery, cable
+from code.classes import cable
 
 class Random:
     """
@@ -13,16 +13,14 @@ class Random:
 
 
     def run(self):
-        random_house_id_list = list(self.grid.houses.keys())
-        random.shuffle(random_house_id_list)
+        random.shuffle(self.grid.houses)
 
-        for house_id in random_house_id_list:
-            house = self.grid.houses[house_id]
-            random_battery = self.grid.batteries[random.choice(list(self.grid.batteries.keys()))]
+        for house in self.grid.houses.values():
+            random_battery = random.choice(self.grid.batteries)
 
             # keep picking a random battery until you've found one that has not reached capacity yet
             while random_battery.capacity_reached == True:
-                random_battery = self.grid.batteries[self.get_random_battery_id()]
+                random_battery = random.choice(self.grid.batteries)
             
             random_battery.add_house(house)
 

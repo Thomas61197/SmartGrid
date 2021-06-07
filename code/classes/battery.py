@@ -16,7 +16,8 @@ class Battery():
         for house in self.houses.values():
             cum_output += float(house.max_output)
 
+        # if capacity has been reached, return true
         if self.capacity < cum_output:
-            return False
+            return True
         
-        return True
+        return False

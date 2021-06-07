@@ -1,4 +1,5 @@
 import copy
+import random
 from code.classes import cable
 
 class Greedy:
@@ -12,7 +13,8 @@ class Greedy:
         """
         Calculates the Manhattan distances from each house to a battery
         """
-        
+        random.shuffle(self.grid.houses)
+
         # Create a dictionary of all the houses with a list of the Manhattan distances to each battery
         for house in self.grid.houses.values():
             distances = {}
@@ -22,12 +24,12 @@ class Greedy:
 
             # Sort distance from low to high
             distances = {k: v for k, v in sorted(distances.items(), key=lambda item: item[1])}
-            iterator = iter(distances.keys())
-            closest_battery = self.grid.batteries[next(iterator)]
+            iterable_object = iter(distances.keys())
+            closest_battery = self.grid.batteries[next(iterable_object)]
 
             # go until you find a battery that has not reached capacity yet
             while closest_battery.capacity_reached() == True:
-                closest_battery = self.grid.batteries[next(iterator)]
+                closest_battery = self.grid.batteries[next(iterable_object)]
 
             closest_battery.add_house(house)
 
