@@ -20,11 +20,9 @@ class Grid():
                 reader = csv.DictReader(in_file)
 
                 for count, row in enumerate(reader):
-                    # let's create the house objects right away
-                    # let the id's start at 0
+                    # Create house object
                     houses[count] = House(int(row['x']), int(row['y']), float(row['maxoutput']), count)
 
-            # the output should be a dictionary ala {id: House (object)}
             return houses
 
     def load_batteries(self, battery_file):
@@ -40,7 +38,6 @@ class Grid():
                     coordinates = row['positie'].split(',')
                     batteries[count] = Battery(int(coordinates[0]), int(coordinates[1]), float(row['capaciteit']), count)
 
-            # the output should be a dictionary ala {id: Battery (object)}
             return batteries
 
     def calc_cost(self):

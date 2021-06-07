@@ -18,12 +18,53 @@ class Greedy:
             distances = {}
 
             for battery in self.grid.batteries.values():
-                distances[battery.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
-            # sorted from low to high
+                distances[house.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
+            # Sort distance from low to high
             distances = {k: v for k, v in sorted(distances.items(), key=lambda item: item[1])}
             closest_battery = self.grid.batteries[next(iter(distances.keys()))]
             closest_battery.add_house(house)
 
+    # alternative
+        # Create a dict with for each house a sorted dict of distance to each battery
+        distances = {}
+        for house in self.grid.houses.values():
+            distances[house.id] = {}
+
+            for battery in self.grid.batteries.values():
+                distances[house.id][battery.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
+            # Sort distance from low to high
+            distances[house.id] = sorted(distances[house.id].items(), key=lambda x: x[1])
+
+        # Also for each battery, make a sorted dict of connected houses plus distances
+        battery_distances = {}
+        for battery in self.grid.batteries.values():
+            battery_distances[battery.id] = {}
+
+            for house in distances:
+                if distances[house][0][0] is battery:
+                    battery_distances[battery][house] = distances[house][0][1]
+            battery_distances[battery] = sorted(battery_distances[battery].items(), key=lambda x: x[1])
+
+        # For each battery, calulate the summed power that goes to that battery from the connected houses
+        battery_power_total = {}
+        for battery in battery_distances:
+            sum_power = 0
+            for house in battery_distances[battery]:
+                sum_power += float(house.max_output[next(iter(house))])
+            battery_power_total[battery] = sum_power
+
+        # If summed power is larger than capacity of battery, ditch the house with largest distance:
+        # The ditched house gets connected to the second (or third etc) closest battery
+        for battery in self.grid.batteries.values():
+            while battery_power_total[battery.id] > battery.capacity:
+                pass
+
+
+
+
+
+
+####################################################
             # determine cable location
             x = list()
             y = list()
