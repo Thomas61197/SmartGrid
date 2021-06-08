@@ -1,5 +1,6 @@
+from SmartGrid.code.algorithms.simulated_annealing import Simulated_annealing
 from code.classes import grid
-from code.algorithms import random, original_greedy
+from code.algorithms import baseline, original_greedy, simulated_annealing
 import json
 from code.visualisations import visualise_costs
 
@@ -14,54 +15,62 @@ if __name__ == "__main__":
 
     grid1 = grid.Grid(house_file, battery_file)
 
-    # --------------------------- random --------------------------
-    random_costs = list()
+    # --------------------------- baseline --------------------------
+    # baseline_costs = list()
 
-    for i in range(1000):
-        random1 = random.Random(grid1)
-        grid2 = random1.run()
-        random_costs.append(grid2.calc_cost())
+    # for i in range(1000):
+    #     baseline1 = baseline.Baseline(grid1)
+    #     baseline1.run()
+    #     baseline_costs.append(baseline1.grid.calc_cost())
     
-    visualise_costs.visualise_costs(random_costs, "random")
+    # visualise_costs.visualise_costs(baseline_costs, "baseline")
     
     # --------------------------- greedy --------------------------
-    greedy_costs = list()
+    # greedy_costs = list()
     
-    for i in range(1000):
-        greedy1 = original_greedy.Greedy(grid1)
-        grid3 = greedy1.run()
-        greedy_costs.append(grid3.calc_cost())
+    # for i in range(1000):
+    #     greedy1 = original_greedy.Greedy(grid1)
+    #     greedy1.run()
+    #     greedy_costs.append(greedy1.grid.calc_cost())
 
-    visualise_costs.visualise_costs(greedy_costs, "greedy")
+    # visualise_costs.visualise_costs(greedy_costs, "greedy")
 
+    greedy1 = original_greedy.Greedy(grid1)
+    greedy1.run()
+
+    # --------------------------- depth_first --------------------------
+    # depth1 = depth_first.Depth_first(grid1)
+    # depth1.run()
+    # --------------------------- simulated_annealing --------------------------
+    sim_an1 = simulated_annealing.Simulated_annealing(greedy1.grid)
     # --------------------------- compare --------------------------
 
-    visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
+    # visualise_costs.compare_costs(baseline_costs, "baseline", greedy_costs, "greedy")
 
     # --------------------------- output --------------------------
     
-    output = list()
-    out_grid = {"district": district_number, "costs-own": grid2.calc_cost()}
-    output.append(out_grid)
+    # output = list()
+    # out_grid = {"district": district_number, "costs-own": grid2.calc_cost()}
+    # output.append(out_grid)
 
-    for battery in grid2.batteries.values():
-        out_battery = {}
-        out_battery["location"] = f"{battery.x},{battery.y}"
-        out_battery["capacity"] = battery.capacity
-        out_battery["houses"] = list()
+    # for battery in grid2.batteries.values():
+    #     out_battery = {}
+    #     out_battery["location"] = f"{battery.x},{battery.y}"
+    #     out_battery["capacity"] = battery.capacity
+    #     out_battery["houses"] = list()
 
-        for house in battery.houses.values():
-            out_house = {}
-            out_house["location"] = f"{house.x},{house.y}"
-            out_house["output"] = house.max_output
-            out_house["cables"] = list()
+    #     for house in battery.houses.values():
+    #         out_house = {}
+    #         out_house["location"] = f"{house.x},{house.y}"
+    #         out_house["output"] = house.max_output
+    #         out_house["cables"] = list()
 
-            for i in range(len(house.cable.x)):
-                out_house["cables"].append(f"{house.cable.x[i]},{house.cable.y[i]}")
+    #         for i in range(len(house.cable.x)):
+    #             out_house["cables"].append(f"{house.cable.x[i]},{house.cable.y[i]}")
             
-            out_battery["houses"].append(out_house)
+    #         out_battery["houses"].append(out_house)
 
-        output.append(out_battery)
+    #     output.append(out_battery)
 
-    with open('/home/thomas61197/SmartGrid/docs/output.json', 'w') as outfile:
-        json.dump(output, outfile)
+    # with open('/home/thomas61197/SmartGrid/docs/output.json', 'w') as outfile:
+    #     json.dump(output, outfile)

@@ -2,7 +2,7 @@ import copy
 import random
 from code.classes import cable
 
-class Random:
+class Baseline:
     """
     Creates a cable between a randomly selected house and a randomly selected battery,
     taking into account the battery capacity
@@ -72,6 +72,4 @@ class Random:
             
             cable_length = abs(house.x - random_battery.x) + abs(house.y - random_battery.y)
             house.add_cable(cable.Cable(x, y, house, random_battery, cable_length))
-        
-        return self.grid
 
