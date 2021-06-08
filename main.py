@@ -1,10 +1,6 @@
 from SmartGrid.code.algorithms.simulated_annealing import Simulated_annealing
 from code.classes import grid
-<<<<<<< HEAD
 from code.algorithms import random, original_greedy, greedy
-=======
-from code.algorithms import baseline, original_greedy, simulated_annealing
->>>>>>> b7f5767f526630b5780f385ff6942dcb6444a58b
 import json
 from code.visualisations import visualise_costs
 
@@ -23,7 +19,6 @@ if __name__ == "__main__":
 
     grid1 = grid.Grid(house_file, battery_file)
 
-<<<<<<< HEAD
     # --------------------------- random --------------------------
     # random_costs = list()
 
@@ -33,17 +28,6 @@ if __name__ == "__main__":
     #     random_costs.append(grid2.calc_cost())
     
     # visualise_costs.visualise_costs(random_costs, "random")
-=======
-    # --------------------------- baseline --------------------------
-    # baseline_costs = list()
-
-    # for i in range(1000):
-    #     baseline1 = baseline.Baseline(grid1)
-    #     baseline1.run()
-    #     baseline_costs.append(baseline1.grid.calc_cost())
-    
-    # visualise_costs.visualise_costs(baseline_costs, "baseline")
->>>>>>> b7f5767f526630b5780f385ff6942dcb6444a58b
     
     # --------------------------- greedy --------------------------
     # greedy_costs = list()
@@ -55,7 +39,6 @@ if __name__ == "__main__":
 
     # visualise_costs.visualise_costs(greedy_costs, "greedy")
 
-<<<<<<< HEAD
  # --------------------------- greedy 2 --------------------------
     greedy2_costs = list()
     
@@ -65,16 +48,6 @@ if __name__ == "__main__":
         greedy2_costs.append(grid4.calc_cost())
 
     visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-=======
-    greedy1 = original_greedy.Greedy(grid1)
-    greedy1.run()
-
-    # --------------------------- depth_first --------------------------
-    # depth1 = depth_first.Depth_first(grid1)
-    # depth1.run()
-    # --------------------------- simulated_annealing --------------------------
-    sim_an1 = simulated_annealing.Simulated_annealing(greedy1.grid)
->>>>>>> b7f5767f526630b5780f385ff6942dcb6444a58b
     # --------------------------- compare --------------------------
 
     # visualise_costs.compare_costs(baseline_costs, "baseline", greedy_costs, "greedy")
@@ -106,3 +79,9 @@ if __name__ == "__main__":
 
     # with open('/home/thomas61197/SmartGrid/docs/output.json', 'w') as outfile:
     #     json.dump(output, outfile)
+
+
+
+
+    # --------------------------- visualise_cables --------------------------
+
