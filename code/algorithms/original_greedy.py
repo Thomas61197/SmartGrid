@@ -80,8 +80,6 @@ class Greedy:
                     y.append(cable_head_y)
 
             house.add_cable(cable.Cable(x, y, house, closest_battery, distances[closest_battery.id]))
-        
-        return self.grid
             
 
 
