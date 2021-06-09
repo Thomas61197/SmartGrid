@@ -4,12 +4,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def visualise_costs(costs, algo):
+    print(sum(costs)/len(costs))
     plt.figure()
     plt.title(f"{algo} algorithm costs")
     plt.xlabel("iteration")
     plt.ylabel("cost")
     plt.scatter(list(range(len(costs))), costs)
-    plt.savefig(f'SmartGrid/docs/{algo}_costs.png')
+    #plt.savefig(f'SmartGrid/docs/{algo}_costs.png')
+    plt.savefig(f'docs/{algo}_costs.png')
+
 
 def compare_costs(costs1, algo1, costs2, algo2):
     plt.figure()

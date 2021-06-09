@@ -10,3 +10,5 @@ class House():
     
     def add_cable(self, cable):
         self.cable = cable
+
+

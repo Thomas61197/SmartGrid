@@ -1,39 +1,41 @@
-from SmartGrid.code.algorithms.simulated_annealing import Simulated_annealing
 from code.classes import grid
-from code.algorithms import baseline, original_greedy, simulated_annealing
+from code.algorithms import original_greedy, greedy
 import json
-from code.visualisations import visualise_costs
+from code.visualisations import visualise_costs,  visualise_cables2
 
 if __name__ == "__main__":
     district_number = "1"
 
-    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+
+    #battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
     # battery_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_batteries.csv"
 
-    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+
+    #house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
     # house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
 
     grid1 = grid.Grid(house_file, battery_file)
 
-    # --------------------------- baseline --------------------------
-    # baseline_costs = list()
+    # --------------------------- random --------------------------
+    # random_costs = list()
 
     # for i in range(1000):
-    #     baseline1 = baseline.Baseline(grid1)
-    #     baseline1.run()
-    #     baseline_costs.append(baseline1.grid.calc_cost())
+    #     random1 = random.Random(grid1)
+    #     grid2 = random1.run()
+    #     random_costs.append(grid2.calc_cost())
     
-    # visualise_costs.visualise_costs(baseline_costs, "baseline")
+    # visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- greedy --------------------------
-    # greedy_costs = list()
+    greedy1_costs = list()
     
-    # for i in range(1000):
-    #     greedy1 = original_greedy.Greedy(grid1)
-    #     greedy1.run()
-    #     greedy_costs.append(greedy1.grid.calc_cost())
-
-    # visualise_costs.visualise_costs(greedy_costs, "greedy")
+    for i in range(3):
+        greedy1 = original_greedy.Greedy(grid1)
+        greedy1.run()
+        greedy1_costs.append(greedy1.grid.calc_cost())
+    visualise_costs.visualise_costs(greedy1_costs, "greedy1")
 
     greedy1 = original_greedy.Greedy(grid1)
     greedy1.run()
@@ -43,9 +45,25 @@ if __name__ == "__main__":
     # depth1.run()
     # --------------------------- simulated_annealing --------------------------
     sim_an1 = simulated_annealing.Simulated_annealing(grid1)
+ # --------------------------- greedy 2 --------------------------
+    #greedy2_costs = list()
+    
+    # for i in range(1000):
+    #     greedy2 = greedy.Greedy(grid1).run_greedy
+    #     grid4 = greedy2.run()
+    #     greedy2_costs.append(grid4.calc_cost())
+
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    greedy2_costs = list()
+    
+    for i in range(3):
+        greedy2 = greedy.Greedy(grid1)
+        greedy2.run_greedy()
+        greedy2_costs.append(greedy2.grid.calc_cost())
+    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # --------------------------- compare --------------------------
 
-    # visualise_costs.compare_costs(baseline_costs, "baseline", greedy_costs, "greedy")
+    # visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
 
     # --------------------------- output --------------------------
     
@@ -53,7 +71,7 @@ if __name__ == "__main__":
     # out_grid = {"district": district_number, "costs-own": grid2.calc_cost()}
     # output.append(out_grid)
 
-    # for battery in grid2.batteries.values():
+    # for battery in grid.batteries.values():
     #     out_battery = {}
     #     out_battery["location"] = f"{battery.x},{battery.y}"
     #     out_battery["capacity"] = battery.capacity
@@ -74,3 +92,7 @@ if __name__ == "__main__":
 
     # with open('/home/thomas61197/SmartGrid/docs/output.json', 'w') as outfile:
     #     json.dump(output, outfile)
+
+
+# --------------------------- visualisation --------------------------
+visualise_cables2.visualise_cables(greedy1.grid)
