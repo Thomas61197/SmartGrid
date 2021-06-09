@@ -1,5 +1,5 @@
 from code.classes import grid
-from code.algorithms import random, original_greedy, greedy
+from code.algorithms import original_greedy, greedy
 import json
 from code.visualisations import visualise_costs
 
@@ -19,37 +19,37 @@ if __name__ == "__main__":
     grid1 = grid.Grid(house_file, battery_file)
 
     # --------------------------- random --------------------------
-    random_costs = list()
+    # random_costs = list()
 
-    for i in range(1000):
-        random1 = random.Random(grid1)
-        grid2 = random1.run()
-        random_costs.append(grid2.calc_cost())
+    # for i in range(1000):
+    #     random1 = random.Random(grid1)
+    #     grid2 = random1.run()
+    #     random_costs.append(grid2.calc_cost())
     
-    visualise_costs.visualise_costs(random_costs, "random")
+    # visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- greedy --------------------------
-    greedy_costs = list()
+    # greedy_costs = list()
     
-    for i in range(1000):
-        greedy1 = original_greedy.Greedy(grid1)
-        grid3 = greedy1.run()
-        greedy_costs.append(grid3.calc_cost())
+    # for i in range(1000):
+    #     greedy1 = original_greedy.Greedy(grid1)
+    #     grid3 = greedy1.run()
+    #     greedy_costs.append(grid3.calc_cost())
 
-    visualise_costs.visualise_costs(greedy_costs, "greedy")
+    # visualise_costs.visualise_costs(greedy_costs, "greedy")
 
  # --------------------------- greedy 2 --------------------------
     greedy2_costs = list()
     
     for i in range(1000):
-        greedy2 = greedy.Greedy(grid1).run_greedy
-        grid4 = greedy2.run()
+        greedy2 = greedy.Greedy(grid1)
+        grid4 = greedy2.run_greedy()
         greedy2_costs.append(grid4.calc_cost())
 
     visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # --------------------------- compare --------------------------
 
-    visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
+    # visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
 
     # --------------------------- output --------------------------
     
