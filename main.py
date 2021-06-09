@@ -1,10 +1,10 @@
 from code.classes import grid
-from code.algorithms import random, original_greedy, greedy
+from code.algorithms import original_greedy, greedy
 import json
 from code.visualisations import visualise_costs,  visualise_cables2
 
 if __name__ == "__main__":
-    district_number = "1"
+    district_number = "small_test"
 
     battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
@@ -19,14 +19,14 @@ if __name__ == "__main__":
     grid1 = grid.Grid(house_file, battery_file)
 
     # --------------------------- random --------------------------
-    random_costs = list()
+    # random_costs = list()
 
-    for i in range(1000):
-        random1 = random.Random(grid1)
-        grid2 = random1.run()
-        random_costs.append(grid2.calc_cost())
+    # for i in range(1000):
+    #     random1 = random.Random(grid1)
+    #     grid2 = random1.run()
+    #     random_costs.append(grid2.calc_cost())
     
-    visualise_costs.visualise_costs(random_costs, "random")
+    # visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- greedy --------------------------
     greedy_costs = list()
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     out_grid = {"district": district_number, "costs-own": grid2.calc_cost()}
     output.append(out_grid)
 
-    for battery in grid2.batteries.values():
+    for battery in grid.batteries.values():
         out_battery = {}
         out_battery["location"] = f"{battery.x},{battery.y}"
         out_battery["capacity"] = battery.capacity
@@ -81,4 +81,4 @@ if __name__ == "__main__":
 
 
 # --------------------------- visualisation --------------------------
-visualise_cables2.visulualise_cables()
+visualise_cables2.visualise_cables(grid1)
