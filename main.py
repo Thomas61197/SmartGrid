@@ -4,7 +4,7 @@ import json
 from code.visualisations import visualise_costs,  visualise_cables2
 
 if __name__ == "__main__":
-    district_number = "small_test"
+    district_number = "1"
 
     battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
@@ -29,20 +29,19 @@ if __name__ == "__main__":
     # visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- greedy --------------------------
-    # greedy_costs = list()
+    greedy1_costs = list()
     
-    # for i in range(1000):
-    #     greedy1 = original_greedy.Greedy(grid1)
-    #     grid3 = greedy1.run()
-    #     greedy_costs.append(grid3.calc_cost())
-
-    # visualise_costs.visualise_costs(greedy_costs, "greedy")
+    for i in range(3):
+        greedy1 = original_greedy.Greedy(grid1)
+        greedy1.run()
+        greedy1_costs.append(greedy1.grid.calc_cost())
+    visualise_costs.visualise_costs(greedy1_costs, "greedy1")
 
     greedy1 = original_greedy.Greedy(grid1)
     greedy1.run()
 
  # --------------------------- greedy 2 --------------------------
-    # greedy2_costs = list()
+    #greedy2_costs = list()
     
     # for i in range(1000):
     #     greedy2 = greedy.Greedy(grid1).run_greedy
@@ -50,6 +49,13 @@ if __name__ == "__main__":
     #     greedy2_costs.append(grid4.calc_cost())
 
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    greedy2_costs = list()
+    
+    for i in range(3):
+        greedy2 = greedy.Greedy(grid1)
+        greedy2.run_greedy()
+        greedy2_costs.append(greedy2.grid.calc_cost())
+    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # --------------------------- compare --------------------------
 
     # visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
