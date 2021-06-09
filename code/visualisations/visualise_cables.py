@@ -8,7 +8,7 @@ from code.classes import grid, house, battery, cable
 # def visulualise_cables(grid): 
     
 # load data files
-district_number = '1'
+district_number = 'small_test' #!!!
 battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
@@ -25,30 +25,32 @@ dfbatteries[['x','y']] = dfbatteries.positie.str.split(",",expand=True).astype(s
 # # visualise all cables in grid
 # # for house in houses: 
 
-# # plot cable start @house
+# get cable start @ house
 # xh = grid.house(self.x)
+xh = int(2)
 # yh = grid.house(self.y)
-# print(xh)
-# print(yh)
-# plt(xh, yh, color="red")
+yh = int(1)
 
 
-# # plot cable
-# x_values = []
-# y_values = []
+# plot cable begin - end
+x_values = []
+y_values = []
+x_values = [2,1,1,0,0]
+y_values = [1,1,2,2,3]
 # for i in range(len(house.cable.x)):
 #     x_values.append(house.cable.x[i])
 #     y_values.append(house.cable.y[i])
-# # print(x_values)
-# # print(y_values)
-# plt(x_values, y_values, "bo-")
+# print(x_values)
+# print(y_values)
 
-# # plot cable end @battery
+
+
+# get cable end @ battery
 # xb = grid.battery(self.x)
+xb = int(0)
 # yb = grid.battery(self.y)
-# print(xb)
-# print(yb)
-# plt(xb, yb, color="green")
+yb = int(3)
+
 
 
 # ###################################################
@@ -58,11 +60,17 @@ dfbatteries[['x','y']] = dfbatteries.positie.str.split(",",expand=True).astype(s
 plt.clf()
 plt.title('SmartGrid')
 plt.scatter(dfbatteries['x'], dfbatteries['y'], color='orange', label = "Batteries")
-plt.scatter(dfhouses['x'], dfhouses['y'], color='blue', label = "dfHouses")
+plt.scatter(dfhouses['x'], dfhouses['y'], color='blue', label = "Houses")
+
+##################################
+plt.plot(x_values, y_values, 'g-')
+plt.scatter(xh, yh, color="green")
+plt.scatter(xb, yb, color="red")
+##################################
 
 plt.grid(which='minor', color='lightgrey')
 plt.grid(which='major', color='grey')
 plt.minorticks_on()
 plt.legend()
 plt.show()
-plt.savefig("SmartGrid/docs/result.png")
+plt.savefig("docs/result.png") ###!

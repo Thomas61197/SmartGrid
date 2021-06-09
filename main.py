@@ -1,7 +1,7 @@
 from code.classes import grid
 from code.algorithms import random, original_greedy, greedy
 import json
-from code.visualisations import visualise_costs
+from code.visualisations import visualise_costs,  visualise_cables2
 
 if __name__ == "__main__":
     district_number = "1"
@@ -39,14 +39,14 @@ if __name__ == "__main__":
     visualise_costs.visualise_costs(greedy_costs, "greedy")
 
  # --------------------------- greedy 2 --------------------------
-    greedy2_costs = list()
+    # greedy2_costs = list()
     
-    for i in range(1000):
-        greedy2 = greedy.Greedy(grid1).run_greedy
-        grid4 = greedy2.run()
-        greedy2_costs.append(grid4.calc_cost())
+    # for i in range(1000):
+    #     greedy2 = greedy.Greedy(grid1).run_greedy
+    #     grid4 = greedy2.run()
+    #     greedy2_costs.append(grid4.calc_cost())
 
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # --------------------------- compare --------------------------
 
     visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
@@ -78,3 +78,7 @@ if __name__ == "__main__":
 
     with open('/home/thomas61197/SmartGrid/docs/output.json', 'w') as outfile:
         json.dump(output, outfile)
+
+
+# --------------------------- visualisation --------------------------
+visualise_cables2.visulualise_cables()
