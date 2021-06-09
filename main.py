@@ -42,7 +42,7 @@ if __name__ == "__main__":
     # depth1 = depth_first.Depth_first(grid1)
     # depth1.run()
     # --------------------------- simulated_annealing --------------------------
-    sim_an1 = simulated_annealing.Simulated_annealing(greedy1.grid)
+    sim_an1 = simulated_annealing.Simulated_annealing(grid1)
     # --------------------------- compare --------------------------
 
     # visualise_costs.compare_costs(baseline_costs, "baseline", greedy_costs, "greedy")
