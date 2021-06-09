@@ -29,14 +29,17 @@ if __name__ == "__main__":
     # visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- greedy --------------------------
-    greedy_costs = list()
+    # greedy_costs = list()
     
-    for i in range(1000):
-        greedy1 = original_greedy.Greedy(grid1)
-        grid3 = greedy1.run()
-        greedy_costs.append(grid3.calc_cost())
+    # for i in range(1000):
+    #     greedy1 = original_greedy.Greedy(grid1)
+    #     grid3 = greedy1.run()
+    #     greedy_costs.append(grid3.calc_cost())
 
-    visualise_costs.visualise_costs(greedy_costs, "greedy")
+    # visualise_costs.visualise_costs(greedy_costs, "greedy")
+
+    greedy1 = original_greedy.Greedy(grid1)
+    greedy1.run()
 
  # --------------------------- greedy 2 --------------------------
     # greedy2_costs = list()
@@ -49,36 +52,36 @@ if __name__ == "__main__":
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # --------------------------- compare --------------------------
 
-    visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
+    # visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
 
     # --------------------------- output --------------------------
     
-    output = list()
-    out_grid = {"district": district_number, "costs-own": grid2.calc_cost()}
-    output.append(out_grid)
+    # output = list()
+    # out_grid = {"district": district_number, "costs-own": grid2.calc_cost()}
+    # output.append(out_grid)
 
-    for battery in grid.batteries.values():
-        out_battery = {}
-        out_battery["location"] = f"{battery.x},{battery.y}"
-        out_battery["capacity"] = battery.capacity
-        out_battery["houses"] = list()
+    # for battery in grid.batteries.values():
+    #     out_battery = {}
+    #     out_battery["location"] = f"{battery.x},{battery.y}"
+    #     out_battery["capacity"] = battery.capacity
+    #     out_battery["houses"] = list()
 
-        for house in battery.houses.values():
-            out_house = {}
-            out_house["location"] = f"{house.x},{house.y}"
-            out_house["output"] = house.max_output
-            out_house["cables"] = list()
+    #     for house in battery.houses.values():
+    #         out_house = {}
+    #         out_house["location"] = f"{house.x},{house.y}"
+    #         out_house["output"] = house.max_output
+    #         out_house["cables"] = list()
 
-            for i in range(len(house.cable.x)):
-                out_house["cables"].append(f"{house.cable.x[i]},{house.cable.y[i]}")
+    #         for i in range(len(house.cable.x)):
+    #             out_house["cables"].append(f"{house.cable.x[i]},{house.cable.y[i]}")
             
-            out_battery["houses"].append(out_house)
+    #         out_battery["houses"].append(out_house)
 
-        output.append(out_battery)
+    #     output.append(out_battery)
 
-    with open('/home/thomas61197/SmartGrid/docs/output.json', 'w') as outfile:
-        json.dump(output, outfile)
+    # with open('/home/thomas61197/SmartGrid/docs/output.json', 'w') as outfile:
+    #     json.dump(output, outfile)
 
 
 # --------------------------- visualisation --------------------------
-visualise_cables2.visualise_cables(grid1)
+visualise_cables2.visualise_cables(greedy1.grid)
