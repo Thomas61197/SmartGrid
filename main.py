@@ -1,7 +1,7 @@
 from code.classes import grid
 from code.algorithms import original_greedy, greedy
 import json
-from code.visualisations import visualise_costs,  visualise_cables2
+from code.visualisations import visualise_costs,  visualise_cables
 
 if __name__ == "__main__":
     district_number = "1"
@@ -92,5 +92,5 @@ if __name__ == "__main__":
     #     json.dump(output, outfile)
 
 
-# --------------------------- visualisation --------------------------
-visualise_cables2.visualise_cables(greedy1.grid)
+# --------------------------- visualise cables --------------------------
+visualise_cables.visualise(greedy1.grid)
