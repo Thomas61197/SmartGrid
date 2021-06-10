@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # depth1 = depth_first.Depth_first(grid1)
     # depth1.run()
     # --------------------------- simulated_annealing --------------------------
-    sim_an1 = simulated_annealing.Simulated_annealing(grid1)
+    #sim_an1 = simulated_annealing.Simulated_annealing(grid1)
  # --------------------------- greedy 2 --------------------------
     #greedy2_costs = list()
     
@@ -55,10 +55,10 @@ if __name__ == "__main__":
 
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     
-    greedy2 = greedy.Greedy(grid1)
-    greedy2.run_greedy()
-    greedy2_costs = (greedy2.grid.calc_cost())
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # greedy2 = greedy.Greedy(grid1)
+    # greedy2.run_greedy()
+    # greedy2_costs = (greedy2.grid.calc_cost())
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # --------------------------- compare --------------------------
 
     # visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
