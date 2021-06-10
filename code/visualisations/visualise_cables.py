@@ -32,9 +32,20 @@ def visualise(grid):
 
     # plot cables 
     for house in grid.houses.values():
-        plt.plot(house.cable.x, house.cable.y, color="grey", linestyle="-")
+        if house.battery == 0:
+            gridcolor = "blue"
+        elif house.battery == 1: 
+            gridcolor = "red"
+        elif house.battery == 2: 
+            gridcolor = "orange"
+        elif house.battery == 3: 
+            gridcolor = "black"
+        elif house.battery == 4: 
+            gridcolor = "gray"
+
+        plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
 
     plt.legend()
     plt.show()
-    plt.savefig("SmartGrid/docs/cable_visualisation.png")
+    plt.savefig("docs/cable_visualisation.png")
     

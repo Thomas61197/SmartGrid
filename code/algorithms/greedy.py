@@ -82,6 +82,7 @@ class Greedy:
         for house in self.grid.houses.values():
             closest_battery_id = house.battery_distances[house.rank][0]
             closest_battery = self.grid.batteries[closest_battery_id]
+            house.battery = closest_battery_id
 
             # determine cable location
             x = list()
