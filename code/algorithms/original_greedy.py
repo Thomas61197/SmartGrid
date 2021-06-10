@@ -32,6 +32,7 @@ class Greedy:
                 closest_battery = self.grid.batteries[next(iterable_object)]
 
             closest_battery.add_house(house)
+            house.battery = closest_battery.id
 
             # determine cable location
             x = list()
