@@ -79,7 +79,7 @@ class Greedy:
                 self.replace_connections()
 
         # If everything is good, start laying cables
-        for house in self.grid.houses.values():
+        for house in random.shuffle(self.grid.houses.values()):
             closest_battery_id = house.battery_distances[house.rank][0]
             closest_battery = self.grid.batteries[closest_battery_id]
             house.battery = closest_battery_id
