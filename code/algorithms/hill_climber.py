@@ -15,9 +15,13 @@ class Hill_climber:
         """
         take a house and connect it to a random (available) battery
         """
-        battery = random.choice(batteries)
-        battery.add_house(house)
-        cable1 = cable.Cable(house = house, battery = battery)
+        # detach house from battery
+        old_battery = house.cable.battery
+        old_battery.remove_house(house)
+
+        new_battery = random.choice(batteries)
+        new_battery.add_house(house)
+        cable1 = cable.Cable(house = house, battery = new_battery)
         cable1.lay_cable()
         house.add_cable(cable1)
 
@@ -58,7 +62,9 @@ class Hill_climber:
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
         """
-        self.grid = copy.deepcopy(baseline.Baseline(self.empty_grid))
+        baseline1 = baseline.Baseline(self.empty_grid)
+        baseline1.run()
+        self.grid = copy.deepcopy(baseline1.grid)
         self.cost = self.grid.calc_cost()
         self.iterations = iterations
 

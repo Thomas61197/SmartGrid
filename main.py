@@ -1,5 +1,5 @@
 from code.classes import grid
-from code.algorithms import hill_climber
+from code.algorithms import hill_climber, simulated_annealing
 from code.visualisations import visualise_costs
 
 import json
@@ -44,8 +44,6 @@ if __name__ == "__main__":
     # --------------------------- depth_first --------------------------
     # depth1 = depth_first.Depth_first(grid1)
     # depth1.run()
-    # --------------------------- simulated_annealing --------------------------
-    # sim_an1 = simulated_annealing.Simulated_annealing(grid1)
     # --------------------------- greedy 2 --------------------------
     #greedy2_costs = list()
     
@@ -62,9 +60,31 @@ if __name__ == "__main__":
     #     greedy2.run_greedy()
     #     greedy2_costs.append(greedy2.grid.calc_cost())
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-    # --------------------------- hill_climber --------------------------
+    # --------------------------- Hill Climber ---------------------------------
+    print("Setting up Hill Climber...")
+    climber = hill_climber.Hill_climber(grid1)
 
-    hill_climber1 = hill_climber.Hill_climber(grid1)
+    print("Running Hill Climber...")
+    climber.run(2000, verbose=True)
+
+    print(f"Value of the configuration after Hill Climber: "
+          f"{climber.grid.calc_cost()}")
+
+    # --------------------------- Simulated Annealing --------------------------
+    # It is very difficult to find a good starting temperature for SA. A rule to
+    # help you find one is to use the maximum change in score that could happen
+    # when mutating your state. In our case, this is 19, because the transmitter
+    # maximum difference in score between the most expensive and the cheapest
+    # transmitter is 19.
+
+    print("Setting up Simulated Annealing...")
+    simanneal = simulated_annealing.Simulated_annealing(grid1, temperature=1250)
+    
+    print("Running Simulated Annealing...")
+    simanneal.run(2000, verbose=True)
+    
+    print(f"Value of the configuration after Simulated Annealing: "
+          f"{simanneal.grid.calc_cost()}")
 
     # --------------------------- compare --------------------------
 
