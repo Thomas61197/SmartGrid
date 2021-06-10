@@ -54,12 +54,10 @@ if __name__ == "__main__":
     #     greedy2_costs.append(grid4.calc_cost())
 
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-    greedy2_costs = list()
     
-    for i in range(3):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        greedy2_costs.append(greedy2.grid.calc_cost())
+    greedy2 = greedy.Greedy(grid1)
+    greedy2.run_greedy()
+    greedy2_costs = (greedy2.grid.calc_cost())
     visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # --------------------------- compare --------------------------
 

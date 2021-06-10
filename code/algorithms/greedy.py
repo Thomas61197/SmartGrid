@@ -16,10 +16,8 @@ class Greedy:
         """
         # Create a dict with for each house a sorted dict of distance to each battery
         for house in self.grid.houses.values():
-            #print('house id:', house.id)
             distances = {}
             for battery in self.grid.batteries.values():
-                #print(battery.id)
                 distances[battery.id] = abs(house.x - battery.x) + abs(house.y - battery.y)
             # Sort distance from low to high
             house.battery_distances = sorted(distances.items(), key=lambda x: x[1])
