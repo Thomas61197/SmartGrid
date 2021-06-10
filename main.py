@@ -4,7 +4,7 @@ import json
 from code.visualisations import visualise_costs,  visualise_cables
 
 if __name__ == "__main__":
-    district_number = "1"
+    district_number = "small_test"
 
     battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
