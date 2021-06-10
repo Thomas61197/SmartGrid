@@ -1,19 +1,20 @@
 from code.classes import grid
-from code.algorithms import original_greedy, greedy
+from code.algorithms import hill_climber
+from code.visualisations import visualise_costs
+
 import json
-from code.visualisations import visualise_costs,  visualise_cables2
 
 if __name__ == "__main__":
     district_number = "1"
 
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    #battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
     # battery_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_batteries.csv"
 
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
-    #house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
     # house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
 
     grid1 = grid.Grid(house_file, battery_file)
@@ -29,23 +30,23 @@ if __name__ == "__main__":
     # visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- greedy --------------------------
-    greedy1_costs = list()
+    # greedy1_costs = list()
     
-    for i in range(3):
-        greedy1 = original_greedy.Greedy(grid1)
-        greedy1.run()
-        greedy1_costs.append(greedy1.grid.calc_cost())
-    visualise_costs.visualise_costs(greedy1_costs, "greedy1")
+    # for i in range(3):
+    #     greedy1 = original_greedy.Greedy(grid1)
+    #     greedy1.run()
+    #     greedy1_costs.append(greedy1.grid.calc_cost())
+    # visualise_costs.visualise_costs(greedy1_costs, "greedy1")
 
-    greedy1 = original_greedy.Greedy(grid1)
-    greedy1.run()
+    # greedy1 = original_greedy.Greedy(grid1)
+    # greedy1.run()
 
     # --------------------------- depth_first --------------------------
     # depth1 = depth_first.Depth_first(grid1)
     # depth1.run()
     # --------------------------- simulated_annealing --------------------------
-    sim_an1 = simulated_annealing.Simulated_annealing(grid1)
- # --------------------------- greedy 2 --------------------------
+    # sim_an1 = simulated_annealing.Simulated_annealing(grid1)
+    # --------------------------- greedy 2 --------------------------
     #greedy2_costs = list()
     
     # for i in range(1000):
@@ -54,13 +55,17 @@ if __name__ == "__main__":
     #     greedy2_costs.append(grid4.calc_cost())
 
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-    greedy2_costs = list()
+    # greedy2_costs = list()
     
-    for i in range(3):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        greedy2_costs.append(greedy2.grid.calc_cost())
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # for i in range(3):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     greedy2_costs.append(greedy2.grid.calc_cost())
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # --------------------------- hill_climber --------------------------
+
+    hill_climber1 = hill_climber.Hill_climber(grid1)
+
     # --------------------------- compare --------------------------
 
     # visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
@@ -95,4 +100,4 @@ if __name__ == "__main__":
 
 
 # --------------------------- visualisation --------------------------
-visualise_cables2.visualise_cables(greedy1.grid)
+# visualise_cables2.visualise_cables(greedy1.grid)

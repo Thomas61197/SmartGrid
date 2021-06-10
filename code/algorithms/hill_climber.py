@@ -1,6 +1,7 @@
 import copy
 import random
 from code.classes import cable
+from code.algorithms import baseline
 
 class Hill_climber:
     """
@@ -32,7 +33,7 @@ class Hill_climber:
             if not battery.capacity_reached():
                 available_batteries.append(battery)
 
-        random_reconfigure_node(random_house, available_batteries)
+        self.random_reconfigure_house(random_house, available_batteries)
 
     def mutate_grid(self, new_grid, number_of_houses=1):
         """
@@ -41,17 +42,17 @@ class Hill_climber:
         for _ in range(number_of_houses):
             self.mutate_single_house(new_grid)
 
-    def check_solution(self, new_graph):
+    def check_solution(self, new_grid):
         """
         Checks and accepts better solutions than the current solution.
         """
-        new_value = new_graph.calculate_value()
-        old_value = self.value
+        new_cost = new_grid.calc_cost()
+        old_cost = self.cost
 
         # We are looking for maps that cost less!
-        if new_value <= old_value:
-            self.graph = new_graph
-            self.value = new_value
+        if new_cost <= old_cost:
+            self.grid = new_grid
+            self.cost = new_cost
 
     def run(self, iterations, verbose=False, mutate_houses_number=1):
         """
@@ -71,4 +72,4 @@ class Hill_climber:
             self.mutate_grid(new_grid, number_of_houses=mutate_houses_number)
 
             # Accept it if it is better
-            self.check_solution(new_graph)
+            self.check_solution(new_grid)
