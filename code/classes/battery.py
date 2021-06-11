@@ -9,6 +9,9 @@ class Battery():
 
     def add_house(self, house):
         self.houses[house.id] = house
+
+    def remove_house(self, house):
+        del self.houses[house.id]
     
     def capacity_reached(self):
         cum_output = 0.0

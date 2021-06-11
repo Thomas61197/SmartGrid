@@ -31,7 +31,9 @@ class Greedy:
             while closest_battery.capacity_reached() == True:
                 closest_battery = self.grid.batteries[next(iterable_object)]
 
+            # connect_house_to_battery(grid, house, battery)
             closest_battery.add_house(house)
+<<<<<<< HEAD
             house.battery = closest_battery.id
 
             # determine cable location
@@ -81,6 +83,11 @@ class Greedy:
                     y.append(cable_head_y)
 
             house.add_cable(cable.Cable(x, y, house, closest_battery, distances[closest_battery.id]))
+=======
+            cable1 = cable.Cable(house = house, battery = closest_battery)
+            cable1.lay_cable()
+            house.add_cable(cable1)
+>>>>>>> lay_cable
             
 
 

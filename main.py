@@ -1,19 +1,20 @@
 from code.classes import grid
-from code.algorithms import original_greedy, greedy
-import json
+from code.algorithms import hill_climber, simulated_annealing
 from code.visualisations import visualise_costs,  visualise_cables
+
+import json
 
 if __name__ == "__main__":
     district_number = "1"
 
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    #battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
     # battery_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_batteries.csv"
 
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
-    #house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
     # house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
 
     grid1 = grid.Grid(house_file, battery_file)
@@ -29,23 +30,21 @@ if __name__ == "__main__":
     # visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- greedy --------------------------
-    greedy1_costs = list()
+    # greedy1_costs = list()
     
-    for i in range(3):
-        greedy1 = original_greedy.Greedy(grid1)
-        greedy1.run()
-        greedy1_costs.append(greedy1.grid.calc_cost())
-    visualise_costs.visualise_costs(greedy1_costs, "greedy1")
+    # for i in range(3):
+    #     greedy1 = original_greedy.Greedy(grid1)
+    #     greedy1.run()
+    #     greedy1_costs.append(greedy1.grid.calc_cost())
+    # visualise_costs.visualise_costs(greedy1_costs, "greedy1")
 
-    greedy1 = original_greedy.Greedy(grid1)
-    greedy1.run()
+    # greedy1 = original_greedy.Greedy(grid1)
+    # greedy1.run()
 
     # --------------------------- depth_first --------------------------
     # depth1 = depth_first.Depth_first(grid1)
     # depth1.run()
-    # --------------------------- simulated_annealing --------------------------
-    #sim_an1 = simulated_annealing.Simulated_annealing(grid1)
- # --------------------------- greedy 2 --------------------------
+    # --------------------------- greedy 2 --------------------------
     #greedy2_costs = list()
     
     # for i in range(1000):
@@ -54,11 +53,39 @@ if __name__ == "__main__":
     #     greedy2_costs.append(grid4.calc_cost())
 
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # greedy2_costs = list()
     
-    # greedy2 = greedy.Greedy(grid1)
-    # greedy2.run_greedy()
-    # greedy2_costs = (greedy2.grid.calc_cost())
+    # for i in range(3):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     greedy2_costs.append(greedy2.grid.calc_cost())
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # --------------------------- Hill Climber ---------------------------------
+    print("Setting up Hill Climber...")
+    climber = hill_climber.Hill_climber(grid1)
+
+    print("Running Hill Climber...")
+    climber.run(2000, verbose=True)
+
+    print(f"Value of the configuration after Hill Climber: "
+          f"{climber.grid.calc_cost()}")
+
+    # --------------------------- Simulated Annealing --------------------------
+    # It is very difficult to find a good starting temperature for SA. A rule to
+    # help you find one is to use the maximum change in score that could happen
+    # when mutating your state. In our case, this is 19, because the transmitter
+    # maximum difference in score between the most expensive and the cheapest
+    # transmitter is 19.
+
+    print("Setting up Simulated Annealing...")
+    simanneal = simulated_annealing.Simulated_annealing(grid1, temperature=1250)
+    
+    print("Running Simulated Annealing...")
+    simanneal.run(2000, verbose=True)
+    
+    print(f"Value of the configuration after Simulated Annealing: "
+          f"{simanneal.grid.calc_cost()}")
+
     # --------------------------- compare --------------------------
 
     # visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
@@ -92,5 +119,5 @@ if __name__ == "__main__":
     #     json.dump(output, outfile)
 
 
-# --------------------------- visualise cables --------------------------
-visualise_cables.visualise(greedy1.grid)
+# --------------------------- visualisation --------------------------
+# visualise_cables2.visualise_cables(greedy1.grid)
