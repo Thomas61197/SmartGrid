@@ -62,8 +62,9 @@ class Hill_climber:
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
         """
-        baseline1 = baseline.Baseline(self.empty_grid)
-        baseline1.run()
+        # baseline1 = baseline.Baseline(self.empty_grid)
+        # baseline1.run()
+        
         self.grid = copy.deepcopy(baseline1.grid)
         self.cost = self.grid.calc_cost()
         self.iterations = iterations
