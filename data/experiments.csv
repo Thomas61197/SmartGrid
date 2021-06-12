@@ -18,3 +18,4 @@ object_id,district,object_type,cost,start_grid,temperature,cooling_scheme,alpha,
 16,1,simanneal,34092,original_greedy,1800.0,exponential,0.994,1000,3
 17,1,simanneal,34983,original_greedy,1800.0,exponential,0.994,1000,3
 18,1,simanneal,35730,original_greedy,450.0,exponential,0.994,1000,3
+19,1,simanneal,30861,original_greedy,900.0,exponential,0.99999,1000000,3
