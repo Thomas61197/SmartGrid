@@ -1,8 +1,10 @@
 from code.classes import grid
 from code.algorithms import hill_climber, simulated_annealing
-from code.visualisations import visualise_costs,  visualise_cables
+# from code.visualisations import visualise_costs,  visualise_cables
 
 import json
+import pandas as pd
+import pickle
 
 if __name__ == "__main__":
     district_number = "1"
@@ -61,14 +63,14 @@ if __name__ == "__main__":
     #     greedy2_costs.append(greedy2.grid.calc_cost())
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # --------------------------- Hill Climber ---------------------------------
-    print("Setting up Hill Climber...")
-    climber = hill_climber.Hill_climber(grid1)
+    # print("Setting up Hill Climber...")
+    # climber = hill_climber.Hill_climber(grid1)
 
-    print("Running Hill Climber...")
-    climber.run(2000, verbose=True)
+    # print("Running Hill Climber...")
+    # climber.run(2000, verbose=True)
 
-    print(f"Value of the configuration after Hill Climber: "
-          f"{climber.grid.calc_cost()}")
+    # print(f"Value of the configuration after Hill Climber: "
+    #       f"{climber.grid.calc_cost()}")
 
     # --------------------------- Simulated Annealing --------------------------
     # It is very difficult to find a good starting temperature for SA. A rule to
@@ -76,15 +78,43 @@ if __name__ == "__main__":
     # when mutating your state. In our case, this is 19, because the transmitter
     # maximum difference in score between the most expensive and the cheapest
     # transmitter is 19.
+    # maximum difference = (breadth of grid + height of grid) * 9.
 
-    print("Setting up Simulated Annealing...")
-    simanneal = simulated_annealing.Simulated_annealing(grid1, temperature=1250)
+    # print("Setting up Simulated Annealing...")
+    # simanneal = simulated_annealing.Simulated_annealing(grid1, temperature=(50+50)*9)
     
-    print("Running Simulated Annealing...")
-    simanneal.run(2000, verbose=True)
+    # print("Running Simulated Annealing...")
+    # simanneal.run(10, verbose=True)
     
-    print(f"Value of the configuration after Simulated Annealing: "
-          f"{simanneal.grid.calc_cost()}")
+    # print(f"Value of the configuration after Simulated Annealing: "
+    #       f"{simanneal.grid.calc_cost()}")
+
+    # simanneal_id = 1
+    # file_name = f"SmartGrid/data/solutions/simanneal_{simanneal_id}.pickle"
+
+    # with open(file_name, 'wb') as handle:
+    #     pickle.dump(simanneal, handle)
+
+    # experiments = {}
+    # experiments["object_id"] = simanneal_id
+    # experiments["district"] = district_number
+    # experiments["object_type"] = "simanneal"
+    # experiments["cost"] = simanneal.grid.calc_cost()
+    # experiments["start_grid"] = "original_greedy"
+    # experiments["temperature"] = simanneal.T0
+    # experiments["cooling_scheme"] = simanneal.cooling_scheme
+    # experiments["alpha"] = simanneal.alpha
+    # experiments["iterations"] = simanneal.iterations
+
+    # df_experiments = pd.DataFrame(experiments, index=['object_id'])
+    # df_experiments_full = pd.read_csv("/home/thomas61197/SmartGrid/data/experiments.csv", index_col='object_id')
+    # df_experiments_full.append(df_experiments)
+
+    # df_experiments_full.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", index = True, header=True)
+
+    with open("/home/thomas61197/SmartGrid/data/solutions/simanneal_1.pickle") as handle:
+        pickle1 = pickle.load(handle)
+        print(pickle1.calc_cost())
 
     # --------------------------- compare --------------------------
 

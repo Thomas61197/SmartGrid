@@ -12,7 +12,7 @@ class Simulated_annealing(Hill_climber):
     Most of the functions are similar to those of the HillClimber class, which is why
     we use that as a parent class.
     """
-    def __init__(self, empty_grid, temperature=1):
+    def __init__(self, empty_grid, temperature=1, cooling_scheme="linear", alpha=0.99):
         # Use the init of the Hillclimber class
         super().__init__(empty_grid)
 
@@ -20,19 +20,24 @@ class Simulated_annealing(Hill_climber):
         self.T0 = temperature
         self.T = temperature
 
+        # update_temp parameters
+        self.cooling_scheme = cooling_scheme
+        self.alpha = alpha
+
     def update_temperature(self):
         """
         This function implements a *linear* cooling scheme.
         Temperature will become zero after all iterations passed to the run()
         method have passed.
         """
-        self.T = self.T - (self.T0 / self.iterations)
+        if self.cooling_scheme == "linear":
+            self.T = self.T - (self.T0 / self.iterations)
+        else:
+            self.cooling_scheme = "exponential"
+            # Exponential would look like this:
+            self.T = self.T * self.alpha
+            # where alpha can be any value below 1 but above 0
 
-        # Exponential would look like this:
-        # alpha = 0.99
-        # self.T = self.T * alpha
-
-        # where alpha can be any value below 1 but above 0
 
     def check_solution(self, new_grid):
         """

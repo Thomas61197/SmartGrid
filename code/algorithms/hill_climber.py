@@ -1,7 +1,7 @@
 import copy
 import random
 from code.classes import cable
-from code.algorithms import baseline
+from code.algorithms import original_greedy
 
 class Hill_climber:
     """
@@ -64,8 +64,9 @@ class Hill_climber:
         """
         # baseline1 = baseline.Baseline(self.empty_grid)
         # baseline1.run()
-        
-        self.grid = copy.deepcopy(baseline1.grid)
+        greedy1 = original_greedy.Greedy(self.empty_grid)
+        greedy1.run()
+        self.grid = copy.deepcopy(greedy1.grid)
         self.cost = self.grid.calc_cost()
         self.iterations = iterations
 
@@ -80,3 +81,5 @@ class Hill_climber:
 
             # Accept it if it is better
             self.check_solution(new_grid)
+
+        

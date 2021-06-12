@@ -1,0 +1,2 @@
+object_id,Unnamed: 0,district,object_type,cost,start_grid,temperature,cooling_scheme,alpha,iterations
+0,object_id,1,simanneal,36216,original_greedy,900,linear,0.99,20
