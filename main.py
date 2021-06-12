@@ -81,41 +81,52 @@ if __name__ == "__main__":
     # transmitter is 19.
     # maximum difference = (breadth of grid + height of grid) * 9.
 
-    print("Setting up Simulated Annealing...")
-    simanneal = simulated_annealing.Simulated_annealing(grid1, temperature=(50+50)*9, cooling_scheme="exponential", alpha=0.99999)
+    # print("Setting up Simulated Annealing...")
+    # simanneal = simulated_annealing.Simulated_annealing(grid1, temperature=(50+50)*9, cooling_scheme="exponential", alpha=0.99999)
     
-    mutate_houses_number = 3
+    # mutate_houses_number = 3
+    # print("Running Simulated Annealing...")
+    # simanneal.run(1000000, verbose=True, mutate_houses_number = mutate_houses_number)
+    
+    # print(f"Value of the configuration after Simulated Annealing: "
+    #       f"{simanneal.grid.calc_cost()}")
+
+    # simanneal_id = 19
+    # file_name = f"SmartGrid/data/solutions/simanneal_{simanneal_id}.pickle"
+
+    # # IMPORTANT: save simanneal object (if lots of iterations)!
+    # with open(file_name, 'wb') as handle:
+    #     pickle.dump(simanneal, handle)
+
+    # experiments = {}
+    # experiments["object_id"] = simanneal_id
+    # experiments["district"] = district_number
+    # experiments["object_type"] = "simanneal"
+    # experiments["cost"] = simanneal.grid.calc_cost()
+    # experiments["start_grid"] = "original_greedy"
+    # experiments["temperature"] = simanneal.T0
+    # experiments["cooling_scheme"] = simanneal.cooling_scheme
+    # experiments["alpha"] = simanneal.alpha
+    # experiments["iterations"] = simanneal.iterations
+    # experiments["mutate_houses_number"] = mutate_houses_number
+
+    # df_experiments = pd.DataFrame(experiments, index=[experiments['object_id']])
+    # df_experiments_old = pd.read_csv("/home/thomas61197/SmartGrid/data/experiments.csv")
+    # df_experiments_new = pd.concat([df_experiments_old.reset_index(drop=True), df_experiments.reset_index(drop=True)], ignore_index=True)
+    # df_experiments_new.set_index('object_id')
+    # print(df_experiments_new)
+    # df_experiments_new.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", header = True, index = False)
+
+    # --------------------------- Simulated Annealing 2 --------------------------
+
+    print("Setting up Simulated Annealing...")
+    simanneal = simulated_annealing2.Simulated_annealing(grid1, temperature=(50+50)*9, mutate_houses_number = 20)
+    
     print("Running Simulated Annealing...")
-    simanneal.run(1000000, verbose=True, mutate_houses_number = mutate_houses_number)
+    simanneal.run(1000000, verbose=True)
     
     print(f"Value of the configuration after Simulated Annealing: "
           f"{simanneal.grid.calc_cost()}")
-
-    simanneal_id = 19
-    file_name = f"SmartGrid/data/solutions/simanneal_{simanneal_id}.pickle"
-
-    # IMPORTANT: save simanneal object (if lots of iterations)!
-    with open(file_name, 'wb') as handle:
-        pickle.dump(simanneal, handle)
-
-    experiments = {}
-    experiments["object_id"] = simanneal_id
-    experiments["district"] = district_number
-    experiments["object_type"] = "simanneal"
-    experiments["cost"] = simanneal.grid.calc_cost()
-    experiments["start_grid"] = "original_greedy"
-    experiments["temperature"] = simanneal.T0
-    experiments["cooling_scheme"] = simanneal.cooling_scheme
-    experiments["alpha"] = simanneal.alpha
-    experiments["iterations"] = simanneal.iterations
-    experiments["mutate_houses_number"] = mutate_houses_number
-
-    df_experiments = pd.DataFrame(experiments, index=[experiments['object_id']])
-    df_experiments_old = pd.read_csv("/home/thomas61197/SmartGrid/data/experiments.csv")
-    df_experiments_new = pd.concat([df_experiments_old.reset_index(drop=True), df_experiments.reset_index(drop=True)], ignore_index=True)
-    df_experiments_new.set_index('object_id')
-    print(df_experiments_new)
-    df_experiments_new.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", header = True, index = False)
 
     # --------------------------- compare --------------------------
 
