@@ -82,15 +82,16 @@ if __name__ == "__main__":
     # maximum difference = (breadth of grid + height of grid) * 9.
 
     print("Setting up Simulated Annealing...")
-    simanneal = simulated_annealing.Simulated_annealing(grid1, temperature=(50+50)*9, cooling_scheme="exponential", alpha=0.991)
+    simanneal = simulated_annealing.Simulated_annealing(grid1, temperature=(50+50)*9, cooling_scheme="exponential", alpha=0.99999)
     
+    mutate_houses_number = 3
     print("Running Simulated Annealing...")
-    simanneal.run(1000, verbose=True)
+    simanneal.run(1000000, verbose=True, mutate_houses_number = mutate_houses_number)
     
     print(f"Value of the configuration after Simulated Annealing: "
           f"{simanneal.grid.calc_cost()}")
 
-    simanneal_id = 4
+    simanneal_id = 19
     file_name = f"SmartGrid/data/solutions/simanneal_{simanneal_id}.pickle"
 
     # IMPORTANT: save simanneal object (if lots of iterations)!
@@ -107,6 +108,7 @@ if __name__ == "__main__":
     experiments["cooling_scheme"] = simanneal.cooling_scheme
     experiments["alpha"] = simanneal.alpha
     experiments["iterations"] = simanneal.iterations
+    experiments["mutate_houses_number"] = mutate_houses_number
 
     df_experiments = pd.DataFrame(experiments, index=[experiments['object_id']])
     df_experiments_old = pd.read_csv("/home/thomas61197/SmartGrid/data/experiments.csv")
