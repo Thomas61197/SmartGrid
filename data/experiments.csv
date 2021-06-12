@@ -1,2 +1,5 @@
-object_id,Unnamed: 0,district,object_type,cost,start_grid,temperature,cooling_scheme,alpha,iterations
-0,object_id,1,simanneal,36216,original_greedy,900,linear,0.99,20
+object_id,district,object_type,cost,start_grid,temperature,cooling_scheme,alpha,iterations
+0,1,simanneal,36216,original_greedy,900,linear,0.99,20
+1,1,simanneal,31581,original_greedy,900,linear,0.99,1000000
+2,1,simanneal,45891,original_greedy,900,exponential,0.999,1000
+3,1,simanneal,34569,original_greedy,900,exponential,0.991,1000
