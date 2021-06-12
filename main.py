@@ -93,8 +93,9 @@ if __name__ == "__main__":
     simanneal_id = 4
     file_name = f"SmartGrid/data/solutions/simanneal_{simanneal_id}.pickle"
 
-    # with open(file_name, 'wb') as handle:
-    #     pickle.dump(simanneal, handle)
+    # IMPORTANT: save simanneal object (if lots of iterations)!
+    with open(file_name, 'wb') as handle:
+        pickle.dump(simanneal, handle)
 
     experiments = {}
     experiments["object_id"] = simanneal_id
