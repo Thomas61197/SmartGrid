@@ -1,5 +1,6 @@
 import copy
 import random
+import math
 from code.classes import cable
 from code.algorithms import original_greedy
 
@@ -45,9 +46,7 @@ class Hill_climber:
         """
         Changes the value of a number of nodes with a random valid value.
         """
-        print("mutate_grid()")
-        print(self.mutate_house_number)
-        for _ in range(self.mutate_house_number):
+        for _ in range(math.ceil(self.mutate_house_number)):
             self.mutate_single_house(new_grid)
 
     def check_solution(self, new_grid):
