@@ -23,7 +23,7 @@ class Fix_Greedy:
         # Find the houses that would fix the surplus of current if replaced 
         battery = self.grid.batteries[battery_id]
         replacable_houses = list()
-        replacable_houses.append([house for house in battery.houses if self.distance(house, battery) > abs(battery.capacity_left())])   
+        replacable_houses.append([house for house_id in battery.houses if self.calc_distance(house_id, battery) > abs(battery.capacity_left())])   
         return replacable_houses
 
     # Optimalisatie stap: welk van die huizen kan het best worden verplaatst?
