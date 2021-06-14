@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def visualise_costs(costs, algo):
-    if algo is "greedy1":
-        print(sum(costs)/len(costs))
-    elif algo is "greedy2":
-        print(costs)
+    print(algo, sum(costs)/len(costs))
+
     plt.figure()
     plt.title(f"{algo} algorithm costs")
     plt.xlabel("iteration")
