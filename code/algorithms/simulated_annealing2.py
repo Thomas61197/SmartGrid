@@ -1,7 +1,7 @@
 import random
 import math
 
-from .hill_climber import Hill_climber
+from .hill_climber2 import Hill_climber
 
 
 class Simulated_annealing(Hill_climber):
@@ -12,9 +12,9 @@ class Simulated_annealing(Hill_climber):
     Most of the functions are similar to those of the HillClimber class, which is why
     we use that as a parent class.
     """
-    def __init__(self, empty_grid, temperature=1, cooling_scheme="linear", alpha=0.99):
+    def __init__(self, empty_grid, temperature=1, cooling_scheme="linear", alpha=0.99, mutate_house_number=20):
         # Use the init of the Hillclimber class
-        super().__init__(empty_grid)
+        super().__init__(empty_grid, mutate_house_number)
 
         # Starting temperature and current temperature
         self.T0 = temperature
@@ -39,6 +39,8 @@ class Simulated_annealing(Hill_climber):
             print(self.T)
             # where alpha can be any value below 1 but above 0
 
+    def update_mutate_house_number(self):
+        self.mutate_house_number = self.mutate_house_number - (self.mutate_house_number0 / self.iterations)
 
     def check_solution(self, new_grid):
         """
@@ -63,4 +65,7 @@ class Simulated_annealing(Hill_climber):
 
         # Update the temperature
         self.update_temperature()
+
+        # Update ...
+        self.update_mutate_house_number()
 
