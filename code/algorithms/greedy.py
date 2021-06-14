@@ -140,9 +140,9 @@ class Greedy:
                     y.append(cable_head_y)
 
             house.add_cable(cable.Cable(x, y, house, closest_battery, house.battery_distances[house.rank][1]))
-        for battery in self.grid.batteries.values():
-                print(battery.capacity())
-        print('next:')
+        # for battery in self.grid.batteries.values():
+        #         print(battery.capacity())
+        # print('next:')
 
 
 

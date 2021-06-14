@@ -27,18 +27,13 @@ class Battery():
         return False
 
     def capacity_left(self):
+
+        return self.capacity - self.get_cum_output()
+
+    def get_cum_output(self):
         cum_output = 0.0
 
         for house in self.houses.values():
             cum_output += float(house.max_output)
-
-        return self.capacity - cum_output
-
-    def capacity(self):
-        cum_output = 0.0
-
-        for house in self.houses.values():
-            cum_output += float(house.max_output)
-
-        #return cum_output, self.capacity, self.capacity - cum_output
+            
         return cum_output
