@@ -28,11 +28,14 @@ class Greedy:
             closest_battery = self.grid.batteries[next(iterable_object)]
 
             # go until you find a battery that has not reached capacity yet
-            while closest_battery.capacity_reached() == True:
+            while closest_battery.capacity_reached():
                 closest_battery = self.grid.batteries[next(iterable_object)]
 
+            # connect_house_to_battery(grid, house, battery)
             closest_battery.add_house(house)
+<<<<<<< HEAD
             house.battery = closest_battery.id
+
 
             # determine cable location
             x = list()
@@ -81,6 +84,9 @@ class Greedy:
                     y.append(cable_head_y)
 
             house.add_cable(cable.Cable(x, y, house, closest_battery, distances[closest_battery.id]))
+        # for battery in self.grid.batteries.values():
+        #     print(battery.capacity_left())
+        # print('next:')
             
 
 
@@ -124,3 +130,8 @@ class Greedy:
 
     #         # Assign the lowest value possibility to the node
     #         node.value = node_possibilities[0]
+=======
+            cable1 = cable.Cable(house = house, battery = closest_battery)
+            cable1.lay_cable()
+            house.add_cable(cable1)
+>>>>>>> 5fa4c53eda86254d65346de60bae9a4d97c5ae9d
