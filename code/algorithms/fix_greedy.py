@@ -28,8 +28,12 @@ class Fix_Greedy:
         # a replacable house is a house whose output is larger or equal to the surplus capacity of a battery 
         # surplus = battery.get_cum_output() - battery.capacity
         replacable_houses = list()
+<<<<<<< HEAD
         replacable_houses.append([house for house in battery.houses.values() if house.max_output >= abs(battery.capacity_left())])   
         
+=======
+        replacable_houses.append([house for house_id in battery.houses if self.calc_distance(house_id, battery) > abs(battery.capacity_left())])   
+>>>>>>> 8152691717cde943eec66e3c80d821f27726851c
         return replacable_houses
 
     def find_space(self, house):
