@@ -12,14 +12,10 @@ if __name__ == "__main__":
     district_number = "1"
 
     # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-
     battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    # battery_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_batteries.csv"
 
     # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-
     house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    # house_file = "/home/thomas61197/SmartGrid/data/Huizen&Batterijen/district_1/district-1_houses.csv"
 
     grid1 = grid.Grid(house_file, battery_file)
 
@@ -33,25 +29,10 @@ if __name__ == "__main__":
     
     # visualise_costs.visualise_costs(random_costs, "random")
     
-    # --------------------------- greedy --------------------------
+    # --------------------------- original greedy--------------------------
     # greedy1_costs = list()
-    
-<<<<<<< HEAD
-    for i in range(100):
-        greedy1 = original_greedy.Greedy(grid1)
-        greedy1.run()
-        greedy1_costs.append(greedy1.grid.calc_cost())
-    visualise_costs.visualise_costs(greedy1_costs, "greedy1")
 
-    # --------------------------- depth_first --------------------------
-    # depth1 = depth_first.Depth_first(grid1)
-    # depth1.run()
-    # --------------------------- simulated_annealing --------------------------
-    #sim_an1 = simulated_annealing.Simulated_annealing(grid1)
- # --------------------------- greedy 2 --------------------------
-    greedy2_costs = list()
-=======
-    # for i in range(3):
+    # for i in range(1000):
     #     greedy1 = original_greedy.Greedy(grid1)
     #     greedy1.run()
     #     greedy1_costs.append(greedy1.grid.calc_cost())
@@ -60,30 +41,16 @@ if __name__ == "__main__":
     # greedy1 = original_greedy.Greedy(grid1)
     # greedy1.run()
 
-    # --------------------------- depth_first --------------------------
-    # depth1 = depth_first.Depth_first(grid1)
-    # depth1.run()
     # --------------------------- greedy 2 --------------------------
     #greedy2_costs = list()
->>>>>>> 5fa4c53eda86254d65346de60bae9a4d97c5ae9d
     
-    for i in range(100):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        greedy2_costs.append(greedy2.grid.calc_cost())
-
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-
-<<<<<<< HEAD
-=======
-    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-    # greedy2_costs = list()
-    
-    # for i in range(3):
+    # for i in range(1000):
     #     greedy2 = greedy.Greedy(grid1)
     #     greedy2.run_greedy()
     #     greedy2_costs.append(greedy2.grid.calc_cost())
+
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+
     # --------------------------- Hill Climber ---------------------------------
     # print("Setting up Hill Climber...")
     # climber = hill_climber.Hill_climber(grid1)
@@ -177,7 +144,6 @@ if __name__ == "__main__":
     print(df_experiments_new)
     df_experiments_new.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", header = True, index = False)
 
->>>>>>> 5fa4c53eda86254d65346de60bae9a4d97c5ae9d
     # --------------------------- compare --------------------------
 
     # visualise_costs.compare_costs(random_costs, "random", greedy_costs, "greedy")
