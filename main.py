@@ -127,7 +127,7 @@ if __name__ == "__main__":
     # experiments["cooling_scheme"] = simanneal.cooling_scheme
     # experiments["alpha"] = simanneal.alpha
     # experiments["iterations"] = simanneal.iterations
-    # experiments["mutate_houses_number"] = mutate_houses_number
+    # experiments["mutate_house_number"] = mutate_houses_number
 
     # df_experiments = pd.DataFrame(experiments, index=[experiments['object_id']])
     # df_experiments_old = pd.read_csv("/home/thomas61197/SmartGrid/data/experiments.csv")

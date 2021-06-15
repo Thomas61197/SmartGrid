@@ -2,7 +2,7 @@ import copy
 import random
 import math
 from code.classes import cable
-from code.algorithms import original_greedy, greedy
+from code.algorithms import original_greedy
 
 class Hill_climber:
     """
