@@ -99,8 +99,8 @@ class Greedy:
             house.add_cable(cable1)
             
         for battery in self.grid.batteries.values():
-                print(battery.capacity())
-        print('next:')
+                print(battery.get_cum_output())
+        print('Output to batteries:')
 
 
 

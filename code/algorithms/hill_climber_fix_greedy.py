@@ -8,6 +8,7 @@ class Hill_climber:
     The HillClimber class that changes a random node in the graph to a random valid value. Each improvement or
     equivalent solution is kept for the next iteration.
     """
+
     def __init__(self, empty_grid):
         self.empty_grid = empty_grid
 
@@ -63,7 +64,7 @@ class Hill_climber:
 
         # Stop condition: if there are no negative numbers in battery.capacity left anymore. 
 
-    def run_fix(self, iterations, verbose=False, mutate_houses_number=2):
+    def run_fix(self, iterations, verbose=True, mutate_houses_number=2):
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
         """
@@ -72,11 +73,14 @@ class Hill_climber:
         # ___________________________________________
         # baseline1 = baseline.Baseline(self.empty_grid)
         # baseline1.run()
-        greedy1 = original_greedy.Greedy(self.empty_grid)
-        greedy1.run()
+        # greedy1 = original_greedy.Greedy(self.empty_grid)
+        # greedy1.run()
+        greedy2 = greedy.Greedy(self.empty_grid)
+        greedy2.run_greedy()
+        print('hier dan')
         # ___________________________________
 
-        self.grid = copy.deepcopy(greedy1.grid)
+        self.grid = copy.deepcopy(greedy2.grid)
         self.cum_diff_from_bat_cap = self.grid.calc_cum_diff_from_bat_cap()
         self.iterations = iterations
 
@@ -86,9 +90,8 @@ class Hill_climber:
 
             # Create a copy of the graph to simulate the change
             new_grid = copy.deepcopy(self.grid)
-
             self.mutate_grid(new_grid, number_of_houses=mutate_houses_number)
-
+            
             # Accept it if it is better
             self.check_solution_fix(new_grid)
 
