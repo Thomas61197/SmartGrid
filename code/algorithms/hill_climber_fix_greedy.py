@@ -59,12 +59,14 @@ class Hill_climber:
             self.cost = new_cost
 
     # We do not look at cost, but at how much surplus current in total
-    def check_solution_2(self, new_grid):
+    def check_solution_fix(self, new_grid):
         """
         Checks and accepts better solutions than the current solution.
         """
-        new_surplus = sum([battery.capacity_left for battery in new_grid.batteries.values()])
-        old_surplus = []
+        # new_surplus = sum([battery.capacity_left() for battery in new_grid.batteries.values()])
+        # old_surplus = []
+        new_cum_diff_from_tot_bat_cap = new_grid.calc_cum_diff_from_bat_cap()
+        old_cum_diff_from_bat_cap = self.cum_diff_from_bat_cap
 
         # We look for grids with a lower surplus of current
         # Why 'or equal to'? 
@@ -96,5 +98,34 @@ class Hill_climber:
 
             # Accept it if it is better
             self.check_solution(new_grid)
+
+    def run_fix(self, iterations, verbose=False, mutate_houses_number=2):
+        """
+        Runs the hillclimber algorithm for a specific amount of iterations.
+        """
+        # WHICH GRID DO YOU WANT TO FIX?
+        # enter input below
+        # ___________________________________________
+        # baseline1 = baseline.Baseline(self.empty_grid)
+        # baseline1.run()
+        greedy1 = original_greedy.Greedy(self.empty_grid)
+        greedy1.run()
+        # ___________________________________
+
+        self.grid = copy.deepcopy(greedy1.grid)
+        self.cum_diff_from_bat_cap = self.grid.calc_cum_diff_from_bat_cap()
+        self.iterations = iterations
+
+        for iteration in range(iterations):
+            # Nice trick to only print if variable is set to True
+            print(f'Iteration {iteration}/{iterations}, current cost: {self.cost}') if verbose else None
+
+            # Create a copy of the graph to simulate the change
+            new_grid = copy.deepcopy(self.grid)
+
+            self.mutate_grid(new_grid, number_of_houses=mutate_houses_number)
+
+            # Accept it if it is better
+            self.check_solution_fix(new_grid)
 
         

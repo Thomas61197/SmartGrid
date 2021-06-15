@@ -36,7 +36,6 @@ class Simulated_annealing(Hill_climber):
             self.cooling_scheme = "exponential"
             # Exponential would look like this:
             self.T = self.T * self.alpha
-            print(self.T)
             # where alpha can be any value below 1 but above 0
 
 
