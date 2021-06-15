@@ -1,5 +1,5 @@
 from code.classes import grid
-from code.algorithms import hill_climber, simulated_annealing2, simulated_annealing, fix_greedy, greedy, original_greedy
+from code.algorithms import hill_climber, hill_climber_fix_greedy, simulated_annealing2, simulated_annealing, fix_greedy, greedy, original_greedy
 from code.visualisations import visualise_costs,  visualise_cables
 
 import json
@@ -45,8 +45,10 @@ if __name__ == "__main__":
     for i in range(2):
         greedy2 = greedy.Greedy(grid1)
         greedy2.run_greedy()
-        fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-        fixed_greedy.run2()
+        print('got here')
+        fixed_greedy = hill_climber_fix_greedy.Hill_climber(greedy2.grid)
+        print('check2')
+        fixed_greedy.run_fix(10)
         greedy2_costs.append(fix_greedy.grid.calc_cost())
 
     visualise_costs.visualise_costs(greedy2_costs, "greedy2")
