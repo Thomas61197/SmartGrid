@@ -35,5 +35,5 @@ class Battery():
 
         for house in self.houses.values():
             cum_output += float(house.max_output)
-            
+
         return cum_output
