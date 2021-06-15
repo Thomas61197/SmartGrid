@@ -55,3 +55,18 @@ class Grid():
             cum_diff_from_bat_cap += abs(battery.capacity_left())
 
         return cum_diff_from_bat_cap
+
+    def is_valid(self):
+        valid = True
+
+        for battery in self.batteries.values():
+
+            if battery.capacity_reached():
+                valid = False
+
+        # for house in self.houses.values():
+
+        #     if house.cable is None:
+        #         valid = False
+
+        return valid

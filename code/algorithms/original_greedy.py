@@ -31,8 +31,13 @@ class Greedy:
             while closest_battery.capacity_reached():
                 closest_battery = self.grid.batteries[next(iterable_object)]
 
-            # connect_house_to_battery(grid, house, battery)
+            # while closest_battery.capacity_left() < house.max_output:
+            #     closest_battery = self.grid.batteries[next(iterable_object)]
+                
+            # if closest_battery.capacity_left() < house.max_output:
             closest_battery.add_house(house)
             cable1 = cable.Cable(house = house, battery = closest_battery)
             cable1.lay_cable()
             house.add_cable(cable1)
+            # else:
+            #     break
