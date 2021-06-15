@@ -1,6 +1,6 @@
 from code.classes import grid
-from code.algorithms import hill_climber, simulated_annealing2, simulated_annealing, fix_greedy, greedy, original_greedy
-# from code.visualisations import visualise_costs,  visualise_cables
+from code.algorithms import hill_climber, hill_climber_fix2, simulated_annealing2, simulated_annealing, fix_greedy, greedy, original_greedy, baseline
+from code.visualisations import visualise_costs
 
 import json
 import pandas as pd
@@ -9,57 +9,88 @@ import pickle
 if __name__ == "__main__":
     district_number = "1"
 
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    #battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    # house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     grid1 = grid.Grid(house_file, battery_file)
 
-    # --------------------------- random --------------------------
-    # random_costs = list()
+    # --------------------------- baseline --------------------------
+    # baseline_costs = list()
 
     # for i in range(1000):
-    #     random1 = random.Random(grid1)
-    #     grid2 = random1.run()
-    #     random_costs.append(grid2.calc_cost())
+    #     baseline1 = baseline.Baseline(grid1)
+    #     baseline1.run()
+        # baseline_costs.append(baseline1.calc_cost())
+        # if baseline1.grid.is_valid():
+        #     print("hurray")
     
     # visualise_costs.visualise_costs(random_costs, "random")
     
     # --------------------------- original greedy--------------------------
     # greedy1_costs = list()
 
-    # for i in range(1000):
+    # for i in range(10000):
     #     greedy1 = original_greedy.Greedy(grid1)
-    #     greedy1.run()
-    #     greedy1_costs.append(greedy1.grid.calc_cost())
+
+    #     try:
+    #         greedy1.run()
+    #     except Exception:
+    #         pass
+
+    #     if greedy1.grid.is_valid():
+    #         print("hurray")
+            # greedy1_costs.append(greedy1.grid.calc_cost())
+
     # visualise_costs.visualise_costs(greedy1_costs, "greedy1")
 
-    # greedy1 = original_greedy.Greedy(grid1)
-    # greedy1.run()
-
     # --------------------------- greedy 2 --------------------------
-    greedy2_costs = list()
+    # greedy2_costs = list()
     
-    for i in range(2):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-        fixed_greedy.run2()
-        greedy2_costs.append(fix_greedy.grid.calc_cost())
+    # for i in range(2):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     fixed_greedy.run2()
+    #     greedy2_costs.append(fix_greedy.grid.calc_cost())
 
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
 
     # --------------------------- Hill Climber ---------------------------------
     # print("Setting up Hill Climber...")
     # climber = hill_climber.Hill_climber(grid1)
 
     # print("Running Hill Climber...")
-    # climber.run(2000, verbose=True)
+    # climber.run(1000, verbose=True)
 
     # print(f"Value of the configuration after Hill Climber: "
     #       f"{climber.grid.calc_cost()}")
+
+    # print("valid?")
+    # print(climber.grid.is_valid())
+
+    # --------------------------- Hill Climber fix 2 ---------------------------------
+    print("Setting up Hill Climber...")
+    climber = hill_climber_fix2.Hill_climber(grid1)
+
+    print("Running Hill Climber...")
+    climber.run(10000, verbose=True, mutate_houses_number=10)
+
+    print(f"Value of the configuration after Hill Climber: "
+          f"{climber.grid.calc_cost()}")
+
+    print("valid?")
+    print(climber.grid.is_valid())
+
+    if climber.grid.is_valid():
+        climber_id = 0
+        file_name = f"SmartGrid/data/solutions/climber_{climber_id}.pickle"
+
+        with open(file_name, 'wb') as handle:
+            pickle.dump(climber, handle)
+
 
     # --------------------------- Simulated Annealing --------------------------
     # It is very difficult to find a good starting temperature for SA. A rule to
