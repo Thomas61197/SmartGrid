@@ -58,17 +58,18 @@ class Greedy:
                 second_closest_battery = sorted(second_closest_battery.items(), key=lambda x: x[1])
                 
                 # Pick the one with the shortest distance to reconnect
-                replace_house = second_closest_battery[0][0]
-                replace_to_battery = second_closest_battery[0][1][0]
+                replace_house_id = second_closest_battery[0][0]
+                replace_to_battery_id = second_closest_battery[0][1][0]
 
+                replace_house = self.grid.houses[replace_house_id]
                 # Remove found house from current battery
-                battery.houses.pop(replace_house)
+                battery.remove_house(replace_house)
                 # Indicate with rank that we've changed batteries
-                if self.grid.houses[replace_house].rank < 3:
-                    self.grid.houses[replace_house].rank += 1
+                if replace_house.rank < 3:
+                    replace_house.rank += 1
 
                 # Add house to new battery INDEX DIFFERENTLY
-                self.grid.batteries[replace_to_battery].add_house(self.grid.houses[replace_house])
+                self.grid.batteries[replace_to_battery_id].add_house(replace_house)
 
 
     def run_greedy(self): 
@@ -83,7 +84,7 @@ class Greedy:
         self.battery_distance_list()
 
         # If battery capacity is full, reconnect houses with the shortest distance to the next battery
-        for i in range(20):
+        for i in range(10):
 
             self.replace_connections()
             
@@ -92,6 +93,14 @@ class Greedy:
             closest_battery_id = house.battery_distances[house.rank][0]
             closest_battery = self.grid.batteries[closest_battery_id]
             house.battery = closest_battery_id
+<<<<<<< HEAD
+            cable1 = cable.Cable(house, closest_battery)
+            cable1.lay_cable()
+            house.add_cable(cable1)
+        # for battery in self.grid.batteries.values():
+        #         print(battery.capacity())
+        # print('next:')
+=======
 
             cable1 = cable.Cable(house = house, battery = closest_battery)
             cable1.lay_cable()
@@ -100,6 +109,7 @@ class Greedy:
         for battery in self.grid.batteries.values():
                 print(battery.capacity())
         print('next:')
+>>>>>>> 83794afc3f57aab6421b749df80e40d12a1cc49e
 
 
 
