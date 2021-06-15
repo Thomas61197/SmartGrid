@@ -33,6 +33,7 @@ class Greedy:
 
             # connect_house_to_battery(grid, house, battery)
             closest_battery.add_house(house)
+<<<<<<< HEAD
             house.battery = closest_battery.id
 
 
@@ -129,3 +130,8 @@ class Greedy:
 
     #         # Assign the lowest value possibility to the node
     #         node.value = node_possibilities[0]
+=======
+            cable1 = cable.Cable(house = house, battery = closest_battery)
+            cable1.lay_cable()
+            house.add_cable(cable1)
+>>>>>>> 83794afc3f57aab6421b749df80e40d12a1cc49e

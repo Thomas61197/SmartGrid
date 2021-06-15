@@ -93,12 +93,23 @@ class Greedy:
             closest_battery_id = house.battery_distances[house.rank][0]
             closest_battery = self.grid.batteries[closest_battery_id]
             house.battery = closest_battery_id
+<<<<<<< HEAD
             cable1 = cable.Cable(house, closest_battery)
             cable1.lay_cable()
             house.add_cable(cable1)
         # for battery in self.grid.batteries.values():
         #         print(battery.capacity())
         # print('next:')
+=======
+
+            cable1 = cable.Cable(house = house, battery = closest_battery)
+            cable1.lay_cable()
+            house.add_cable(cable1)
+            
+        for battery in self.grid.batteries.values():
+                print(battery.capacity())
+        print('next:')
+>>>>>>> 83794afc3f57aab6421b749df80e40d12a1cc49e
 
 
 
