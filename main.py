@@ -5,6 +5,7 @@ from code.visualisations import visualise_costs
 import json
 import pandas as pd
 import pickle
+import copy
 
 if __name__ == "__main__":
     district_number = "1"
@@ -19,32 +20,50 @@ if __name__ == "__main__":
 
     # --------------------------- baseline --------------------------
     # baseline_costs = list()
+    # baseline1 = baseline.Baseline(grid1)
+    # baseline1.run()
+    # best_base = copy.deepcopy(baseline1)
 
-    # for i in range(1000):
+    # for i in range(100000):
     #     baseline1 = baseline.Baseline(grid1)
     #     baseline1.run()
+    #     print(f"i: {i}, cost: {best_base.grid.calc_cost()}")
+
+    #     if baseline1.grid.calc_cost() < best_base.grid.calc_cost():
+    #         best_base = copy.deepcopy(baseline1)
+
         # baseline_costs.append(baseline1.calc_cost())
         # if baseline1.grid.is_valid():
         #     print("hurray")
     
     # visualise_costs.visualise_costs(random_costs, "random")
+
+    # file_name = f"SmartGrid/data/solutions/best_baseline.pickle"
+
+    # with open(file_name, 'wb') as handle:
+    #     pickle.dump(best_base, handle)
     
     # --------------------------- original greedy--------------------------
     # greedy1_costs = list()
+    # greedy1 = original_greedy.Greedy(grid1)
+    # greedy1.run()
+    # best_greedy = copy.deepcopy(greedy1)
 
-    # for i in range(10000):
+    # for i in range(100000):
     #     greedy1 = original_greedy.Greedy(grid1)
+    #     greedy1.run()
+    #     print(f"i: {i}, cost: {best_greedy.grid.calc_cost()}")
 
-    #     try:
-    #         greedy1.run()
-    #     except Exception:
-    #         pass
+    #     if greedy1.grid.calc_cost() < best_greedy.grid.calc_cost():
+    #         best_greedy = copy.deepcopy(greedy1)
 
-    #     if greedy1.grid.is_valid():
-    #         print("hurray")
-            # greedy1_costs.append(greedy1.grid.calc_cost())
+        # greedy1_costs.append(greedy1.grid.calc_cost())
 
     # visualise_costs.visualise_costs(greedy1_costs, "greedy1")
+    # file_name = f"SmartGrid/data/solutions/best_greedy.pickle"
+
+    # with open(file_name, 'wb') as handle:
+    #     pickle.dump(best_greedy, handle)
 
     # --------------------------- greedy 2 --------------------------
     # greedy2_costs = list()
@@ -72,11 +91,18 @@ if __name__ == "__main__":
     # print(climber.grid.is_valid())
 
     # --------------------------- Hill Climber fix 2 ---------------------------------
+    file_name = "/home/thomas61197/SmartGrid/data/solutions/best_greedy.pickle"
+
+    with open(file_name, 'rb') as handle:
+        best_greedy = pickle.load(handle)
+
+    print(best_greedy.grid.calc_cost())
+    
     print("Setting up Hill Climber...")
-    climber = hill_climber_fix2.Hill_climber(grid1)
+    climber = hill_climber_fix2.Hill_climber(best_greedy.grid)
 
     print("Running Hill Climber...")
-    climber.run(10000, verbose=True, mutate_houses_number=10)
+    climber.run(100000, verbose=True, mutate_houses_number=10)
 
     print(f"Value of the configuration after Hill Climber: "
           f"{climber.grid.calc_cost()}")
@@ -85,8 +111,8 @@ if __name__ == "__main__":
     print(climber.grid.is_valid())
 
     if climber.grid.is_valid():
-        climber_id = 0
-        file_name = f"SmartGrid/data/solutions/climber_{climber_id}.pickle"
+        climber_id = 4
+        file_name = f"SmartGrid/data/solutions/climber_{climber_id}_best_greedy.pickle"
 
         with open(file_name, 'wb') as handle:
             pickle.dump(climber, handle)

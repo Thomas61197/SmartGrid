@@ -21,7 +21,9 @@ class Baseline:
             # cum_max_output = 1500 * 5 = 7500
             # cum_cap = 1507 * 5 = 7535
             # keep picking a random battery until you've found one that has enough space
-            while random_battery.capacity_left() < house.max_output:
+            # while random_battery.capacity_left() < house.max_output:
+            
+            while random_battery.capacity_reached():
                 random_battery = random.choice(self.grid.batteries)
             
             random_battery.add_house(house)
