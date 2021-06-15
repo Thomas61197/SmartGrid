@@ -114,16 +114,28 @@ if __name__ == "__main__":
     # , cooling_scheme="exponential")
     
     # print("Running Simulated Annealing...")
+<<<<<<< HEAD
     # simanneal.run(1000000, verbose=False)
+=======
+    # simanneal.run(1000, verbose=False)
+>>>>>>> ab643df9cff244fb0c1f427546b0b75ac6a528a2
     
     # print(f"Value of the configuration after Simulated Annealing: "
     #       f"{simanneal.grid.calc_cost()}")
 
+<<<<<<< HEAD
     # simanneal_id = 31
 
     # file_name = f"SmartGrid/data/solutions/simanneal_{simanneal_id}.pickle"
 
     # # IMPORTANT: save simanneal object (if lots of iterations)!
+=======
+    # simanneal_id = 32
+
+    # file_name = f"SmartGrid/data/solutions/simanneal_{simanneal_id}.pickle"
+
+    # IMPORTANT: save simanneal object (if lots of iterations)!
+>>>>>>> ab643df9cff244fb0c1f427546b0b75ac6a528a2
     # with open(file_name, 'wb') as handle:
     #     pickle.dump(simanneal, handle)
 

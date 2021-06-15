@@ -23,9 +23,10 @@ object_id,district,object_type,cost,start_grid,temperature,cooling_scheme,alpha,
 21,1,simanneal,35145,original_greedy,900,exponential,0.994,1000,3.38e-13,20
 22,1,simanneal,33597,original_greedy,900,exponential,0.994,1000,1.69e-13,10
 23,1,simanneal,34020,original_greedy,900,exponential,0.994,1000,8.444460408707499e-14,5
-24,1,simanneal,40266,original_greedy,900,linear,0.99,1000,1.6888920817415e-13,10
+24,1,simanneal,40266,original_greedy,900,linear,0.99,1000,1.6888920817414999e-13,10
 25,1,simanneal,40122,original_greedy,900,linear,0.99,1000,8.444460408707499e-14,5
 26,1,simanneal,38655,original_greedy,900,linear,0.99,1000,-2.6289734278428508e-15,3
 27,1,simanneal,38691,original_greedy,900,linear,0.99,1000,-1.762479051592436e-15,2
 28,1,simanneal,50058,original_greedy,900,exponential,0.99999,1000,1000.0000000000076,10
-29,1,simanneal,40293,original_greedy,900,exponential,0.991,1000,1000.0000000000077,10
+29,1,simanneal,40293,original_greedy,900,exponential,0.991,1000,1000.0000000000076,10
+31,1,simanneal,30870,original_greedy,900,exponential,0.99999,1000000,2.0940893574508657e-10,10

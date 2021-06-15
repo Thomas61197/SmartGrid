@@ -34,7 +34,7 @@ class Hill_climber:
 
         for battery in new_grid.batteries.values():
             
-            if not battery.capacity_reached():
+            if battery.capacity_left() >= random_house.max_output:
                 available_batteries.append(battery)
 
         self.random_reconfigure_house(random_house, available_batteries)
@@ -46,25 +46,15 @@ class Hill_climber:
         for _ in range(number_of_houses):
             self.mutate_single_house(new_grid)
 
-    def check_solution(self, new_grid):
-        """
-        Checks and accepts better solutions than the current solution.
-        """
-        new_cost = new_grid.calc_cost()
-        old_cost = self.cost
-
-        # We are looking for maps that cost less!
-        if new_cost <= old_cost:
-            self.grid = new_grid
-            self.cost = new_cost
-
     # We do not look at cost, but at how much surplus current in total
-    def check_solution_2(self, new_grid):
+    def check_solution_fix(self, new_grid):
         """
         Checks and accepts better solutions than the current solution.
         """
-        new_surplus = sum([battery.capacity_left for battery in new_grid.batteries.values()])
-        old_surplus = []
+        # new_surplus = sum([battery.capacity_left() for battery in new_grid.batteries.values()])
+        # old_surplus = []
+        new_cum_diff_from_tot_bat_cap = new_grid.calc_cum_diff_from_bat_cap()
+        old_cum_diff_from_bat_cap = self.cum_diff_from_bat_cap
 
         # We look for grids with a lower surplus of current
         # Why 'or equal to'? 
@@ -73,16 +63,21 @@ class Hill_climber:
 
         # Stop condition: if there are no negative numbers in battery.capacity left anymore. 
 
-    def run(self, iterations, verbose=False, mutate_houses_number=1):
+    def run_fix(self, iterations, verbose=False, mutate_houses_number=2):
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
         """
+        # WHICH GRID DO YOU WANT TO FIX?
+        # enter input below
+        # ___________________________________________
         # baseline1 = baseline.Baseline(self.empty_grid)
         # baseline1.run()
         greedy1 = original_greedy.Greedy(self.empty_grid)
         greedy1.run()
+        # ___________________________________
+
         self.grid = copy.deepcopy(greedy1.grid)
-        self.cost = self.grid.calc_cost()
+        self.cum_diff_from_bat_cap = self.grid.calc_cum_diff_from_bat_cap()
         self.iterations = iterations
 
         for iteration in range(iterations):
@@ -95,6 +90,6 @@ class Hill_climber:
             self.mutate_grid(new_grid, number_of_houses=mutate_houses_number)
 
             # Accept it if it is better
-            self.check_solution(new_grid)
+            self.check_solution_fix(new_grid)
 
         

@@ -47,3 +47,11 @@ class Grid():
             tot += house.cable.cost()
         
         return tot
+
+    def calc_cum_diff_from_bat_cap(self):
+        cum_diff_from_bat_cap = 0
+
+        for battery in self.grid.batteries.values():
+            cum_diff_from_bat_cap += abs(battery.capacity_left())
+
+        return cum_diff_from_bat_cap
