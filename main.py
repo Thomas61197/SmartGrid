@@ -20,19 +20,19 @@ if __name__ == "__main__":
     # --------------------------- baseline --------------------------
     baseline_costs = list()
 
-    for i in range(1000):
+    for i in range(100):
         baseline1 = baseline.Baseline(grid1)
         baseline1.run()
-        baseline_costs.append(baseline1.calc_cost())
-        if baseline1.grid.is_valid():
-            print("hurray")
+        baseline_costs.append(baseline1.grid.calc_cost())
+        # if baseline1.grid.is_valid():
+        #     print("hurray")
     
-    visualise_costs.visualise_costs(random_costs, "random")
+    visualise_costs.visualise_costs(baseline_costs, "random")
     
     # --------------------------- original greedy--------------------------
     # greedy1_costs = list()
 
-    # for i in range(10000):
+    # for i in range(1000):
     #     greedy1 = original_greedy.Greedy(grid1)
 
     #     try:
@@ -42,21 +42,21 @@ if __name__ == "__main__":
 
     #     if greedy1.grid.is_valid():
     #         print("hurray")
-            # greedy1_costs.append(greedy1.grid.calc_cost())
+    #     greedy1_costs.append(greedy1.grid.calc_cost())
 
     # visualise_costs.visualise_costs(greedy1_costs, "greedy1")
 
     # --------------------------- greedy 2 --------------------------
-    greedy2_costs = list()
+    # greedy2_costs = list()
     
-    for i in range(10):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-        # fixed_greedy.run2()
-        greedy2_costs.append(greedy2.grid.calc_cost())
+    # for i in range(100):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     # fixed_greedy.run2()
+    #     greedy2_costs.append(greedy2.grid.calc_cost())
 
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
 
     # --------------------------- Hill Climber ---------------------------------
     # print("Setting up Hill Climber...")
@@ -212,4 +212,4 @@ if __name__ == "__main__":
 
 
 # --------------------------- visualisation --------------------------
-#visualise_cables.visualise(greedy2.grid)
+visualise_cables.visualise(baseline1.grid)

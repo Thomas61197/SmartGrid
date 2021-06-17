@@ -36,8 +36,12 @@ class Greedy:
                 
             # if closest_battery.capacity_left() < house.max_output:
             closest_battery.add_house(house)
+            house.battery = closest_battery.id
             cable1 = cable.Cable(house = house, battery = closest_battery)
             cable1.lay_cable()
             house.add_cable(cable1)
             # else:
             #     break
+        # for battery in self.grid.batteries.values():
+        #     print(battery.get_cum_output())
+        # print('Output to batteries:')
