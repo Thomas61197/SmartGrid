@@ -1,15 +1,14 @@
 import copy
 import random
 from code.classes import cable
-from code.algorithms import original_greedy
 
 class Hill_climber:
     """
     The HillClimber class that changes a random node in the graph to a random valid value. Each improvement or
     equivalent solution is kept for the next iteration.
     """
-    def __init__(self, empty_grid):
-        self.empty_grid = empty_grid
+    def __init__(self, grid):
+        self.grid = copy.deepcopy(grid)
 
     def random_reconfigure_house(self, house, batteries):
         """
@@ -55,7 +54,7 @@ class Hill_climber:
 
         # else, accept new_grid if valid and lower cost
         else:
-            
+
             if new_grid.is_valid():
 
                 if new_cost <= old_cost:
@@ -66,11 +65,6 @@ class Hill_climber:
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
         """
-        # baseline1 = baseline.Baseline(self.empty_grid)
-        # baseline1.run()
-        greedy1 = original_greedy.Greedy(self.empty_grid)
-        greedy1.run()
-        self.grid = copy.deepcopy(greedy1.grid)
         self.cost = self.grid.calc_cost()
         self.iterations = iterations
 
