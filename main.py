@@ -92,9 +92,18 @@ if __name__ == "__main__":
 
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # file_name = f"SmartGrid/data/solutions/best_greedy_100k.pickle"
+    for i in range(20):
+        greedy2 = greedy.Greedy(grid1)
+        greedy2.run_greedy()
+        # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+        # fixed_greedy.run3()
+        if greedy2.grid.is_valid():
+             print("hurray")
+        greedy2_costs.append(greedy2.grid.calc_cost())
 
     # with open(file_name, 'wb') as handle:
     #     pickle.dump(best_greedy, handle)
+
 
     # --------------------------- Hill Climber ---------------------------------
     best_greedy.grid.print_cum_output_per_battery()
@@ -212,4 +221,4 @@ if __name__ == "__main__":
 
 
 # --------------------------- visualisation --------------------------
-#visualise_cables.visualise(greedy2.grid)
+# visualise_cables.visualise(greedy2.grid)

@@ -70,8 +70,10 @@ class Cable():
 
         # step 1: find the closest point
         # first get the distance between the ouse and the battery
-        
-        for house in self.battery.houses.values():
+
+        # for house in self.battery.houses.values():
+
+        pass
 
 
         
