@@ -1,6 +1,6 @@
 import copy
 import random
-from code.classes import cable
+from code.classes import cable, grid
 
 class Baseline:
     """
@@ -23,8 +23,12 @@ class Baseline:
             # keep picking a random battery until you've found one that has enough space
             # while random_battery.capacity_left() < house.max_output:
             
-            while random_battery.capacity_reached():
+            # while random_battery.capacity_reached():
+            #     random_battery = random.choice(self.grid.batteries)
+            while random_battery.capacity_left() < house.max_output:
                 random_battery = random.choice(self.grid.batteries)
+                if random_battery.capacity_left() < 60:
+                    print(random_battery.id, 'is:', random_battery.capacity_left(), 'and', house.max_output)
             
             random_battery.add_house(house)
             house.battery = random_battery.id
