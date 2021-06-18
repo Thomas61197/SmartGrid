@@ -19,16 +19,16 @@ if __name__ == "__main__":
     grid1 = grid.Grid(house_file, battery_file)
 
     # --------------------------- baseline --------------------------
-    # baseline_costs = list()
-    # for i in range(10):
-    #     baseline1 = baseline.Baseline(grid1)
-    #     baseline1.run()
-    #     best_base = copy.deepcopy(baseline1)
-    #     baseline_costs.append(baseline1.grid.calc_cost())
-    #     if baseline1.grid.is_valid():
-    #         print("hurray")
+    baseline_costs = list()
+    for i in range(10):
+        baseline1 = baseline.Baseline(grid1)
+        baseline1.run()
+        best_base = copy.deepcopy(baseline1)
+        baseline_costs.append(baseline1.grid.calc_cost())
+        if baseline1.grid.is_valid():
+            print("hurray")
     
-    # visualise_costs.visualise_costs(random_costs, "random")
+    visualise_costs.visualise_costs(random_costs, "random")
 
     # for i in range(100):
     #     baseline1 = baseline.Baseline(grid1)
@@ -72,18 +72,19 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- greedy 2 --------------------------
-    greedy2_costs = list()
-    
-    for i in range(20):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-        # fixed_greedy.run3()
-        if greedy2.grid.is_valid():
-             print("hurray")
-        greedy2_costs.append(greedy2.grid.calc_cost())
-
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # greedy2_costs = list()
+    # count = 0
+    # for i in range(100):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     # fixed_greedy.run3()
+    #     if greedy2.grid.is_valid():
+    #          print("hurray")
+    #          count += 1
+    #     greedy2_costs.append(greedy2.grid.calc_cost())
+    # print(count)
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
 
 
     # --------------------------- Hill Climber ---------------------------------

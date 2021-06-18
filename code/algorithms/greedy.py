@@ -106,11 +106,11 @@ class Greedy:
             cable1.lay_cable()
             house.add_cable(cable1)
             
-        for battery in self.grid.batteries.values():
-                print(battery.get_cum_output())
-        print('Output to batteries:')
-        check_capacity = any(battery.capacity_reached() in self.grid.batteries for battery in self.grid.batteries.values())
-        if check_capacity == False:
-            print('Good')
+        # for battery in self.grid.batteries.values():
+        #         print(battery.get_cum_output())
+        # print('Output to batteries:')
+        # check_capacity = any(battery.capacity_reached() in self.grid.batteries for battery in self.grid.batteries.values())
+        # if check_capacity == False:
+        #     print('Good')
 
 
