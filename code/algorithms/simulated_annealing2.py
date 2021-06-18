@@ -36,11 +36,10 @@ class Simulated_annealing(Hill_climber):
             self.cooling_scheme = "exponential"
             # Exponential would look like this:
             self.T = self.T * self.alpha
-            print(self.T)
             # where alpha can be any value below 1 but above 0
 
     def update_mutate_house_number(self):
-        self.mutate_house_number = self.mutate_house_number - (self.mutate_house_number0 / self.iterations)
+        self.mutate_house_number = (self.mutate_house_number - (self.mutate_house_number0 / self.iterations))
 
     def check_solution(self, new_grid):
         """

@@ -1,6 +1,5 @@
 import copy
 import random
-import math
 from code.classes import cable
 from code.algorithms import original_greedy, greedy
 
@@ -9,10 +8,8 @@ class Hill_climber:
     The HillClimber class that changes a random node in the graph to a random valid value. Each improvement or
     equivalent solution is kept for the next iteration.
     """
-    def __init__(self, empty_grid, mutate_house_number):
+    def __init__(self, empty_grid):
         self.empty_grid = empty_grid
-        self.mutate_house_number0 = mutate_house_number
-        self.mutate_house_number = mutate_house_number
 
     def random_reconfigure_house(self, house, batteries):
         """
@@ -42,11 +39,11 @@ class Hill_climber:
 
         self.random_reconfigure_house(random_house, available_batteries)
 
-    def mutate_grid(self, new_grid):
+    def mutate_grid(self, new_grid, number_of_houses=1):
         """
         Changes the value of a number of nodes with a random valid value.
         """
-        for _ in range(math.ceil(self.mutate_house_number)):
+        for _ in range(number_of_houses):
             self.mutate_single_house(new_grid)
 
     def check_solution(self, new_grid):
@@ -61,7 +58,22 @@ class Hill_climber:
             self.grid = new_grid
             self.cost = new_cost
 
-    def run(self, iterations, verbose=False):
+    # We do not look at cost, but at how much surplus current in total
+    def check_solution_2(self, new_grid):
+        """
+        Checks and accepts better solutions than the current solution.
+        """
+        new_surplus = sum([battery.capacity_left for battery in new_grid.batteries.values()])
+        old_surplus = []
+
+        # We look for grids with a lower surplus of current
+        # Why 'or equal to'? 
+        if new_surplus <= old_surplus:
+            pass
+
+        # Stop condition: if there are no negative numbers in battery.capacity left anymore. 
+
+    def run(self, iterations, verbose=False, mutate_houses_number=1):
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
         """
@@ -80,7 +92,7 @@ class Hill_climber:
             # Create a copy of the graph to simulate the change
             new_grid = copy.deepcopy(self.grid)
 
-            self.mutate_grid(new_grid)
+            self.mutate_grid(new_grid, number_of_houses=mutate_houses_number)
 
             # Accept it if it is better
             self.check_solution(new_grid)

@@ -7,7 +7,7 @@ from code.classes import grid, house, battery, cable
 def visualise(grid): 
 
     # load data files
-    district_number = 'small_test'
+    district_number = '1'
     battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
     house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
