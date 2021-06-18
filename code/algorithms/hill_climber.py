@@ -1,5 +1,6 @@
 import copy
 import random
+import math
 from code.classes import cable
 from code.algorithms import original_greedy
 
@@ -8,8 +9,10 @@ class Hill_climber:
     The HillClimber class that changes a random node in the graph to a random valid value. Each improvement or
     equivalent solution is kept for the next iteration.
     """
-    def __init__(self, empty_grid):
-        self.empty_grid = empty_grid
+    def __init__(self, grid, mutate_house_number = 1):
+        self.grid = grid
+        self.mutate_house_number0 = mutate_house_number
+        self.mutate_house_number = mutate_house_number
 
     def random_reconfigure_house(self, house, batteries):
         """
@@ -34,19 +37,19 @@ class Hill_climber:
 
         for battery in new_grid.batteries.values():
             
-            if battery.capacity_left() >= random_house.max_output:
+            if not battery.capacity_reached():
                 available_batteries.append(battery)
 
         self.random_reconfigure_house(random_house, available_batteries)
 
-    def mutate_grid(self, new_grid, number_of_houses=1):
+    def mutate_grid(self, new_grid):
         """
         Changes the value of a number of nodes with a random valid value.
         """
-        for _ in range(number_of_houses):
+        for _ in range(math.ceil(self.mutate_house_number)):
             self.mutate_single_house(new_grid)
 
-    def check_solution(self, new_grid):
+    def check_solution(self, new_grid, decreasing_mutate_house_number):
         """
         Checks and accepts better solutions than the current solution.
         """
@@ -58,15 +61,11 @@ class Hill_climber:
             self.grid = new_grid
             self.cost = new_cost
 
-    def run(self, iterations, verbose=False, mutate_houses_number=1):
+    def run(self, iterations, verbose=False, decreasing_mutate_house_number = False):
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
+        Takes a filled in grid as starting grid
         """
-        # baseline1 = baseline.Baseline(self.empty_grid)
-        # baseline1.run()
-        greedy1 = original_greedy.Greedy(self.empty_grid)
-        greedy1.run()
-        self.grid = copy.deepcopy(greedy1.grid)
         self.cost = self.grid.calc_cost()
         self.iterations = iterations
 
@@ -77,9 +76,11 @@ class Hill_climber:
             # Create a copy of the graph to simulate the change
             new_grid = copy.deepcopy(self.grid)
 
-            self.mutate_grid(new_grid, number_of_houses=mutate_houses_number)
+            self.mutate_grid(new_grid)
 
             # Accept it if it is better
-            self.check_solution(new_grid)
+            self.check_solution(new_grid, decreasing_mutate_house_number)
+
+    
 
         

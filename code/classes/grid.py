@@ -70,3 +70,8 @@ class Grid():
         #         valid = False
 
         return valid
+
+    def print_cum_output_per_battery(self):
+        
+        for battery in self.batteries.values():
+            print(f"battery_{battery.id}, cum_output: {battery.get_cum_output()}")

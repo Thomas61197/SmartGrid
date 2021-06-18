@@ -60,4 +60,18 @@ class Cable():
         self.x = x
         self.y = y
 
+    def lay_cable2(self):
+        """
+        cables are now allowed to be attached to eachother
+        """
+        # connect to closest cable connected to that battery 
+        # OR (to the battery itself if that is closer
+        # OR to the battery itself if there are no cables connected to that battery yet)
+
+        # step 1: find the closest point
+        # first get the distance between the ouse and the battery
+        
+        for house in self.battery.houses.values():
+
+
         
