@@ -5,6 +5,7 @@ import numpy as np
 
 def visualise_costs(costs, algo):
     print(algo, sum(costs)/len(costs))
+    print(algo, min(costs))
 
     plt.figure()
     plt.title(f"{algo} algorithm costs")

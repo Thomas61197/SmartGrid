@@ -34,7 +34,7 @@ class Hill_climber:
 
         for battery in new_grid.batteries.values():
             
-            if not battery.capacity_reached():
+            if battery.capacity_left() >= random_house.max_output:
                 available_batteries.append(battery)
 
         self.random_reconfigure_house(random_house, available_batteries)

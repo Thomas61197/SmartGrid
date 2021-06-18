@@ -35,38 +35,45 @@ class Greedy:
 
     def replace_connections(self): 
         """
-        Find the houses with the shortest distance to their second closest battery, 
-        connect if capacity of current battery is filled
+        Find the houses with the shortest distance to their next closest battery. 
+        If the battery they're connected to now is full, replace that house to next closest battery.
         """
-        battery_numbers = [*range(0,len(self.grid.batteries.values()))]
+
+        #battery_numbers = [*range(0,len(self.grid.batteries.values()))]
+        random.shuffle(self.grid.batteries)
 
         for battery in self.grid.batteries.values():
-            battery = self.grid.batteries[(random.choice(battery_numbers))]
+            # Randomise the order of the batteries
+            #battery = self.grid.batteries[(random.choice(battery_numbers))]
             while battery.capacity_reached():
                 # Make a dict of distances from houses to their next closest battery
-                second_closest_battery = {}
+                next_closest_battery = {}
                 for house in battery.houses:
                     house_obj = self.grid.houses[house]
 
-                    # Only move a house if there is still batteries left to move it too
+                    # Pick the battery that is second closest after the one we're at now
                     if house_obj.rank < 4:
-                        second_closest = house_obj.battery_distances[(house_obj.rank + 1)]
-                        second_closest_battery[house] = second_closest
+                        next_closest = house_obj.battery_distances[(house_obj.rank + 1)]
+                        next_closest_battery[house] = next_closest
+                    # Go back to the beginning of the battery distance list
+                    else:
+                        house_obj.rank = 0
+                        next_closest = house_obj.battery_distances[(house_obj.rank)]
+                        next_closest_battery[house] = next_closest
 
 
                 # Sort that dict
-                second_closest_battery = sorted(second_closest_battery.items(), key=lambda x: x[1])
+                next_closest_battery = sorted(next_closest_battery.items(), key=lambda x: x[1])
                 
                 # Pick the one with the shortest distance to reconnect
-                replace_house_id = second_closest_battery[0][0]
-                replace_to_battery_id = second_closest_battery[0][1][0]
+                replace_house_id = next_closest_battery[0][0]
+                replace_to_battery_id = next_closest_battery[0][1][0]
 
                 replace_house = self.grid.houses[replace_house_id]
                 # Remove found house from current battery
                 battery.remove_house(replace_house)
                 # Indicate with rank that we've changed batteries
-                if replace_house.rank < 3:
-                    replace_house.rank += 1
+                replace_house.rank += 1
 
                 # Add house to new battery INDEX DIFFERENTLY
                 self.grid.batteries[replace_to_battery_id].add_house(replace_house)
@@ -84,7 +91,8 @@ class Greedy:
         self.battery_distance_list()
 
         # If battery capacity is full, reconnect houses with the shortest distance to the next battery
-        for i in range(10):
+        # for i in range(100):
+        for i in range(100):
 
             self.replace_connections()
             
@@ -98,42 +106,11 @@ class Greedy:
             cable1.lay_cable()
             house.add_cable(cable1)
             
-        # for battery in self.grid.batteries.values():
-        #         print(battery.capacity())
-        # print('next:')
+        for battery in self.grid.batteries.values():
+                print(battery.get_cum_output())
+        print('Output to batteries:')
+        check_capacity = any(battery.capacity_reached() in self.grid.batteries for battery in self.grid.batteries.values())
+        if check_capacity == False:
+            print('Good')
 
 
-
-####################################################
-                       
-            
-
-## Code van live coding ter inspiratie
-
-    # def get_next_node(self, nodes):
-    #     """
-    #     Gets the next node with the most neighbours and removes it from the list.
-    #     """
-    #     nodes.sort(key=lambda node: len(node.neighbours))
-    #     return nodes.pop()
-
-    # def run(self):
-    #     """
-    #     Greedily assigns the lowest costing transmitters to the nodes of the graph.
-    #     """
-    #     nodes = list(self.graph.nodes.values())
-
-    #     node_possibilities = self.transmitters
-
-    #     # Repeat untill no more possible solution or we've assigned all nodes
-    #     while nodes or not node_possibilities:
-    #         node = self.get_next_node(nodes)
-
-    #         # Retrieve all valid possible values for a node
-    #         node_possibilities = node.get_possibilities(self.transmitters)
-
-    #         # Sort them by value in ascending order
-    #         node_possibilities.sort(key=lambda transmitter: transmitter.value)
-
-    #         # Assign the lowest value possibility to the node
-    #         node.value = node_possibilities[0]

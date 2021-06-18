@@ -14,13 +14,9 @@ class Battery():
         del self.houses[house.id]
     
     def capacity_reached(self):
-        cum_output = 0.0
-
-        for house in self.houses.values():
-            cum_output += float(house.max_output)
+        cum_output = self.get_cum_output()
 
         # if capacity has been reached, return true
-        self.capacity - cum_output
         if self.capacity < cum_output:
             return True
         

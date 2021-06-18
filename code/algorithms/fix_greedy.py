@@ -135,17 +135,70 @@ class Fix_greedy:
             cable1.lay_cable()
             fitting_house.cable = cable1
 
+    def replace_random(self, battery):
+
+        # Take a random house out of battery.houses
+        replace_house_id = random.choice(list(battery.houses.keys()))
+        replace_house = self.grid.houses[replace_house_id]
+
+        # Find a battery with space for that house, pick another house otherwise
+        try:
+            replace_to_battery = random.choice(self.find_space(replace_house))
+        except:
+            self.replace_random(battery)
+        
+        # Replace the house
+        battery.remove_house(replace_house)
+        replace_to_battery.add_house(replace_house)
+
+    def houses_dif_capacity(self, battery):
+        """
+        If a house can make the battery capacity valid, add it to the dict.
+        Find the minimum house max output to make the bat cap valid in that dict.
+        """
+        diff_dict = {}
+
+        for house in battery.houses.values():
+            if battery.capacity + house.max_output > 0:
+                diff_dict[house.id] = (abs(battery.capacity) - house.max_output)
+
+        print('min diff dict: ', min(diff_dict))
+        min_dif_house = min(diff_dict, key = diff_dict.get)
+        
+        return min_dif_house
+
+
     def run3(self):
 
-        # while at least 1 battery is full
-            # take the house with the largest max output from the battery with the most cumulative output
-            # disconnect this house from the battery with the most cumulative output
-            # add it to the battery with the lowest cumulative output
+        """
+        Randomly pick a house from a full battery and replace it to a battery with space.
+        If the battery is still full, find the house with max output ~~ capacity_left
+        Place that with a battery with space
+        """
+        # first get the batteries that need to be fixed
+        for battery in self.capacity_full():
+            # Take a random battery out of battery.houses
+            self.replace_random(battery)
 
-            # take the house with the smallest max output from the battery with the least cumulative output
-            # disconnect this house from the battery with the least cumulative output
-            # add it to the battery with the most cumulative output
-        pass
+            # while battery is not yet fixed
+            while battery.capacity_reached() == True:
+                # find min difference max output ~~ capacity_left
+                house_min_dif_id = self.houses_dif_capacity(battery)
+
+                #### Make this a def
+                try:
+                    replace_to_battery = random.choice(self.find_space(house_min_dif_id))
+                except:
+                    ## nested function, if no space could be found for smallest diff cap-max output house, 
+                    # take a random one
+                    self.replace_random(battery)
+                
+                # Replace the house
+                battery.remove_house(house_min_dif_id)
+                replace_to_battery.add_house(house_min_dif_id)
+                
+
+
                 
 
 
