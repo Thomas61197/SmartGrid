@@ -1,3 +1,5 @@
+import numpy as np
+
 class Battery():
     def __init__(self, x, y, capacity, id):
         self.x = x
@@ -33,3 +35,12 @@ class Battery():
             cum_output += float(house.max_output)
 
         return cum_output
+
+    def get_cable_matrix(self):
+        matrix = np.zeros( (50, 50), dtype=int )
+
+        for house in self.houses.values():
+            for x, y in zip(house.cable.x, house.cable.y):
+                    matrix[x][y] = int(1)
+                
+        return matrix
