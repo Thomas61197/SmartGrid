@@ -26,10 +26,23 @@ if __name__ == "__main__":
         best_greedy = pickle.load(handle)
 
     # --------------------------- baseline --------------------------
+<<<<<<< HEAD
+    baseline_costs = list()
+    for i in range(10):
+        baseline1 = baseline.Baseline(grid1)
+        baseline1.run()
+        best_base = copy.deepcopy(baseline1)
+        baseline_costs.append(baseline1.grid.calc_cost())
+        if baseline1.grid.is_valid():
+            print("hurray")
+    
+    visualise_costs.visualise_costs(random_costs, "random")
+=======
     # baseline_costs = list()
     # baseline1 = baseline.Baseline(empty_grid)
     # baseline1.run()
     # best_base = copy.deepcopy(baseline1)
+>>>>>>> c47006592e09197b64e64be08db0201ee0171051
 
     # for i in range(100000):
     #     baseline1 = baseline.Baseline(empty_grid)
@@ -74,6 +87,20 @@ if __name__ == "__main__":
 
     # --------------------------- greedy 2 --------------------------
     # greedy2_costs = list()
+<<<<<<< HEAD
+    # count = 0
+    # for i in range(100):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     # fixed_greedy.run3()
+    #     if greedy2.grid.is_valid():
+    #          print("hurray")
+    #          count += 1
+    #     greedy2_costs.append(greedy2.grid.calc_cost())
+    # print(count)
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+=======
     # greedy2 = greedy.Greedy(empty_grid)
     # greedy2.run_greedy()
     # best_greedy = copy.deepcopy(greedy2)
@@ -103,6 +130,7 @@ if __name__ == "__main__":
 
     # with open(file_name, 'wb') as handle:
     #     pickle.dump(best_greedy, handle)
+>>>>>>> c47006592e09197b64e64be08db0201ee0171051
 
 
     # --------------------------- Hill Climber ---------------------------------

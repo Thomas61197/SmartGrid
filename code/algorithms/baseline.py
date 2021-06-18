@@ -11,13 +11,26 @@ class Baseline:
     def __init__(self, grid):
         self.grid = copy.deepcopy(grid)
 
+    def largest_output_house(self):
+        output_houses = {}
+        for house in self.grid.houses.values():
+            output_houses[house.id] = house.max_output
+
+        output_houses = {k: v for k, v in sorted(output_houses.items(), key=lambda item: item[1], reverse=True)}    
+        
+        return output_houses
+
 
     def run(self):
         random.shuffle(self.grid.houses)
+        output_houses = self.largest_output_house()
 
-        for house in self.grid.houses.values():
+        for house_id in output_houses:
+            house_output = output_houses[house_id]
             random_battery = random.choice(self.grid.batteries)
 
+
+            # print(house_obj.max_output)
             # cum_max_output = 1500 * 5 = 7500
             # cum_cap = 1507 * 5 = 7535
             # keep picking a random battery until you've found one that has enough space
@@ -25,16 +38,16 @@ class Baseline:
             
             # while random_battery.capacity_reached():
             #     random_battery = random.choice(self.grid.batteries)
-            while random_battery.capacity_left() < house.max_output:
+            while random_battery.capacity_left() < house_output:
                 random_battery = random.choice(self.grid.batteries)
                 if random_battery.capacity_left() < 60:
-                    print(random_battery.id, 'is:', random_battery.capacity_left(), 'and', house.max_output)
+                    print(random_battery.id, 'is:', random_battery.capacity_left(), 'and', house_output)
             
-            random_battery.add_house(house)
-            house.battery = random_battery.id
-            cable1 = cable.Cable(house = house, battery = random_battery)
+            random_battery.add_house(self.grid.houses[house_id])
+            self.grid.houses[house_id].battery = random_battery.id
+            cable1 = cable.Cable(house = self.grid.houses[house_id], battery = random_battery)
             cable1.lay_cable()
-            house.add_cable(cable1)
+            self.grid.houses[house_id].add_cable(cable1)
 
             # for battery in self.grid.batteries.values():
             #     print(battery.get_cum_output())
