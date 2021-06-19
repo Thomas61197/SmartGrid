@@ -1,5 +1,5 @@
 from code.classes import grid
-from code.algorithms import hill_climber, hill_climber_fix2, simulated_annealing, fix_greedy, greedy, original_greedy, baseline
+from code.algorithms import hill_climber, hill_climber_fix2, simulated_annealing, cheapest_greedy, fix_greedy, greedy, original_greedy, baseline
 from code.visualisations import visualise_costs, visualise_cables
 
 import json
@@ -10,20 +10,21 @@ import copy
 if __name__ == "__main__":
     district_number = "1"
 
-    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    #battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    #house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
-    empty_grid = grid.Grid(house_file, battery_file)
+    # empty_grid = grid.Grid(house_file, battery_file)
+    grid1 = grid.Grid(house_file, battery_file)
 
     # --------------------------- load pickled grid --------------------------
 
-    file_name = "/home/thomas61197/SmartGrid/data/solutions/best_greedy_100k.pickle"
+    # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_greedy_100k.pickle"
 
-    with open(file_name, 'rb') as handle:
-        best_greedy = pickle.load(handle)
+    # with open(file_name, 'rb') as handle:
+    #     best_greedy = pickle.load(handle)
 
     # --------------------------- baseline --------------------------
     # baseline_costs = list()
@@ -86,6 +87,23 @@ if __name__ == "__main__":
     #     greedy2_costs.append(greedy2.grid.calc_cost())
     # print(count)
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+
+        # --------------------------- greedy cheap --------------------------
+    greedy3_costs = list()
+    count = 0
+    for i in range(100):
+        greedy3 = cheapest_greedy.Greedy_cheapest(grid1)
+        greedy3.run_greedy()
+        # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+        # fixed_greedy.run3()
+        if greedy3.grid.is_valid():
+             print("hurray")
+             count += 1
+        greedy3_costs.append(greedy3.grid.calc_cost())
+    print(count)
+    visualise_costs.visualise_costs(greedy3_costs, "greedy3")
+
+
     # greedy2 = greedy.Greedy(empty_grid)
     # greedy2.run_greedy()
     # best_greedy = copy.deepcopy(greedy2)
@@ -104,35 +122,38 @@ if __name__ == "__main__":
 
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # file_name = f"SmartGrid/data/solutions/best_greedy_100k.pickle"
-    for i in range(20):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-        # fixed_greedy.run3()
-        if greedy2.grid.is_valid():
-             print("hurray")
-        greedy2_costs.append(greedy2.grid.calc_cost())
+    # for i in range(20):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     # fixed_greedy.run3()
+    #     if greedy2.grid.is_valid():
+    #          print("hurray")
+    #     greedy2_costs.append(greedy2.grid.calc_cost())
 
     # with open(file_name, 'wb') as handle:
     #     pickle.dump(best_greedy, handle)
 
+    # --------------------------- visualisation --------------------------
+    visualise_cables.visualise(greedy3.grid)
+
 
     # --------------------------- Hill Climber ---------------------------------
-    best_greedy.grid.print_cum_output_per_battery()
+    # best_greedy.grid.print_cum_output_per_battery()
 
-    print("Setting up Hill Climber...")
-    climber = hill_climber.Hill_climber(best_greedy.grid)
+    # print("Setting up Hill Climber...")
+    # climber = hill_climber.Hill_climber(best_greedy.grid)
 
-    print("Running Hill Climber...")
-    climber.run(100, verbose=True)
+    # print("Running Hill Climber...")
+    # climber.run(100, verbose=True)
 
-    print(f"Value of the configuration after Hill Climber: "
-          f"{climber.grid.calc_cost()}")
+    # print(f"Value of the configuration after Hill Climber: "
+    #       f"{climber.grid.calc_cost()}")
 
-    print("valid?")
-    print(climber.grid.is_valid())
+    # print("valid?")
+    # print(climber.grid.is_valid())
 
-    climber.grid.print_cum_output_per_battery()
+    # climber.grid.print_cum_output_per_battery()
 
     # --------------------------- Hill Climber fix 2 ---------------------------------
 
@@ -232,5 +253,4 @@ if __name__ == "__main__":
     #     json.dump(output, outfile)
 
 
-# --------------------------- visualisation --------------------------
-# visualise_cables.visualise(greedy2.grid)
+
