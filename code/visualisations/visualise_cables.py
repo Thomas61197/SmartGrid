@@ -57,8 +57,7 @@ def visualise_apart(grid, district_number):
         battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
         house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
-        dfhouses = pd.read_csv(house_file)
-        dfhouses.plot(kind='scatter', x='x', y='y')
+        dfhouses = grid.houses.values()
 
 
 
@@ -73,7 +72,7 @@ def visualise_apart(grid, district_number):
 
 
         plt.scatter(battery.x, battery.y, color='orange', label = "Batteries")
-        plt.scatter(dfhouses['x'], dfhouses['y'], color='blue', label = "Houses")
+        plt.scatter(dfhouses.x, dfhouses.y, color='blue', label = "Houses")
 
         if battery.id == 0:
             gridcolor = "blue"
