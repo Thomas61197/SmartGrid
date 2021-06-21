@@ -74,34 +74,36 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- greedy 2 --------------------------
-    # greedy2_costs = list()
-    # count = 0
-    # for i in range(100):
-    #     greedy2 = greedy.Greedy(grid1)
-    #     greedy2.run_greedy()
-    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-    #     # fixed_greedy.run3()
-    #     if greedy2.grid.is_valid():
-    #          print("hurray")
-    #          count += 1
-    #     greedy2_costs.append(greedy2.grid.calc_cost())
-    # print(count)
-    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-
-        # --------------------------- greedy cheap --------------------------
-    greedy3_costs = list()
+    greedy2_costs = list()
     count = 0
     for i in range(100):
-        greedy3 = cheapest_greedy.Greedy_cheapest(grid1)
-        greedy3.run_greedy()
+        greedy2 = greedy.Greedy(grid1)
+        greedy2.run_greedy()
         # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
         # fixed_greedy.run3()
-        if greedy3.grid.is_valid():
-             print("hurray")
+        if greedy2.grid.is_valid():
              count += 1
-        greedy3_costs.append(greedy3.grid.calc_cost())
+             if greedy2.grid.calc_cost() < best_cost:
+                best_grid = copy.deepcopy(greedy2.grid)
+                best_cost = greedy2.grid.calc_cost()
+        greedy2_costs.append(greedy2.grid.calc_cost())
     print(count)
-    visualise_costs.visualise_costs(greedy3_costs, "greedy3")
+    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+
+        # --------------------------- greedy - each house to closest battery--------------------------
+    # greedy3_costs = list()
+    # count = 0
+    # for i in range(100):
+    #     greedy3 = cheapest_greedy.Greedy_cheapest(grid1)
+    #     greedy3.run_greedy()
+    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     # fixed_greedy.run3()
+    #     if greedy3.grid.is_valid():
+    #          print("hurray")
+    #          count += 1
+    #     greedy3_costs.append(greedy3.grid.calc_cost())
+    # print(count)
+    # visualise_costs.visualise_costs(greedy3_costs, "greedy3")
 
 
     # greedy2 = greedy.Greedy(empty_grid)
