@@ -8,13 +8,13 @@ import pickle
 import copy
 
 if __name__ == "__main__":
-    district_number = "2"
+    district_number = "1"
 
-    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    #battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    #house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     # empty_grid = grid.Grid(house_file, battery_file)
     grid1 = grid.Grid(house_file, battery_file)
@@ -22,12 +22,12 @@ if __name__ == "__main__":
     # --------------------------- load pickled grid --------------------------
 
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_greedy_100k.pickle"
-    file_name = "/home/thomas61197/SmartGrid/data/solutions/best_original_greedy.pickle"
+    # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_original_greedy.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/simanneal_cable_to_cable_34.pickle"
 
-    with open(file_name, 'rb') as handle:
+    # with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
-        best_original_greedy = pickle.load(handle)
+        # best_original_greedy = pickle.load(handle)
         # simanneal_cable_to_cable = pickle.load(handle)
 
     # --------------------------- baseline --------------------------
@@ -45,8 +45,8 @@ if __name__ == "__main__":
     #     #     best_base = copy.deepcopy(baseline1)
 
     #     baseline_costs.append(baseline1.grid.calc_cost())
-    #     if baseline1.grid.is_valid():
-    #         print("hurray")
+    #     # if baseline1.grid.is_valid():
+    #     #     print("hurray")
     
     # visualise_costs.visualise_costs(baseline_costs, "random")
 
@@ -78,29 +78,6 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- greedy 2 --------------------------
-<<<<<<< HEAD
-    # greedy2_costs = list()
-    # count = 0
-    # best_cost = 70000
-    # for i in range(100):
-    #     greedy2 = greedy.Greedy(grid1)
-    #     greedy2.run_greedy()
-    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-    #     # fixed_greedy.run3()
-    #     if greedy2.grid.is_valid():
-    #         count += 1
-    #         if greedy2.grid.calc_cost() < best_cost:
-    #             best_grid = copy.deepcopy(greedy2.grid)
-    #             best_cost = greedy2.grid.calc_cost()
-    #             print(best_cost)
-    #     greedy2_costs.append(greedy2.grid.calc_cost())
-    # print(count)
-    # print(best_cost)
-    # for battery in best_grid.batteries.values():
-    #     print('houses: ', battery.houses.values())
-    #     print('cap left:', battery.capacity_left())
-    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-=======
     greedy2_costs = list()
     count = 0
     best_cost = 70000
@@ -123,7 +100,6 @@ if __name__ == "__main__":
     #     for house in battery.houses.values():
     #         print(house.id)
     visualise_costs.visualise_costs(greedy2_costs, "greedy2")
->>>>>>> 78b2eeb5487fea3d428b9853f9905873304fdc18
 
         # --------------------------- greedy - each house to closest battery--------------------------
     # greedy3_costs = list()
@@ -187,11 +163,7 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- visualisation --------------------------
-<<<<<<< HEAD
-    # visualise_cables.visualise_apart(best_grid)
-=======
-    visualise_cables.visualise_apart(best_grid, district_number)
->>>>>>> 78b2eeb5487fea3d428b9853f9905873304fdc18
+    visualise_cables.visualise_apart(baseline1.grid, district_number)
 
 
     # --------------------------- Hill Climber ---------------------------------

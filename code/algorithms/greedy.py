@@ -74,7 +74,7 @@ class Greedy:
                 battery.remove_house(replace_house)
                 # Indicate with rank that we've changed batteries
                 replace_house.rank += 1
-
+                print(replace_to_battery_id)
                 # Add house to new battery INDEX DIFFERENTLY
                 self.grid.batteries[replace_to_battery_id].add_house(replace_house)
 
