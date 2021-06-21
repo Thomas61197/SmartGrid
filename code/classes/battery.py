@@ -1,12 +1,12 @@
 import numpy as np
 
 class Battery():
-    def __init__(self, x, y, capacity, id):
+    def __init__(self, id, x, y, capacity, battery_cost):
+        self.id = id
         self.x = x
         self.y = y
         self.capacity = capacity
-        self.id = id
-
+        self.cost = 5000
         self.houses = {}
 
 
