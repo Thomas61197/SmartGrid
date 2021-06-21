@@ -45,7 +45,7 @@ def visualise(grid):
 
         plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
 
-    plt.legend()
+    # plt.legend()
     plt.show()
     plt.savefig("docs/cable_visualisation.png")
     

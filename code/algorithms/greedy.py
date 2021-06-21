@@ -91,7 +91,7 @@ class Greedy:
         self.battery_distance_list()
 
         # If battery capacity is full, reconnect houses with the shortest distance to the next battery
-        # for i in range(100):
+        # while any(battery.capacity_reached() in self.grid.batteries for battery in self.grid.batteries.values()):
         for i in range(100):
 
             self.replace_connections()
