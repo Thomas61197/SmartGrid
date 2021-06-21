@@ -4,7 +4,7 @@ from code.classes import grid, house, battery, cable
 
 class Greedy_cheapest:
     """
-    Calculats the shortest Manhattan distance from each house to a battery
+    Calculates the shortest Manhattan distance from each house to a battery
     """
     def __init__(self, grid):
         self.grid = copy.deepcopy(grid)

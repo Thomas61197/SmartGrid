@@ -79,31 +79,16 @@ class Grid():
             
     def calc_cost2(self):
         ''' 
-        Calculating the cost of cables without duplicates.
+        Calculating the cost of cables without duplicates per battery network.
         Initialise empty grid represented as a matrix filled with zeros
         Cables are added as ones in matrix at the corresponding coordinates, duplicate cables are not accepted. 
         '''
+        tot = []
+        
+        for battery in self.batteries.values():
+            matrix = battery.get_cable_matrix()
+            cost_per_matrix  = np.count_nonzero(matrix == 1) * battery.houses[0].cable.cost_per_unit + battery.cost
+            tot.append(cost_per_matrix)
 
-        tot = 0
-        matrix = np.zeros( (51, 51), dtype=int )
+        return sum(tot)
 
-        for house in self.houses.values():
-
-            for x, y in zip(house.cable.x, house.cable.y):
-
-                # for some reason, x and y are sometimes lists in object best_greedy
-                if type(x) == list:
-
-                    for x2, y2 in zip(x, y):
-                        matrix[x2][y2] = int(1)  # -1 bc grid coordinates are from 1 up to and including 50
-
-                else:
-                    matrix[x][y] = int(1)
-                
-
-        tot = np.count_nonzero(matrix == 1) * house.cable.cost_per_unit
-                
-        return tot
-
-    # def __str__(self):
-    #     return f"name: {self.name}"

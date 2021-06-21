@@ -1,12 +1,12 @@
 import numpy as np
 
 class Battery():
-    def __init__(self, x, y, capacity, id):
+    def __init__(self, id, x, y, capacity):
+        self.id = id
         self.x = x
         self.y = y
         self.capacity = capacity
-        self.id = id
-
+        self.cost = 5000
         self.houses = {}
 
     def add_house(self, house):
@@ -47,7 +47,7 @@ class Battery():
                 if type(x) == list:
 
                     for x2, y2 in zip(x, y):
-                        matrix[x2][y2] = int(1)  # -1 bc grid coordinates are from 1 up to and including 50
+                        matrix[x2][y2] = int(1)
 
                 else:
                     matrix[x][y] = int(1)

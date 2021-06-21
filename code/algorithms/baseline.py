@@ -40,7 +40,7 @@ class Baseline:
             #     random_battery = random.choice(self.grid.batteries)
             while random_battery.capacity_left() < house_output:
                 random_battery = random.choice(self.grid.batteries)
-                if random_battery.capacity_left() < 60:
+                if all(battery.capacity_left() < house_output for battery in self.grid.batteries.values()):
                     print(random_battery.id, 'is:', random_battery.capacity_left(), 'and', house_output)
             
             random_battery.add_house(self.grid.houses[house_id])
