@@ -76,18 +76,21 @@ if __name__ == "__main__":
     # --------------------------- greedy 2 --------------------------
     greedy2_costs = list()
     count = 0
+    best_cost = 70000
     for i in range(100):
         greedy2 = greedy.Greedy(grid1)
         greedy2.run_greedy()
         # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
         # fixed_greedy.run3()
         if greedy2.grid.is_valid():
-             count += 1
-             if greedy2.grid.calc_cost() < best_cost:
+            count += 1
+            if greedy2.grid.calc_cost() < best_cost:
                 best_grid = copy.deepcopy(greedy2.grid)
                 best_cost = greedy2.grid.calc_cost()
+                print(best_cost)
         greedy2_costs.append(greedy2.grid.calc_cost())
     print(count)
+    print(best_cost)
     visualise_costs.visualise_costs(greedy2_costs, "greedy2")
 
         # --------------------------- greedy - each house to closest battery--------------------------
@@ -137,7 +140,7 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- visualisation --------------------------
-    visualise_cables.visualise(greedy3.grid)
+    visualise_cables.visualise_apart(best_grid)
 
 
     # --------------------------- Hill Climber ---------------------------------
