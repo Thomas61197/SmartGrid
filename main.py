@@ -25,9 +25,9 @@ if __name__ == "__main__":
     file_name = "/home/thomas61197/SmartGrid/data/solutions/best_original_greedy.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/simanneal_cable_to_cable_34.pickle"
 
-    with open(file_name, 'rb') as handle:
+    # with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
-        best_original_greedy = pickle.load(handle)
+        # best_original_greedy = pickle.load(handle)
         # simanneal_cable_to_cable = pickle.load(handle)
 
     # --------------------------- baseline --------------------------
@@ -36,10 +36,10 @@ if __name__ == "__main__":
     # baseline1.run()
     # # best_base = copy.deepcopy(baseline1)
 
-    # for i in range(100):
+    # for i in range(1):
     #     baseline1 = baseline.Baseline(grid1)
     #     baseline1.run()
-    #     # print(f"i: {i}, cost: {best_base.grid.calc_cost()}")
+        # print(f"i: {i}, cost: {best_base.grid.calc_cost()}")
 
     #     # if baseline1.grid.calc_cost() < best_base.grid.calc_cost():
     #     #     best_base = copy.deepcopy(baseline1)
@@ -78,7 +78,6 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- greedy 2 --------------------------
-<<<<<<< HEAD
     # greedy2_costs = list()
     # count = 0
     # best_cost = 70000
@@ -90,40 +89,17 @@ if __name__ == "__main__":
     #     if greedy2.grid.is_valid():
     #         count += 1
     #         if greedy2.grid.calc_cost() < best_cost:
-    #             best_grid = copy.deepcopy(greedy2.grid)
+    #             best_grid = greedy2.grid
     #             best_cost = greedy2.grid.calc_cost()
     #             print(best_cost)
     #     greedy2_costs.append(greedy2.grid.calc_cost())
     # print(count)
     # print(best_cost)
     # for battery in best_grid.batteries.values():
-    #     print('houses: ', battery.houses.values())
-    #     print('cap left:', battery.capacity_left())
-    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-=======
-    greedy2_costs = list()
-    count = 0
-    best_cost = 70000
-    for i in range(100):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-        # fixed_greedy.run3()
-        if greedy2.grid.is_valid():
-            count += 1
-            if greedy2.grid.calc_cost() < best_cost:
-                best_grid = greedy2.grid
-                best_cost = greedy2.grid.calc_cost()
-                print(best_cost)
-        greedy2_costs.append(greedy2.grid.calc_cost())
-    print(count)
-    print(best_cost)
-    # for battery in best_grid.batteries.values():
     #     print('houses:')
     #     for house in battery.houses.values():
     #         print(house.id)
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
->>>>>>> 78b2eeb5487fea3d428b9853f9905873304fdc18
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
 
         # --------------------------- greedy - each house to closest battery--------------------------
     # greedy3_costs = list()
@@ -140,7 +116,7 @@ if __name__ == "__main__":
     # print(count)
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
 
-        # --------------------------- greedy cheap --------------------------
+    # --------------------------- greedy cheap --------------------------
     # greedy3_costs = list()
     # count = 0
     # for i in range(100):
@@ -187,13 +163,7 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- visualisation --------------------------
-<<<<<<< HEAD
-    # visualise_cables.visualise_apart(best_grid)
-=======
     visualise_cables.visualise_apart(best_grid, district_number)
->>>>>>> 78b2eeb5487fea3d428b9853f9905873304fdc18
-
-
     # --------------------------- Hill Climber ---------------------------------
     # best_greedy.grid.print_cum_output_per_battery()
 

@@ -7,17 +7,12 @@ from code.classes import grid, house, battery, cable
 def visualise(grid, district_number): 
 
     # load data files
-<<<<<<< HEAD
     district_number = '1'
     # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
     battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
     # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
     house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-=======
     district_number = district_number
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
->>>>>>> 78b2eeb5487fea3d428b9853f9905873304fdc18
 
     dfhouses = pd.read_csv(house_file)
     dfhouses.plot(kind='scatter', x='x', y='y')
@@ -98,14 +93,9 @@ def visualise_apart(grid, district_number):
             gridcolor = "gray"
 
         # plot cables 
-<<<<<<< HEAD
-        for house in battery.houses.values():
-            plt.plot(house.cable.x, house.cable.y, color="red", linestyle="-")
-=======
         for house in battery.houses.values():           
 
             plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
->>>>>>> 78b2eeb5487fea3d428b9853f9905873304fdc18
 
         # plt.legend()
         plt.show()

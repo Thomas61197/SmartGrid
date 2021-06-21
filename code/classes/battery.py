@@ -17,6 +17,8 @@ class Battery():
     
     def capacity_reached(self):
         cum_output = self.get_cum_output()
+        print(f'cum output: {cum_output}')
+        print(f"capacity: {self.capacity}")
 
         # if capacity has been reached, return true
         if self.capacity < cum_output:
