@@ -9,6 +9,7 @@ class Battery():
 
         self.houses = {}
 
+
     def add_house(self, house):
         self.houses[house.id] = house
 
