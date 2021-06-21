@@ -87,12 +87,16 @@ if __name__ == "__main__":
             if greedy2.grid.calc_cost() < best_cost:
                 best_grid = copy.deepcopy(greedy2.grid)
                 best_cost = greedy2.grid.calc_cost()
+                print(best_cost)
         greedy2_costs.append(greedy2.grid.calc_cost())
     print(count)
     print(best_cost)
+<<<<<<< HEAD
     for battery in best_grid.batteries.values():
         print('houses: ', battery.houses.values())
         print('cap left:', battery.capacity_left())
+=======
+>>>>>>> 9d7b5d7c40669497af30828ee06892a6559960e4
     visualise_costs.visualise_costs(greedy2_costs, "greedy2")
 
         # --------------------------- greedy - each house to closest battery--------------------------
