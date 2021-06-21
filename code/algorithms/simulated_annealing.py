@@ -12,9 +12,9 @@ class Simulated_annealing(Hill_climber):
     Most of the functions are similar to those of the HillClimber class, which is why
     we use that as a parent class.
     """
-    def __init__(self, empty_grid, temperature=1, cooling_scheme="linear", alpha=0.99, mutate_house_number=20):
+    def __init__(self, empty_grid, temperature=1, cooling_scheme="linear", alpha=0.99, mutate_house_number=20, cable_to_cable = True):
         # Use the init of the Hillclimber class
-        super().__init__(empty_grid, mutate_house_number)
+        super().__init__(empty_grid, mutate_house_number, cable_to_cable)
 
         # Starting temperature and current temperature
         self.T0 = temperature
@@ -47,7 +47,12 @@ class Simulated_annealing(Hill_climber):
         Also sometimes accepts solutions that are worse, depending on the current
         temperature.
         """
-        new_cost = new_grid.calc_cost()
+
+        if self.cable_to_cable:
+            new_cost = new_grid.calc_cost2()
+        else:
+            new_cost = new_grid.calc_cost()
+
         old_cost = self.cost
 
         # Calculate the probability of accepting this new graph

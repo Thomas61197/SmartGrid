@@ -9,7 +9,6 @@ class Battery():
         self.cost = 5000
         self.houses = {}
 
-
     def add_house(self, house):
         self.houses[house.id] = house
 
@@ -38,10 +37,19 @@ class Battery():
         return cum_output
 
     def get_cable_matrix(self):
-        matrix = np.zeros( (50, 50), dtype=int )
+        matrix = np.zeros( (51, 51), dtype=int )
 
         for house in self.houses.values():
+
             for x, y in zip(house.cable.x, house.cable.y):
+                
+                # for some reason, x and y are sometimes lists in object best_greedy
+                if type(x) == list:
+
+                    for x2, y2 in zip(x, y):
+                        matrix[x2][y2] = int(1)
+
+                else:
                     matrix[x][y] = int(1)
                 
         return matrix

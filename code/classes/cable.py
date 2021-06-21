@@ -62,7 +62,7 @@ class Cable():
         self.x = x
         self.y = y
 
-    def lay_cable2(self):
+    def lay_cable_to_closest_cable(self):
         """
         cables are now allowed to be attached to eachother
         """
@@ -72,8 +72,11 @@ class Cable():
 
         # step 1: find the closest point
         # first get the distance between the ouse and the battery
+        # print(f"house x: {self.house.x}")
+        # print(f"house y: {self.house.y}")
         min_distance = self.length
         connect_to = [self.battery.x, self.battery.y]
+        # print(f"connect to battery: {connect_to}")
         cable_matrix = self.battery.get_cable_matrix()
 
         for y in range(len(cable_matrix[0][:])):
@@ -85,14 +88,60 @@ class Cable():
 
                     if distance < min_distance:
                         min_distance = distance
-                        connect_to = [x, y]
+                        connect_to = [x+1, y+1]  # +1 bc grid coordinates are from 1 up to and including 50
+
+        # print(f"connect to battery or closest cable: {connect_to}")
 
         # step 2: lay cable to closest point
-        first_part_of_cable_x, first_part_of_cable_y = self.lay_cable3(self, connect_to[0], connect_to[1])
+        # first_part_of_cable_x, first_part_of_cable_y = self.get_cable_coords(connect_to[0], connect_to[1])
+        self.x, self.y = self.get_cable_coords(connect_to[0], connect_to[1])
+        # print(f"first part of cable x: {self.x}")
+        # print(f"first part of cable y: {self.y}")
 
         # now append from closest point to battery
+        second_part_of_cable_x = list()
+        second_part_of_cable_y = list()
 
-    def lay_cable3(self, connect_to_x, connect_to_y):
+        # find house with a cable which contains the coordinates of the closest point
+        for house in self.battery.houses.values():
+            start_appending = False
+
+            # loop through the cable coordinates until you find the coordinates of the closest point
+            # keep looping through the rest of the cable while adding the rest of the cable coordinates to second_part_of_cable
+            for x, y in zip(house.cable.x, house.cable.y):
+
+                if x == connect_to[0] and y == connect_to[1]:
+                    # house_of_interest = house
+                    start_appending = True
+                    # print(f"start appending")
+
+                if start_appending:
+                    second_part_of_cable_x.append(x)
+                    second_part_of_cable_y.append(y)
+
+            if start_appending:
+                break
+
+        second_part_of_cable_x = second_part_of_cable_x[1:]
+        second_part_of_cable_y = second_part_of_cable_y[1:]
+        # print(f"second part of cable x: {second_part_of_cable_x}")
+        # print(f"second part of cable y: {second_part_of_cable_y}")
+
+        for x, y in zip(second_part_of_cable_x, second_part_of_cable_y):
+            self.x.append(x)
+            self.y.append(y)
+
+        # final_cable_x = list()
+        # final_cable_y = list()
+        # final_cable_x.append(first_part_of_cable_x)
+        # final_cable_y.append(first_part_of_cable_y)
+        # final_cable_x.append(second_part_of_cable_x)
+        # final_cable_y.append(second_part_of_cable_y)
+
+        # self.x = final_cable_x
+        # self.y = final_cable_y
+
+    def get_cable_coords(self, connect_to_x, connect_to_y):
         # determine cable location
         x = list()
         y = list()
@@ -178,10 +227,9 @@ class Cable():
                     x.append(cable_head_x)
                     y.append(cable_head_y)
 
-
         return x, y
 
-    def lay_cable4(self):
+    def lay_cable_to_random_house(self):
         # from all houses connected to that battery and the battery itself
         # choose a random one
         to_pick_from = list()

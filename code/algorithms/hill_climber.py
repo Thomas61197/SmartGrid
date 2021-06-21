@@ -1,6 +1,7 @@
 import copy
 import random
 import math
+
 from code.classes import cable
 from code.algorithms import original_greedy
 
@@ -9,10 +10,11 @@ class Hill_climber:
     The HillClimber class that changes a random node in the graph to a random valid value. Each improvement or
     equivalent solution is kept for the next iteration.
     """
-    def __init__(self, grid, mutate_house_number = 1):
+    def __init__(self, grid, mutate_house_number = 1, cable_to_cable = True):
         self.grid = grid
         self.mutate_house_number0 = mutate_house_number
         self.mutate_house_number = mutate_house_number
+        self.cable_to_cable = cable_to_cable
 
     def random_reconfigure_house(self, house, batteries):
         """
@@ -25,7 +27,12 @@ class Hill_climber:
         new_battery = random.choice(batteries)
         new_battery.add_house(house)
         cable1 = cable.Cable(house = house, battery = new_battery)
-        cable1.lay_cable()
+
+        if self.cable_to_cable:
+            cable1.lay_cable_to_closest_cable()
+        else:
+            cable1.lay_cable()
+
         house.add_cable(cable1)
 
     def mutate_single_house(self, new_grid):
@@ -53,7 +60,11 @@ class Hill_climber:
         """
         Checks and accepts better solutions than the current solution.
         """
-        new_cost = new_grid.calc_cost()
+        if self.cable_to_cable:
+            new_cost = new_grid.calc_cost2()
+        else:
+            new_cost = new_grid.calc_cost()
+
         old_cost = self.cost
 
         # We are looking for maps that cost less!
@@ -66,7 +77,11 @@ class Hill_climber:
         Runs the hillclimber algorithm for a specific amount of iterations.
         Takes a filled in grid as starting grid
         """
-        self.cost = self.grid.calc_cost()
+        if self.cable_to_cable:
+            self.cost = self.grid.calc_cost2()
+        else:
+            self.cost = self.grid.calc_cost()
+            
         self.iterations = iterations
 
         for iteration in range(iterations):

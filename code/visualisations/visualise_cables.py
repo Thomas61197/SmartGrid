@@ -32,21 +32,24 @@ def visualise(grid, district_number):
 
     # plot cables 
     for house in grid.houses.values():
-        if house.battery == 0:
+        if house.cable.battery.id == 0:
             gridcolor = "blue"
-        elif house.battery == 1: 
+        elif house.cable.battery.id == 1: 
             gridcolor = "red"
-        elif house.battery == 2: 
+        elif house.cable.battery.id == 2: 
             gridcolor = "orange"
-        elif house.battery == 3: 
+        elif house.cable.battery.id == 3: 
             gridcolor = "black"
-        elif house.battery == 4: 
+        elif house.cable.battery.id == 4: 
             gridcolor = "gray"
 
         plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
 
     # plt.legend()
     plt.show()
+    grid_name = "sim_anneal"
+    plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")
+    
     plt.savefig("docs/cable_visualisation.png")
 
 def visualise_apart(grid, district_number):
@@ -86,8 +89,7 @@ def visualise_apart(grid, district_number):
             gridcolor = "gray"
 
         # plot cables 
-        for house in battery.houses.values():           
-
+        for house in battery.houses.values():
             plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
 
         # plt.legend()

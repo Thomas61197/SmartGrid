@@ -10,11 +10,11 @@ import copy
 if __name__ == "__main__":
     district_number = "2"
 
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    #battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    #house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     # empty_grid = grid.Grid(house_file, battery_file)
     grid1 = grid.Grid(house_file, battery_file)
@@ -22,9 +22,13 @@ if __name__ == "__main__":
     # --------------------------- load pickled grid --------------------------
 
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_greedy_100k.pickle"
+    file_name = "/home/thomas61197/SmartGrid/data/solutions/best_original_greedy.pickle"
+    # file_name = "/home/thomas61197/SmartGrid/data/solutions/simanneal_cable_to_cable_34.pickle"
 
-    # with open(file_name, 'rb') as handle:
-    #     best_greedy = pickle.load(handle)
+    with open(file_name, 'rb') as handle:
+        # best_greedy = pickle.load(handle)
+        best_original_greedy = pickle.load(handle)
+        # simanneal_cable_to_cable = pickle.load(handle)
 
     # --------------------------- baseline --------------------------
     # baseline_costs = list()
@@ -74,6 +78,29 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- greedy 2 --------------------------
+<<<<<<< HEAD
+    # greedy2_costs = list()
+    # count = 0
+    # best_cost = 70000
+    # for i in range(100):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     # fixed_greedy.run3()
+    #     if greedy2.grid.is_valid():
+    #         count += 1
+    #         if greedy2.grid.calc_cost() < best_cost:
+    #             best_grid = copy.deepcopy(greedy2.grid)
+    #             best_cost = greedy2.grid.calc_cost()
+    #             print(best_cost)
+    #     greedy2_costs.append(greedy2.grid.calc_cost())
+    # print(count)
+    # print(best_cost)
+    # for battery in best_grid.batteries.values():
+    #     print('houses: ', battery.houses.values())
+    #     print('cap left:', battery.capacity_left())
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+=======
     greedy2_costs = list()
     count = 0
     best_cost = 70000
@@ -96,8 +123,24 @@ if __name__ == "__main__":
     #     for house in battery.houses.values():
     #         print(house.id)
     visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+>>>>>>> 78b2eeb5487fea3d428b9853f9905873304fdc18
 
         # --------------------------- greedy - each house to closest battery--------------------------
+    # greedy3_costs = list()
+    # count = 0
+    # for i in range(100):
+    #     greedy3 = cheapest_greedy.Greedy_cheapest(grid1)
+    #     greedy3.run_greedy()
+    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     # fixed_greedy.run3()
+    #     if greedy3.grid.is_valid():
+    #          print("hurray")
+    #          count += 1
+    #     greedy3_costs.append(greedy3.grid.calc_cost())
+    # print(count)
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+
+        # --------------------------- greedy cheap --------------------------
     # greedy3_costs = list()
     # count = 0
     # for i in range(100):
@@ -144,7 +187,11 @@ if __name__ == "__main__":
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- visualisation --------------------------
+<<<<<<< HEAD
+    # visualise_cables.visualise_apart(best_grid)
+=======
     visualise_cables.visualise_apart(best_grid, district_number)
+>>>>>>> 78b2eeb5487fea3d428b9853f9905873304fdc18
 
 
     # --------------------------- Hill Climber ---------------------------------
@@ -192,18 +239,18 @@ if __name__ == "__main__":
     # whereas in the other one the mutate_house_number is static.
 
     # print("Setting up Simulated Annealing...")
-    # simanneal = simulated_annealing.Simulated_annealing(best_greedy.grid, temperature=(50+50)*9, mutate_house_number = 3, alpha = 0.994
-    # , cooling_scheme="exponential")
+    # simanneal = simulated_annealing.Simulated_annealing(best_original_greedy.grid, temperature=(50+50)*9, mutate_house_number = 3
+    # , alpha = 0.999, cooling_scheme="exponential", cable_to_cable = True)
     
     # print("Running Simulated Annealing...")
-    # simanneal.run(1000, verbose=True, decreasing_mutate_house_number = False)
+    # simanneal.run(10000, verbose=True, decreasing_mutate_house_number = False)
     
     # print(f"Value of the configuration after Simulated Annealing: "
-    #       f"{simanneal.grid.calc_cost()}")
+    #       f"{simanneal.grid.calc_cost2()}")
 
-    # simanneal_id = 32
+    # simanneal_id = 34
 
-    # file_name = f"SmartGrid/data/solutions/simanneal_{simanneal_id}.pickle"
+    # file_name = f"SmartGrid/data/solutions/simanneal_cable_to_cable_{simanneal_id}.pickle"
 
     # IMPORTANT: save simanneal object (if lots of iterations)!
     # with open(file_name, 'wb') as handle:
@@ -228,6 +275,10 @@ if __name__ == "__main__":
     # df_experiments_new.set_index('object_id')
     # print(df_experiments_new)
     # df_experiments_new.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", header = True, index = False)
+
+    # --------------------------- visualisation --------------------------
+    # visualise_cables.visualise(greedy3.grid)
+    # visualise_cables.visualise(simanneal.grid)
 
     # --------------------------- compare --------------------------
 

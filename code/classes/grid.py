@@ -83,20 +83,12 @@ class Grid():
         Initialise empty grid represented as a matrix filled with zeros
         Cables are added as ones in matrix at the corresponding coordinates, duplicate cables are not accepted. 
         '''
-
         tot = []
         
         for battery in self.batteries.values():
-            matrix = np.zeros( (50, 50), dtype=int )
-
-        
-            for house in battery.houses.values(): 
-                for x, y in zip(house.cable.x, house.cable.y):
-                        matrix[x][y] = int(1)
-
-            
-            cost_per_matrix  = np.count_nonzero(matrix == 1) * house.cable.cost_per_unit + battery.cost
-
+            matrix = battery.get_cable_matrix()
+            cost_per_matrix  = np.count_nonzero(matrix == 1) * battery.houses[0].cable.cost_per_unit + battery.cost
             tot.append(cost_per_matrix)
+
         return sum(tot)
 
