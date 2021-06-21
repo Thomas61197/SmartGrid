@@ -85,12 +85,25 @@ class Grid():
         '''
 
         tot = 0
-        matrix = np.zeros( (50, 50), dtype=int )
+        matrix = np.zeros( (51, 51), dtype=int )
 
         for house in self.houses.values():
+
             for x, y in zip(house.cable.x, house.cable.y):
+
+                # for some reason, x and y are sometimes lists in object best_greedy
+                if type(x) == list:
+
+                    for x2, y2 in zip(x, y):
+                        matrix[x2][y2] = int(1)  # -1 bc grid coordinates are from 1 up to and including 50
+
+                else:
                     matrix[x][y] = int(1)
+                
 
         tot = np.count_nonzero(matrix == 1) * house.cable.cost_per_unit
                 
         return tot
+
+    # def __str__(self):
+    #     return f"name: {self.name}"

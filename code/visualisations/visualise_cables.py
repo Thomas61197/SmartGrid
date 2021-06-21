@@ -8,8 +8,10 @@ def visualise(grid):
 
     # load data files
     district_number = '1'
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     dfhouses = pd.read_csv(house_file)
     dfhouses.plot(kind='scatter', x='x', y='y')
@@ -32,20 +34,21 @@ def visualise(grid):
 
     # plot cables 
     for house in grid.houses.values():
-        if house.battery == 0:
+        if house.cable.battery.id == 0:
             gridcolor = "blue"
-        elif house.battery == 1: 
+        elif house.cable.battery.id == 1: 
             gridcolor = "red"
-        elif house.battery == 2: 
+        elif house.cable.battery.id == 2: 
             gridcolor = "orange"
-        elif house.battery == 3: 
+        elif house.cable.battery.id == 3: 
             gridcolor = "black"
-        elif house.battery == 4: 
+        elif house.cable.battery.id == 4: 
             gridcolor = "gray"
 
         plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
 
     # plt.legend()
     plt.show()
-    plt.savefig("docs/cable_visualisation.png")
+    grid_name = "sim_anneal"
+    plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")
     
