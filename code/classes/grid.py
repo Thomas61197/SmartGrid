@@ -86,16 +86,16 @@ class Grid():
 
         tot = []
         
-        for battery in self.batteries.values(): ###
+        for battery in self.batteries.values():
             matrix = np.zeros( (50, 50), dtype=int )
 
         
-            for house in battery.houses.values(): # voor die specefieke batterij
+            for house in battery.houses.values(): 
                 for x, y in zip(house.cable.x, house.cable.y):
                         matrix[x][y] = int(1)
 
-            # for matrix in matrices
-            cost_per_matrix  = np.count_nonzero(matrix == 1) * house.cable.cost_per_unit
+            
+            cost_per_matrix  = np.count_nonzero(matrix == 1) * house.cable.cost_per_unit + battery.cost
 
             tot.append(cost_per_matrix)
         return sum(tot)
