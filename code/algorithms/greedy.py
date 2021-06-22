@@ -46,34 +46,36 @@ class Greedy:
             while battery.capacity_reached():
 
                 # Make a dict of distances from houses to their next closest battery
-                next_closest_battery = {}
+                next_closest_battery_dict = {}
                 for house in battery.houses:
                     house_obj = self.grid.houses[house]
 
                     # Pick the battery that is second closest after the one we're at now
                     if house_obj.rank < 4:
                         next_closest = house_obj.battery_distances[(house_obj.rank + 1)]
-                        next_closest_battery[house] = next_closest
+                        next_closest_battery_dict[house] = next_closest
                     # Go back to the beginning of the battery distance list
                     else:
                         house_obj.rank = 0
                         next_closest = house_obj.battery_distances[(house_obj.rank)]
-                        next_closest_battery[house] = next_closest
+                        next_closest_battery_dict[house] = next_closest
 
 
                 # Sort that dict
-                next_closest_battery = sorted(next_closest_battery.items(), key=lambda x: x[1])
-                
-                # Pick the one with the shortest distance to reconnect
-                replace_house_id = next_closest_battery[0][0]
-                replace_to_battery_id = next_closest_battery[0][1][0]
+                next_closest_battery_dict = sorted(next_closest_battery_dict.items(), key=lambda x: x[1])              
+                # Indexing -> 1. First place in sorted dict 2. Want second item, tuple with battery id + distance to house
+                # 3. We want the battery id
+                replace_to_battery_id = next_closest_battery_dict[0][1][0]
+
+                # Pick the house with the shortest distance to reconnect
+                replace_house_id = next_closest_battery_dict[0][0]
 
                 replace_house = self.grid.houses[replace_house_id]
                 # Remove found house from current battery
                 battery.remove_house(replace_house)
                 # Indicate with rank that we've changed batteries
                 replace_house.rank += 1
-                # Add house to new battery INDEX DIFFERENTLY
+                # Add house to new battery 
                 self.grid.batteries[replace_to_battery_id].add_house(replace_house)
 
 
@@ -95,21 +97,11 @@ class Greedy:
         # Start laying cables
         for battery in self.grid.batteries.values():
             for house in battery.houses.values():
-        # for house in self.grid.houses.values():
-        #     closest_battery_id = house.battery_distances[house.rank][0]
-        #     closest_battery = self.grid.batteries[closest_battery_id]
-                # house.battery = closest_battery_id
                 house.battery = battery
 
                 cable1 = cable.Cable(house = house, battery = battery)
                 cable1.lay_cable()
                 house.add_cable(cable1)
-            
-        # for battery in self.grid.batteries.values():
-        #         print(battery.get_cum_output())
-        # print('Output to batteries:')
-        check_capacity = any(battery.capacity_reached() in self.grid.batteries for battery in self.grid.batteries.values())
-        if check_capacity == False:
-            print('Good')
+
 
 

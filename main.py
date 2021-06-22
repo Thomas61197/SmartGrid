@@ -90,7 +90,7 @@ if __name__ == "__main__":
         best_cost = 70000
 
 
-        for i in range(1000):
+        for i in range(100):
             greedy2 = greedy.Greedy(empty_grid)
             greedy2.run_greedy()
             
@@ -100,15 +100,15 @@ if __name__ == "__main__":
                     best_cost = greedy2.grid.calc_cost2()
                     best_greedy2_1000_ctc = greedy2
             greedy2_costs.append(greedy2.grid.calc_cost2())
-            print(f'iteration {i}', greedy2.grid.calc_cost2())
+            # print(f'iteration {i}', greedy2.grid.calc_cost2())
 
         print('Price cheapest valid Greedy:', best_cost)
-        visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+        visualise_costs.histogram_costs(greedy2_costs, "greedy2", nbins = 50)
 
-        file_name = f"data/solutions/best_greedy2.pickle"
+        # file_name = f"data/solutions/best_greedy2.pickle"
 
-        with open(file_name, 'wb') as handle:
-            pickle.dump(best_greedy2_1000_ctc, handle)
+        # with open(file_name, 'wb') as handle:
+        #     pickle.dump(best_greedy2_1000_ctc, handle)
 
     # --------------------------- visualisation --------------------------
     # visualise_cables.visualise_apart(best_grid, district_number)
@@ -129,29 +129,6 @@ if __name__ == "__main__":
             greedy3_costs.append(greedy3.grid.calc_cost())
 
         visualise_costs.visualise_costs(greedy3_costs, "greedy3")
-
-
-    # greedy2 = greedy.Greedy(empty_grid)
-    # greedy2.run_greedy()
-    # best_greedy = copy.deepcopy(greedy2)
-    
-    # for i in range(100000):
-    #     greedy2 = greedy.Greedy(empty_grid)
-    #     greedy2.run_greedy()
-    #     print(f"i: {i}, cost: {best_greedy.grid.calc_cost()}")
-
-    #     if greedy2.grid.calc_cost() < best_greedy.grid.calc_cost():
-    #         best_greedy = copy.deepcopy(greedy2)
-
-        # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-        # fixed_greedy.run2()
-        # greedy2_costs.append(greedy2.grid.calc_cost())
-
-    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-    # file_name = f"SmartGrid/data/solutions/best_greedy_100k.pickle"
-
-    # with open(file_name, 'wb') as handle:
-    #     pickle.dump(best_greedy, handle)
     
     # --------------------------- Simulated Annealing --------------------------
     # Simulated annealing 2 is different from simulated annealing 1 in that this one decreases the mutate_house_number linearly with 
@@ -197,32 +174,32 @@ if __name__ == "__main__":
 
     # --------------------------- Hill Climber (fix) ---------------------------------
 
-    print(best_greedy2_1000_ctc.grid.calc_cost())
+    # print(best_greedy2_1000_ctc.grid.calc_cost())
     
-    # print("Setting up Hill Climber...")
-    climber = hill_climber.Hill_climber(best_greedy2_1000_ctc.grid, fix = True, mutate_house_number=10)
+    # # print("Setting up Hill Climber...")
+    # climber = hill_climber.Hill_climber(best_greedy2_1000_ctc.grid, fix = True, mutate_house_number=10)
 
-    # print("Running Hill Climber...")
-    climber.run(1000, verbose=True)
+    # # print("Running Hill Climber...")
+    # climber.run(1000, verbose=True)
 
-    print(f"Value of the configuration after Hill Climber: "
-          f"{climber.grid.calc_cost2()}")
+    # print(f"Value of the configuration after Hill Climber: "
+    #       f"{climber.grid.calc_cost2()}")
 
-    print("valid?")
-    print(climber.grid.is_valid())
+    # print("valid?")
+    # print(climber.grid.is_valid())
 
-    if climber.grid.is_valid():
-        climber_id = 6
-        file_name = f"SmartGrid/data/solutions/climber_{climber_id}_best_greedy2_1000_c2c.pickle"
+    # if climber.grid.is_valid():
+    #     climber_id = 6
+    #     file_name = f"data/solutions/climber_{climber_id}_best_greedy2_1000_c2c.pickle"
 
-        with open(file_name, 'wb') as handle:
-            pickle.dump(climber, handle)
+    #     with open(file_name, 'wb') as handle:
+    #         pickle.dump(climber, handle)
 
 
     # --------------------------- visualisation --------------------------
-    # visualise_cables.visualise(greedy3.grid)
+    # visualise_cables.visualise(greedy3.grid, district_number)
     # visualise_cables.visualise(simanneal.grid, district_number)
-    visualise_cables.visualise(climber.grid, district_number)
+    # visualise_cables.visualise(climber.grid, district_number)
     # visualise_cables.visualise(greedy1.grid, district_number)
 
     # --------------------------- compare --------------------------
