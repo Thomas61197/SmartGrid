@@ -11,35 +11,35 @@ class Grid():
         self.batteries = self.load_batteries(battery_file)
 
     def load_houses(self, house_file):
-            """
-            Load the position of the houses and their max output.
-            """
+        """
+        Load the position of the houses and their max output.
+        """
 
-            houses = {}
+        houses = {}
 
-            with open(house_file, 'r') as in_file:
-                reader = csv.DictReader(in_file)
+        with open(house_file, 'r') as in_file:
+            reader = csv.DictReader(in_file)
 
-                for count, row in enumerate(reader):
-                    # Create house object
-                    houses[count] = House(int(row['x']), int(row['y']), float(row['maxoutput']), count)
+            for count, row in enumerate(reader):
+                # Create house object
+                houses[count] = House(x = int(row['x']), y = int(row['y']), max_output = float(row['maxoutput']), id = count)
 
-            return houses
+        return houses
 
     def load_batteries(self, battery_file):
-            """
-            Load the positions of all the batteries.
-            """
-            batteries = {}
+        """
+        Load the positions of all the batteries.
+        """
+        batteries = {}
 
-            with open(battery_file, 'r') as in_file:
-                reader = csv.DictReader(in_file)
+        with open(battery_file, 'r') as in_file:
+            reader = csv.DictReader(in_file)
 
-                for count, row in enumerate(reader):
-                    coordinates = row['positie'].split(',')
-                    batteries[count] = Battery(x = int(coordinates[0]), y = int(coordinates[1]), capacity = float(row['capaciteit']), id = count)
+            for count, row in enumerate(reader):
+                coordinates = row['positie'].split(',')
+                batteries[count] = Battery(x = int(coordinates[0]), y = int(coordinates[1]), capacity = float(row['capaciteit']), id = count)
 
-            return batteries
+        return batteries
 
     def calc_cost(self):
         tot = 0
@@ -83,11 +83,16 @@ class Grid():
         Initialise empty grid represented as a matrix filled with zeros
         Cables are added as ones in matrix at the corresponding coordinates, duplicate cables are not accepted. 
         '''
+        for house in self.houses.values():
+            house = house
+            break
+
         tot = []
         
         for battery in self.batteries.values():
             matrix = battery.get_cable_matrix()
-            cost_per_matrix  = np.count_nonzero(matrix == 1) * battery.houses[0].cable.cost_per_unit + battery.cost
+            # cost_per_matrix  = np.count_nonzero(matrix == 1) * battery.houses[house.id].cable.cost_per_unit + battery.cost
+            cost_per_matrix  = np.count_nonzero(matrix == 1) * 9 + battery.cost
             tot.append(cost_per_matrix)
 
         return sum(tot)

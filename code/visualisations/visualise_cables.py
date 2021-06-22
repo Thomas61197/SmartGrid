@@ -4,21 +4,13 @@ import matplotlib.pyplot as plt
 from code.classes import grid, house, battery, cable
 
 
-def visualise(grid, district_number): 
+def visualise(grid, district_number):
 
     # load data files
-<<<<<<< HEAD
-    district_number = '1'
     # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
     battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
     # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
     house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    district_number = district_number
-=======
-    district_number = district_number
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
->>>>>>> 3fc4e1d32010cdf774f9378de1d02934eb64bcd4
 
     dfhouses = pd.read_csv(house_file)
     dfhouses.plot(kind='scatter', x='x', y='y')
@@ -58,20 +50,13 @@ def visualise(grid, district_number):
     plt.show()
     grid_name = "sim_anneal"
     plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")
-    
-    plt.savefig("docs/cable_visualisation.png")
+    # plt.savefig("docs/cable_visualisation.png")
 
 def visualise_apart(grid, district_number):
         # plot battries and houses
     for battery in grid.batteries.values():
         # load data files
-        district_number = district_number
-        battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-        house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-
         dfhouses = grid.houses.values()
-
-
 
         # clear the figure
         plt.clf()

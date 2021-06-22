@@ -17,8 +17,6 @@ class Battery():
     
     def capacity_reached(self):
         cum_output = self.get_cum_output()
-        print(f'cum output: {cum_output}')
-        print(f"capacity: {self.capacity}")
 
         # if capacity has been reached, return true
         if self.capacity < cum_output:
@@ -43,15 +41,18 @@ class Battery():
 
         for house in self.houses.values():
 
-            for x, y in zip(house.cable.x, house.cable.y):
-                
-                # for some reason, x and y are sometimes lists in object best_greedy
-                if type(x) == list:
+            if not house.cable is None:
 
-                    for x2, y2 in zip(x, y):
-                        matrix[x2][y2] = int(1)
+                if not house.cable.x is None:
 
-                else:
-                    matrix[x][y] = int(1)
+                    for x, y in zip(house.cable.x, house.cable.y):
+                        
+                        # for some reason, x and y are sometimes lists in object best_greedy
+                        if type(x) == list:
+
+                            for x2, y2 in zip(x, y):
+                                matrix[x2][y2] = int(1)
+                        else:
+                            matrix[x][y] = int(1)
                 
         return matrix
