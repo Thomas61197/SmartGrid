@@ -6,8 +6,9 @@ class Greedy:
     """
     Calculats the shortest Manhattan distance from each house to a battery
     """
-    def __init__(self, grid):
+    def __init__(self, grid, cable_to_cable = True):
         self.grid = copy.deepcopy(grid)
+        self.cable_to_cable = cable_to_cable
 
     def run(self):
         """
@@ -38,10 +39,10 @@ class Greedy:
             closest_battery.add_house(house)
             house.battery = closest_battery.id
             cable1 = cable.Cable(house = house, battery = closest_battery)
-            cable1.lay_cable()
+
+            if self.cable_to_cable:
+                cable1.lay_cable_to_closest_cable()
+            else:
+                cable1.lay_cable()
+
             house.add_cable(cable1)
-            # else:
-            #     break
-        # for battery in self.grid.batteries.values():
-        #     print(battery.get_cum_output())
-        # print('Output to batteries:')

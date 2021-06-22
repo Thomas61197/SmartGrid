@@ -1,5 +1,5 @@
 from code.classes import grid
-from code.algorithms import hill_climber, hill_climber_fix2, simulated_annealing, cheapest_greedy, fix_greedy, greedy, original_greedy, baseline
+from code.algorithms import hill_climber, simulated_annealing, cheapest_greedy, fix_greedy, greedy, original_greedy, baseline
 from code.visualisations import visualise_costs, visualise_cables
 
 import json
@@ -17,8 +17,7 @@ if __name__ == "__main__":
     house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
     #house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
-    # empty_grid = grid.Grid(house_file, battery_file)
-    grid1 = grid.Grid(house_file, battery_file)
+    empty_grid = grid.Grid(house_file, battery_file)
 
     # --------------------------- load pickled grid --------------------------
 
@@ -61,21 +60,18 @@ if __name__ == "__main__":
     # --------------------------- original greedy--------------------------
     if greedy_version == 1:
         print('running Greedy version 1..')
-        greedy1_costs = list()
-        greedy1 = original_greedy.Greedy(grid1)
+        # greedy1_costs = list()
+        greedy1 = original_greedy.Greedy(empty_grid)
         greedy1.run()
-        count = 0
         best_greedy = copy.deepcopy(greedy1)
 
-        for i in range(100):
-            greedy1 = original_greedy.Greedy(grid1)
+        for i in range(1):
+            greedy1 = original_greedy.Greedy(empty_grid)
             greedy1.run()
-            # print(f"i: {i}, cost: {best_greedy.grid.calc_cost()}")
+            print(f"i: {i}, cost: {best_greedy.grid.calc_cost()}")
 
             if greedy1.grid.calc_cost() < best_greedy.grid.calc_cost():
                 best_greedy = copy.deepcopy(greedy1)
-            if greedy1.grid.is_valid():
-                count += 1
 
             greedy1_costs.append(greedy1.grid.calc_cost())
         print(count)
@@ -85,7 +81,7 @@ if __name__ == "__main__":
 
         # with open(file_name, 'wb') as handle:
         #     pickle.dump(best_greedy, handle)
-
+    
     # --------------------------- greedy 2 --------------------------
     if greedy_version == 2:
 
@@ -119,6 +115,7 @@ if __name__ == "__main__":
         # --------------------------- greedy - each house to closest battery--------------------------
     if greedy_version == 3:
 
+        print('Running Greedy version 3, connecting each house to closest battery..')
         greedy3_costs = list()
 
         for i in range(100):
@@ -150,73 +147,25 @@ if __name__ == "__main__":
 
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
     # file_name = f"SmartGrid/data/solutions/best_greedy_100k.pickle"
-    # for i in range(20):
-    #     greedy2 = greedy.Greedy(grid1)
-    #     greedy2.run_greedy()
-    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-    #     # fixed_greedy.run3()
-    #     if greedy2.grid.is_valid():
-    #          print("hurray")
-    #     greedy2_costs.append(greedy2.grid.calc_cost())
 
     # with open(file_name, 'wb') as handle:
     #     pickle.dump(best_greedy, handle)
-
-    # --------------------------- Hill Climber ---------------------------------
-    # best_greedy.grid.print_cum_output_per_battery()
-
-    # print("Setting up Hill Climber...")
-    # climber = hill_climber.Hill_climber(best_greedy.grid)
-
-    # print("Running Hill Climber...")
-    # climber.run(100, verbose=True)
-
-    # print(f"Value of the configuration after Hill Climber: "
-    #       f"{climber.grid.calc_cost()}")
-
-    # print("valid?")
-    # print(climber.grid.is_valid())
-
-    # climber.grid.print_cum_output_per_battery()
-
-    # --------------------------- Hill Climber fix 2 ---------------------------------
-
-    # print(best_greedy.grid.calc_cost())
     
-    # print("Setting up Hill Climber...")
-    # climber = hill_climber_fix2.Hill_climber(best_greedy.grid)
-
-    # print("Running Hill Climber...")
-    # climber.run(1000000, verbose=True, mutate_houses_number=20)
-
-    # print(f"Value of the configuration after Hill Climber: "
-    #       f"{climber.grid.calc_cost()}")
-
-    # print("valid?")
-    # print(climber.grid.is_valid())
-
-    # if climber.grid.is_valid():
-    #     climber_id = 5
-    #     file_name = f"SmartGrid/data/solutions/climber_{climber_id}_best_greedy.pickle"
-
-    #     with open(file_name, 'wb') as handle:
-    #         pickle.dump(climber, handle)
-
     # --------------------------- Simulated Annealing --------------------------
-    # Simulated annealing 2 is different from simulated annealing 1 in that this one decreases the mutate_house_number linearly with each iteration, 
-    # whereas in the other one the mutate_house_number is static.
+    # Simulated annealing 2 is different from simulated annealing 1 in that this one decreases the mutate_house_number linearly with 
+    # each iteration, whereas in the other one the mutate_house_number is static.
 
-    # print("Setting up Simulated Annealing...")
-    # simanneal = simulated_annealing.Simulated_annealing(best_original_greedy.grid, temperature=(50+50)*9, mutate_house_number = 3
-    # , alpha = 0.999, cooling_scheme="exponential", cable_to_cable = True)
+    print("Setting up Simulated Annealing...")
+    simanneal = simulated_annealing.Simulated_annealing(greedy1.grid, temperature=(50+50)*9, mutate_house_number = 3
+    , alpha = 0.999, cooling_scheme="exponential", cable_to_cable = True)
     
-    # print("Running Simulated Annealing...")
-    # simanneal.run(10000, verbose=True, decreasing_mutate_house_number = False)
+    print("Running Simulated Annealing...")
+    simanneal.run(100, verbose=True, decreasing_mutate_house_number = False)
     
-    # print(f"Value of the configuration after Simulated Annealing: "
-    #       f"{simanneal.grid.calc_cost2()}")
+    print(f"Value of the configuration after Simulated Annealing: "
+          f"{simanneal.grid.calc_cost2()}")
 
-    # simanneal_id = 34
+    # simanneal_id = 35
 
     # file_name = f"SmartGrid/data/solutions/simanneal_cable_to_cable_{simanneal_id}.pickle"
 
@@ -244,9 +193,35 @@ if __name__ == "__main__":
     # print(df_experiments_new)
     # df_experiments_new.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", header = True, index = False)
 
+    # --------------------------- Hill Climber (fix) ---------------------------------
+
+    # print(best_greedy.grid.calc_cost())
+    
+    # print("Setting up Hill Climber...")
+    climber = hill_climber.Hill_climber(simanneal.grid, fix = True, mutate_house_number=10)
+
+    # print("Running Hill Climber...")
+    climber.run(1000, verbose=True)
+
+    print(f"Value of the configuration after Hill Climber: "
+          f"{climber.grid.calc_cost2()}")
+
+    # print("valid?")
+    # print(climber.grid.is_valid())
+
+    # if climber.grid.is_valid():
+    #     climber_id = 5
+    #     file_name = f"SmartGrid/data/solutions/climber_{climber_id}_best_greedy.pickle"
+
+    #     with open(file_name, 'wb') as handle:
+    #         pickle.dump(climber, handle)
+
+
     # --------------------------- visualisation --------------------------
     # visualise_cables.visualise(greedy3.grid)
-    # visualise_cables.visualise(simanneal.grid)
+    # visualise_cables.visualise(simanneal.grid, district_number)
+    visualise_cables.visualise(climber.grid, district_number)
+    # visualise_cables.visualise(greedy1.grid, district_number)
 
     # --------------------------- compare --------------------------
 

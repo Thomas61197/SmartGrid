@@ -10,11 +10,12 @@ class Hill_climber:
     The HillClimber class that changes a random node in the graph to a random valid value. Each improvement or
     equivalent solution is kept for the next iteration.
     """
-    def __init__(self, grid, mutate_house_number = 1, cable_to_cable = True):
+    def __init__(self, grid, mutate_house_number = 1, cable_to_cable = True, fix = False):
         self.grid = grid
         self.mutate_house_number0 = mutate_house_number
         self.mutate_house_number = mutate_house_number
         self.cable_to_cable = cable_to_cable
+        self.fix = fix
 
     def random_reconfigure_house(self, house, batteries):
         """
@@ -47,7 +48,10 @@ class Hill_climber:
             if not battery.capacity_reached():
                 available_batteries.append(battery)
 
-        self.random_reconfigure_house(random_house, available_batteries)
+        if self.fix:
+            self.random_reconfigure_house(random_house, list(new_grid.batteries.values()))
+        else:
+            self.random_reconfigure_house(random_house, available_batteries)
 
     def mutate_grid(self, new_grid):
         """
@@ -67,10 +71,26 @@ class Hill_climber:
 
         old_cost = self.cost
 
-        # We are looking for maps that cost less!
-        if new_cost <= old_cost:
-            self.grid = new_grid
-            self.cost = new_cost
+        if self.fix:
+            # if current grid is invalid, accept any new grid that is valid, no matter the cost
+            if not self.grid.is_valid():
+
+                if new_grid.is_valid():
+                    self.grid = new_grid
+                    self.cost = new_cost
+
+            # else, accept new_grid if valid and lower cost
+            else:
+
+                if new_grid.is_valid():
+
+                    if new_cost <= old_cost:
+                        self.grid = new_grid
+                        self.cost = new_cost
+        else:
+            if new_cost <= old_cost:
+                self.grid = new_grid
+                self.cost = new_cost
 
     def run(self, iterations, verbose=False, decreasing_mutate_house_number = False):
         """
@@ -85,8 +105,13 @@ class Hill_climber:
         self.iterations = iterations
 
         for iteration in range(iterations):
+
             # Nice trick to only print if variable is set to True
-            print(f'Iteration {iteration}/{iterations}, current cost: {self.cost}') if verbose else None
+            if self.fix:
+                print(f'Iteration {iteration}/{iterations}, valid? {self.grid.is_valid()}, current cost: {self.cost}') if verbose else None
+            
+            else:
+                print(f'Iteration {iteration}/{iterations}, current cost: {self.cost}') if verbose else None
 
             # Create a copy of the graph to simulate the change
             new_grid = copy.deepcopy(self.grid)
