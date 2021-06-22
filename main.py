@@ -56,49 +56,59 @@ if __name__ == "__main__":
     #     pickle.dump(best_base, handle)
     
     # --------------------------- original greedy--------------------------
-    # greedy1_costs = list()
-    # greedy1 = original_greedy.Greedy(grid1)
-    # greedy1.run()
-    # best_greedy = copy.deepcopy(greedy1)
+    greedy1_costs = list()
+    greedy1 = original_greedy.Greedy(grid1)
+    greedy1.run()
+    count = 0
+    best_greedy = copy.deepcopy(greedy1)
 
-    # for i in range(100):
-    #     greedy1 = original_greedy.Greedy(grid1)
-    #     greedy1.run()
-    #     # print(f"i: {i}, cost: {best_greedy.grid.calc_cost()}")
+    for i in range(100):
+        greedy1 = original_greedy.Greedy(grid1)
+        greedy1.run()
+        # print(f"i: {i}, cost: {best_greedy.grid.calc_cost()}")
 
-    #     if greedy1.grid.calc_cost() < best_greedy.grid.calc_cost():
-    #         best_greedy = copy.deepcopy(greedy1)
+        if greedy1.grid.calc_cost() < best_greedy.grid.calc_cost():
+            best_greedy = copy.deepcopy(greedy1)
+        if greedy1.grid.is_valid():
+            count += 1
 
-    #     greedy1_costs.append(greedy1.grid.calc_cost())
+        greedy1_costs.append(greedy1.grid.calc_cost())
+    print(count)
 
-    # visualise_costs.visualise_costs(greedy1_costs, "greedy1")
+    visualise_costs.visualise_costs(greedy1_costs, "greedy1")
+    # for battery in best_greedy.grid.batteries.values():
+    #     print('battery:', battery.id, battery.get_cum_output(), battery.capacity_left())
     # file_name = f"SmartGrid/data/solutions/best_greedy.pickle"
 
     # with open(file_name, 'wb') as handle:
     #     pickle.dump(best_greedy, handle)
 
     # --------------------------- greedy 2 --------------------------
-    greedy2_costs = list()
-    count = 0
-    best_cost = 70000
-    for i in range(100):
-        greedy2 = greedy.Greedy(grid1)
-        greedy2.run_greedy()
-        # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-        # fixed_greedy.run3()
-        if greedy2.grid.is_valid():
-            count += 1
-            if greedy2.grid.calc_cost() < best_cost:
-                best_grid = greedy2.grid
-                best_cost = greedy2.grid.calc_cost()
-        greedy2_costs.append(greedy2.grid.calc_cost())
-    print(count)
-    print(best_cost)
-    for battery in best_grid.batteries.values():
-        print('battery:', battery.id, battery.get_cum_output(), battery.capacity_left())
-    #     for house in battery.houses.values():
-    #         print(house.id)
-    visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+    # greedy2_costs = list()
+    # count = 0
+    # best_cost = 70000
+    # for i in range(100):
+    #     greedy2 = greedy.Greedy(grid1)
+    #     greedy2.run_greedy()
+    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
+    #     # fixed_greedy.run3()
+    #     if greedy2.grid.is_valid():
+    #         count += 1
+    #         if greedy2.grid.calc_cost() < best_cost:
+    #             best_grid = greedy2.grid
+    #             best_cost = greedy2.grid.calc_cost()
+    #     greedy2_costs.append(greedy2.grid.calc_cost())
+    # print(count)
+    # print(best_cost)
+    # # for battery in best_grid.batteries.values():
+    # #     print('battery:', battery.id, battery.get_cum_output(), battery.capacity_left())
+    # #     if battery.id == 1:
+    # #         for house in battery.houses.values():
+    # #             print(house.cable.x, house.cable.y)
+    # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+
+    # --------------------------- visualisation --------------------------
+    visualise_cables.visualise_apart(best_greedy.grid, district_number)
 
         # --------------------------- greedy - each house to closest battery--------------------------
     # greedy3_costs = list()
@@ -114,21 +124,6 @@ if __name__ == "__main__":
     #     greedy3_costs.append(greedy3.grid.calc_cost())
     # print(count)
     # visualise_costs.visualise_costs(greedy2_costs, "greedy2")
-
-    # --------------------------- greedy cheap --------------------------
-    # greedy3_costs = list()
-    # count = 0
-    # for i in range(100):
-    #     greedy3 = cheapest_greedy.Greedy_cheapest(grid1)
-    #     greedy3.run_greedy()
-    #     # fixed_greedy = fix_greedy.Fix_greedy(greedy2.grid)
-    #     # fixed_greedy.run3()
-    #     if greedy3.grid.is_valid():
-    #          print("hurray")
-    #          count += 1
-    #     greedy3_costs.append(greedy3.grid.calc_cost())
-    # print(count)
-    # visualise_costs.visualise_costs(greedy3_costs, "greedy3")
 
 
     # greedy2 = greedy.Greedy(empty_grid)
@@ -161,8 +156,6 @@ if __name__ == "__main__":
     # with open(file_name, 'wb') as handle:
     #     pickle.dump(best_greedy, handle)
 
-    # --------------------------- visualisation --------------------------
-    visualise_cables.visualise_apart(best_grid, district_number)
     # --------------------------- Hill Climber ---------------------------------
     # best_greedy.grid.print_cum_output_per_battery()
 

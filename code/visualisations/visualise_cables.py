@@ -53,31 +53,33 @@ def visualise(grid, district_number):
     plt.savefig("docs/cable_visualisation.png")
 
 def visualise_apart(grid, district_number):
-        # plot battries and houses
-    for battery in grid.batteries.values():
-        # load data files
-        district_number = district_number
-        battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-        house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    """
+    Visualise the connections of each battery in separate grids
+    """
 
+    for battery in grid.batteries.values():
+
+        district_number = district_number
+        
+        # Load house files
+        house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
         dfhouses = pd.read_csv(house_file)
         dfhouses.plot(kind='scatter', x='x', y='y')
 
-
-
-        # clear the figure
+        # Clear the figure
         plt.clf()
 
-        # plot grid
+        # Plot gridlines
         plt.title('SmartGrid')
         plt.grid(which='minor', color='lightgrey')
         plt.grid(which='major', color='grey')
         plt.minorticks_on()
 
-
+        # Plot each house and battery in the grid
         plt.scatter(battery.x, battery.y, color='orange', label = "Batteries")
         plt.scatter(dfhouses.x, dfhouses.y, color='blue', label = "Houses")
 
+        # Give the connections of each battery a different colour
         if battery.id == 0:
             gridcolor = "blue"
         elif battery.id == 1: 
@@ -89,7 +91,7 @@ def visualise_apart(grid, district_number):
         elif battery.id == 4: 
             gridcolor = "gray"
 
-        # plot cables 
+        # Plot cables 
         for house in battery.houses.values():
             plt.scatter(house.x, house.y, color="pink")
             plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
