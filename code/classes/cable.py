@@ -32,6 +32,7 @@ class Cable():
         for y in range(len(cable_matrix[0][:])):
 
             for x in range(len(cable_matrix[:][0])):
+                
 
                 if cable_matrix[x][y] == 1:
                     distance = abs(self.house.x - x) + abs(self.house.y - y)

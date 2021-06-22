@@ -48,7 +48,7 @@ def visualise(grid, district_number):
 
     # plt.legend()
     plt.show()
-    grid_name = "sim_anneal"
+    grid_name = f"10k_it_or_greedy_ctc_dis{district_number}_1mil_it_sa_ctc"
     plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")
     # plt.savefig("docs/cable_visualisation.png")
 
@@ -60,7 +60,8 @@ def visualise_apart(grid, district_number):
     for battery in grid.batteries.values():
         
         # Load house files
-        house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+        # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+        house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
         dfhouses = pd.read_csv(house_file)
         dfhouses.plot(kind='scatter', x='x', y='y')
 
@@ -96,7 +97,7 @@ def visualise_apart(grid, district_number):
 
         # plt.legend()
         plt.show()
-        plt.savefig(f"docs/cable_visualisation_battery{battery.id}.png")
+        plt.savefig(f"SmartGrid/docs/cable_visualisation_battery{battery.id}_10k_it_or_greedy_ctc_dis{district_number}_1mil_it_sa_ctc.png")
 
 
 def visualise_house_apart(grid, district_number):
@@ -107,9 +108,8 @@ def visualise_house_apart(grid, district_number):
     for house in battery.houses.values():
         if house.id < 30:
 
-            district_number = district_number
             # Load house files
-            house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+            house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
             dfhouses = pd.read_csv(house_file)
             dfhouses.plot(kind='scatter', x='x', y='y')
 
@@ -145,7 +145,7 @@ def visualise_house_apart(grid, district_number):
 
             # plt.legend()
             plt.show()
-            plt.savefig(f"docs/cable_visualisation_house{house.id}.png")
+            plt.savefig(f"SmartGrid/docs/cable_visualisation_house{house.id}_1_it_or_greedy_ctc_100_it_sa_ctc.png")
             print(house.id, 'coordinates', house.x, house.y)
             print(battery.id, 'coordinates', battery.x, battery.y)
             print(house.id, 'cable', house.cable.x, house.cable.y)

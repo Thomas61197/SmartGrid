@@ -25,6 +25,10 @@ class Hill_climber:
         old_battery = house.cable.battery
         old_battery.remove_house(house)
 
+        # remove cable
+        house.cable = None
+
+        # add house to new battery
         new_battery = random.choice(batteries)
         new_battery.add_house(house)
         cable1 = cable.Cable(house = house, battery = new_battery)
@@ -34,6 +38,7 @@ class Hill_climber:
         else:
             cable1.lay_cable()
 
+        # add new cable and thus new battery to house
         house.add_cable(cable1)
 
     def mutate_single_house(self, new_grid):
