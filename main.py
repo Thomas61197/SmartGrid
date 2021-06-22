@@ -34,12 +34,12 @@ if __name__ == "__main__":
     if greedy_version == "baseline":
         print('Running baseline version..')
         baseline_costs = list()
-        baseline1 = baseline.Baseline(grid1)
+        baseline1 = baseline.Baseline(empty_grid)
         baseline1.run()
         # best_base = copy.deepcopy(baseline1)
 
         for i in range(1):
-            baseline1 = baseline.Baseline(grid1)
+            baseline1 = baseline.Baseline(empty_grid)
             baseline1.run()
             # print(f"i: {i}, cost: {best_base.grid.calc_cost()}")
 
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         best_cost = 70000
 
         for i in range(100):
-            greedy2 = greedy.Greedy(grid1)
+            greedy2 = greedy.Greedy(empty_grid)
             greedy2.run_greedy()
             
             if greedy2.grid.is_valid():
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         greedy3_costs = list()
 
         for i in range(100):
-            greedy3 = cheapest_greedy.Greedy_cheapest(grid1)
+            greedy3 = cheapest_greedy.Greedy_cheapest(empty_grid)
             greedy3.run_greedy()
             if greedy3.grid.is_valid():
                 print("hurray")
