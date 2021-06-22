@@ -1,6 +1,7 @@
 import copy
 import random
 import math
+import pickle
 
 from code.classes import cable
 from code.algorithms import original_greedy
@@ -97,6 +98,8 @@ class Hill_climber:
                 self.grid = new_grid
                 self.cost = new_cost
 
+        self.cost_list.append(self.cost)
+
     def run(self, iterations, verbose=False, decreasing_mutate_house_number = False):
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
@@ -108,6 +111,8 @@ class Hill_climber:
             self.cost = self.grid.calc_cost()
             
         self.iterations = iterations
+        self.cost_list = list()
+        self.checkpoints = list(range(10000, self.iterations, 10000))
 
         for iteration in range(iterations):
 
@@ -125,6 +130,16 @@ class Hill_climber:
 
             # Accept it if it is better
             self.check_solution(new_grid, decreasing_mutate_house_number)
+
+            if self.fix:
+
+                if iteration in self.checkpoints and self.grid.is_valid():
+                    file_name = f"SmartGrid/data/solutions/10k_or_greedy_ctc_dis1_{iteration}_hc_fix_ctc.pickle"
+
+                    with open(file_name, 'wb') as handle:
+                        pickle.dump(self, handle)
+                    
+                    print(f"checkpoint: {iteration}")
 
     
 
