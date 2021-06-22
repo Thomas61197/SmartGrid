@@ -5,6 +5,9 @@ from code.classes import grid, house, battery, cable
 
 
 def visualise(grid, district_number): 
+    """
+    Visualise the connections of each battery in one grid
+    """
 
     # load data files
     district_number = district_number
@@ -47,9 +50,8 @@ def visualise(grid, district_number):
 
     # plt.legend()
     plt.show()
-    grid_name = "sim_anneal"
-    plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")
-    
+
+    # plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")  
     plt.savefig("docs/cable_visualisation.png")
 
 def visualise_apart(grid, district_number):
