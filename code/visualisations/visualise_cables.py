@@ -100,5 +100,57 @@ def visualise_apart(grid, district_number):
 
         # plt.legend()
         plt.show()
-        plt.savefig(f"docs/cable_visualisation{battery.id}.png")
+        plt.savefig(f"docs/cable_visualisation_battery{battery.id}.png")
+
+
+def visualise_house_apart(grid, district_number):
+    """
+    Visualise the connections of each house connected to battery 0 in separate grids
+    """
+    battery = grid.batteries[0]
+    for house in battery.houses.values():
+        if house.id < 30:
+
+            district_number = district_number
+            # Load house files
+            house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+            dfhouses = pd.read_csv(house_file)
+            dfhouses.plot(kind='scatter', x='x', y='y')
+
+            # Clear the figure
+            plt.clf()
+
+            # Plot gridlines
+            plt.title(f'SmartGrid house {house.id}')
+            plt.grid(which='minor', color='lightgrey')
+            plt.grid(which='major', color='grey')
+            plt.minorticks_on()
+
+            # Plot each house and battery in the grid
+            plt.scatter(battery.x, battery.y, color='orange', label = "Batteries")
+            plt.scatter(dfhouses.x, dfhouses.y, color='blue', label = "Houses")
+
+            # Give the connections of each battery a different colour
+            if battery.id == 0:
+                gridcolor = "blue"
+            elif battery.id == 1: 
+                gridcolor = "red"
+            elif battery.id == 2: 
+                gridcolor = "orange"
+            elif battery.id == 3: 
+                gridcolor = "black"
+            elif battery.id == 4: 
+                gridcolor = "gray"
+
+            # Plot cables 
+
+            plt.scatter(house.x, house.y, color="pink")
+            plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
+
+            # plt.legend()
+            plt.show()
+            plt.savefig(f"docs/cable_visualisation_house{house.id}.png")
+            print(house.id, 'coordinates', house.x, house.y)
+            print(battery.id, 'coordinates', battery.x, battery.y)
+            print(house.id, 'cable', house.cable.x, house.cable.y)
     

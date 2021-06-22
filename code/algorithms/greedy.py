@@ -90,18 +90,20 @@ class Greedy:
 
         # If battery capacity is full, reconnect houses with the shortest distance to the next battery
         for i in range(100):
-
             self.replace_connections()
             
         # Start laying cables
-        for house in self.grid.houses.values():
-            closest_battery_id = house.battery_distances[house.rank][0]
-            closest_battery = self.grid.batteries[closest_battery_id]
-            house.battery = closest_battery_id
+        for battery in self.grid.batteries.values():
+            for house in battery.houses.values():
+        # for house in self.grid.houses.values():
+        #     closest_battery_id = house.battery_distances[house.rank][0]
+        #     closest_battery = self.grid.batteries[closest_battery_id]
+                # house.battery = closest_battery_id
+                house.battery = battery
 
-            cable1 = cable.Cable(house = house, battery = closest_battery)
-            cable1.lay_cable()
-            house.add_cable(cable1)
+                cable1 = cable.Cable(house = house, battery = battery)
+                cable1.lay_cable()
+                house.add_cable(cable1)
             
         # for battery in self.grid.batteries.values():
         #         print(battery.get_cum_output())
