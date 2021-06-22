@@ -85,9 +85,12 @@ De hierop volgende lijst beschrijft de belangrijkste mappen en files in het proj
 
 - **/code**: bevat alle code van dit project
   - **/code/algorithms**: bevat de code voor algoritmes
-  - **/code/classes**: bevat de drie benodigde classes voor deze case
-  - **/code/visualisation**: bevat de bokeh code voor de visualisatie
-- **/data**: bevat de verschillende databestanden die nodig zijn om de graaf te vullen en te visualiseren
+  - **/code/classes**: bevat de vier benodigde classes voor deze case
+  - **/code/visualisation**: bevat de matplotlib code voor de visualisatie
+- **/data**: bevat de verschillende databestanden die benodigd zijn om de algoritmen te runnen 
+  - **/data/Huizen&Batterijen** bevat de databestanden van de verschillende wijken met huizen en batterijen
+  - **/data/solutions** bevat de databestanden van resultaten opgeslagen als objecten verkregen met de algoritmen
+
 
 ## Auteurs
 Ysanne de Graaf <br>

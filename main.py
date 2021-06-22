@@ -101,23 +101,26 @@ if __name__ == "__main__":
         greedy2_costs = list()
         best_cost = 70000
 
+
         for i in range(100):
             greedy2 = greedy.Greedy(empty_grid)
             greedy2.run_greedy()
             
             if greedy2.grid.is_valid():
-                if greedy2.grid.calc_cost() < best_cost:
+                if greedy2.grid.calc_cost2() < best_cost:
                     best_grid = greedy2.grid
-                    best_cost = greedy2.grid.calc_cost()
-            greedy2_costs.append(greedy2.grid.calc_cost())
+                    best_cost = greedy2.grid.calc_cost2()
+                    best_greedy2_1000_ctc = greedy2
+            greedy2_costs.append(greedy2.grid.calc_cost2())
+            # print(f'iteration {i}', greedy2.grid.calc_cost2())
 
         print('Price cheapest valid Greedy:', best_cost)
-        visualise_costs.visualise_costs(greedy2_costs, "greedy2")
+        visualise_costs.histogram_costs(greedy2_costs, "greedy2", nbins = 50)
 
-        # file_name = f"SmartGrid/data/solutions/best_greedy2.pickle"
+        # file_name = f"data/solutions/best_greedy2.pickle"
 
         # with open(file_name, 'wb') as handle:
-        #     pickle.dump(best_greedy, handle)
+        #     pickle.dump(best_greedy2_1000_ctc, handle)
 
         # --------------------------- greedy - each house to closest battery--------------------------
     if greedy_version == 3:
@@ -148,8 +151,8 @@ if __name__ == "__main__":
     print("Running Simulated Annealing...")
     simanneal.run(1000000, verbose=True, decreasing_mutate_house_number = False)
     
-    print(f"Value of the configuration after Simulated Annealing: "
-          f"{simanneal.grid.calc_cost2()}")
+    # print(f"Value of the configuration after Simulated Annealing: "
+    #       f"{simanneal.grid.calc_cost2()}")
 
     simanneal_id = 36
 
@@ -182,7 +185,7 @@ if __name__ == "__main__":
 
     # --------------------------- Hill Climber (fix) ---------------------------------
 
-    # print(best_greedy.grid.calc_cost())
+    # print(best_greedy2_1000_ctc.grid.calc_cost())
     
     # print("Setting up Hill Climber...")
     # climber = hill_climber.Hill_climber(simanneal.grid, fix = True, mutate_house_number=10)
@@ -197,8 +200,8 @@ if __name__ == "__main__":
     # print(climber.grid.is_valid())
 
     # if climber.grid.is_valid():
-    #     climber_id = 5
-    #     file_name = f"SmartGrid/data/solutions/climber_{climber_id}_best_greedy.pickle"
+    #     climber_id = 6
+    #     file_name = f"data/solutions/climber_{climber_id}_best_greedy2_1000_c2c.pickle"
 
     #     with open(file_name, 'wb') as handle:
     #         pickle.dump(climber, handle)
