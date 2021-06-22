@@ -46,8 +46,10 @@ class Grid():
         
         for house in self.houses.values():
             tot += house.cable.cost()
+        for battery in self.batteries.values():
+            tot += battery.cost
         
-        return tot
+        return tot 
 
     def calc_cum_diff_from_bat_cap(self):
         cum_diff_from_bat_cap = 0
