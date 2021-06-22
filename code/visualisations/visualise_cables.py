@@ -60,7 +60,8 @@ def visualise_apart(grid, district_number):
         battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
         house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
-        dfhouses = grid.houses.values()
+        dfhouses = pd.read_csv(house_file)
+        dfhouses.plot(kind='scatter', x='x', y='y')
 
 
 
@@ -90,6 +91,7 @@ def visualise_apart(grid, district_number):
 
         # plot cables 
         for house in battery.houses.values():
+            plt.scatter(house.x, house.y, color="pink")
             plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
 
         # plt.legend()

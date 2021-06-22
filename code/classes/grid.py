@@ -37,7 +37,7 @@ class Grid():
 
                 for count, row in enumerate(reader):
                     coordinates = row['positie'].split(',')
-                    batteries[count] = Battery(int(coordinates[0]), int(coordinates[1]), float(row['capaciteit']), count)
+                    batteries[count] = Battery(x = int(coordinates[0]), y = int(coordinates[1]), capacity = float(row['capaciteit']), id = count)
 
             return batteries
 
@@ -46,8 +46,10 @@ class Grid():
         
         for house in self.houses.values():
             tot += house.cable.cost()
+        for battery in self.batteries.values():
+            tot += battery.cost
         
-        return tot
+        return tot 
 
     def calc_cum_diff_from_bat_cap(self):
         cum_diff_from_bat_cap = 0
