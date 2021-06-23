@@ -97,12 +97,6 @@ Om de <i>kosten van de algoritmes te weergeven</i> zijn er drie keuzes:
 - histogram_costs(kostenlijst, algo, nbins). Een histogram met de frequenties van de verschillende kosten bij de iteraties van een algoritme
 - compare_costs(kostenlijst1, algo1, kostenlijst2, algo2). Een barplot die de gemiddelde kosten van twee algoritmen weergeeft
 
-#### Een voorbeeldje kan gerund worden door aanroepen van:
-
- ```console
-python main.py
-```
-
 
 ### Structuur
 
