@@ -65,11 +65,6 @@ class Grid():
             if battery.capacity_reached():
                 valid = False
 
-        # for house in self.houses.values():
-
-        #     if house.cable is None:
-        #         valid = False
-
         return valid
 
     def print_status_batteries(self):

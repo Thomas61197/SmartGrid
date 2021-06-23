@@ -1,6 +1,6 @@
 import copy
 import random
-from code.classes import cable, grid
+from code.classes import cable
 
 class Baseline:
     """
@@ -8,8 +8,11 @@ class Baseline:
     taking into account the battery capacity
     """
 
-    def __init__(self, grid):
-        self.grid = copy.deepcopy(grid)
+    def __init__(self, empty_grid):
+        """
+        requires an empty grid to start with.
+        """
+        self.grid = copy.deepcopy(empty_grid)
 
     def run(self):
         """

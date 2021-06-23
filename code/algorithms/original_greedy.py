@@ -4,16 +4,21 @@ from code.classes import cable
 
 class Greedy:
     """
-    Calculats the shortest Manhattan distance from each house to a battery
+    for a house, finds the closest available battery and connects to it.
     """
-    def __init__(self, grid, cable_to_cable = True):
-        self.grid = copy.deepcopy(grid)
+    def __init__(self, empty_grid, cable_to_cable = True):
+        """
+        requires an empty grid to start with.
+        if cable_to_cable is set to true, cables are attached to the closest cable connected to the same battery.
+        """
+        self.grid = copy.deepcopy(empty_grid)
         self.cable_to_cable = cable_to_cable
 
     def run(self):
         """
-        Calculates the Manhattan distances from each house to a battery
+        runs the algorithm.
         """
+        # otherwise the same result is produced every time
         random.shuffle(self.grid.houses)
 
         # Create a dictionary of all the houses with a list of the Manhattan distances to each battery
@@ -31,11 +36,7 @@ class Greedy:
             # go until you find a battery that has not reached capacity yet
             while closest_battery.capacity_reached():
                 closest_battery = self.grid.batteries[next(iterable_object)]
-
-            # while closest_battery.capacity_left() < house.max_output:
-            #     closest_battery = self.grid.batteries[next(iterable_object)]
                 
-            # if closest_battery.capacity_left() < house.max_output:
             closest_battery.add_house(house)
             house.battery = closest_battery.id
             cable1 = cable.Cable(house = house, battery = closest_battery)

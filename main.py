@@ -24,24 +24,11 @@ if __name__ == "__main__":
     empty_grid = grid.Grid(house_file, battery_file)
 
     # --------------------------- load pickled grid --------------------------
-
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_greedy_100k.pickle"
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_original_greedy.pickle"
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/simanneal_cable_to_cable_34.pickle"
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/10k_it_or_greedy_ctc_dis1.pickle"
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_baseline_100k.pickle"
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/10k_it_or_greedy_ctc_dis1_1mil_it_simanneal_36_ctc.pickle"
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_solution_yet_dis1_sa_valid.pickle"
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_it_or_greedy_ctc_dis2_1mil_it_simanneal_37_ctc.pickle"
-    # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_or_greedy_ctc_dis3_100k_sa_38_ctc.pickle"
     file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final2_sa_valid_dis{district_number}.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
-        # best_original_greedy = pickle.load(handle)
-        # simanneal_cable_to_cable = pickle.load(handle)
-        # best_base = pickle.load(handle)
-        greedy2_not_shared = pickle.load(handle)
+        final_sa_valid = pickle.load(handle)
 
     # save as
     grid_name = f"final2_sa_valid_dis{district_number}"
@@ -237,29 +224,11 @@ if __name__ == "__main__":
         #         pickle.dump(climber, handle)
 
     # --------------------------- visualisation --------------------------
-    # visualise_cables.visualise(greedy3.grid)
-
-    # visualise_cables.visualise(simanneal.grid, district_number)
-    # visualise_cables.visualise_apart(simanneal.grid, district_number)
-    # visualise_cables.visualise_house_apart(simanneal.grid, district_number)
-
     # visualise_cables.visualise(final_sa_valid.grid, district_number, grid_name=grid_name)
     # visualise_cables.visualise_apart(final_sa_valid.grid, district_number, grid_name=grid_name)
-
-    # visualise_cables.visualise(greedy2_dis1.grid, district_number)
-    # visualise_cables.visualise_empty_grid(best_grid, district_number)
-    # visualise_cables.visualise_apart(best_greedy.grid, district_number)
-    # visualise_cables.visualise_house_apart(greedy1.grid, district_number)
-
-    # visualise_cables.visualise(best_original_greedy.grid, district_number)
-    # visualise_cables.visualise_apart(best_original_greedy.grid, district_number)
-
-    # visualise_cables.visualise_apart(best_grid, district_number)
-    # visualise_cables.visualise(best_grid, district_number)
-    # visualise_cables.visualise_house_apart(best_grid, district_number)
-
-    # visualise_cables.visualise(final_sa_valid_dis1.grid, district_number, grid_name=grid_name)
-    # visualise_cables.visualise_apart(final_sa_valid_dis1.grid, district_number, grid_name=grid_name)
+    
+    # visualise_cables.visualise(best_greedy.grid, district_number, grid_name=grid_name)
+    # visualise_cables.visualise_apart(best_greedy.grid, district_number, grid_name=grid_name)
 
     # --------------------------- compare --------------------------
 

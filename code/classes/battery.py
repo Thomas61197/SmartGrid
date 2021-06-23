@@ -17,7 +17,7 @@ class Battery():
 
     def remove_house(self, house):
         """
-        Remove a house object from the dict of houses that this batetry is connected to
+        Remove a house object from the dict of houses that this battery is connected to
         """
         del self.houses[house.id]
     
@@ -53,23 +53,17 @@ class Battery():
         """
         Creates a matrix of ones and zeroes, with ones indicating the cables connecting the houses to this battery
         """
+        # the length and width are 51 bc it goes from 0 up to and including 50
         matrix = np.zeros( (51, 51), dtype=int )
 
         for house in self.houses.values():
-
+            
+            # these checks need to be here because this function can also be used on (semi)empty grids
             if not house.cable is None:
 
                 if not house.cable.x is None:
 
                     for x, y in zip(house.cable.x, house.cable.y):
-                        
-                        # # for some reason, x and y are sometimes lists in object best_greedy
-                        # if type(x) == list:
-
-                        #     for x2, y2 in zip(x, y):
-                        #         matrix[x2][y2] = int(1)
-                        # else:
-                        
                         matrix[x][y] = int(1)
                 
         return matrix
