@@ -46,15 +46,14 @@ class Hill_climber:
         """
         old_battery = house.cable.battery
         
-        # detach house from battery
         old_battery.remove_house(house)
 
         # remove cable
         house.cable = None
 
-        # choose new battery from available batteries
         new_battery = random.choice(batteries)
 
+        # cable object is created but cable has not been layed yet
         cable1 = cable.Cable(house = house, battery = new_battery)
 
         # if cables from different houses are allowed to be connected to eachother
@@ -72,7 +71,6 @@ class Hill_climber:
         # add new cable and thus new battery to house
         house.add_cable(cable1)
 
-        # add house to new battery
         new_battery.add_house(house)
 
     def mutate_single_house(self, new_grid):
@@ -93,7 +91,7 @@ class Hill_climber:
 
     def mutate_grid(self, new_grid):
         """
-        Changes the value of a number of nodes with a random valid value.
+        Changes the connection of a number of houses to a random available battery.
         """
         for _ in range(math.ceil(self.mutate_house_number)):
             self.mutate_single_house(new_grid)
@@ -102,6 +100,7 @@ class Hill_climber:
         """
         Checks and accepts better solutions than the current solution.
         """
+        # in the case that cables can be connected to cables from different houses, costs are calculated differently
         if self.cable_to_cable:
             new_cost = new_grid.calc_cost2()
         else:
@@ -110,11 +109,11 @@ class Hill_climber:
         old_cost = self.cost
 
         if self.minimalize_surplus:
+            # surplus = output above battery capacity
             new_surplus = new_grid.calc_surplus()
             old_surplus = self.surplus
 
-        if self.minimalize_surplus:
-
+            # if both cost and surplus need to be minimized
             if self.cost_and_surplus:
 
                 if new_surplus <= old_surplus and new_cost <= old_cost:
@@ -122,7 +121,8 @@ class Hill_climber:
                     self.surplus = new_surplus
                     self.cost = new_cost
             else:
-
+                
+                # < and not <= because unnecessary changes are more likely to result in a higher cost
                 if new_surplus < old_surplus:
                     self.grid = new_grid
                     self.surplus = new_surplus
@@ -133,20 +133,16 @@ class Hill_climber:
             if new_cost <= old_cost:
                 self.grid = new_grid
                 self.cost = new_cost
-
-        # new_grid.print_status_batteries()
-
     
     def update_mutate_house_number(self):
         """
-        
+        linearly decreases mutate_house_number with each iteration.
         """
         self.mutate_house_number = (self.mutate_house_number - (self.mutate_house_number0 / self.iterations))
 
     def run(self, iterations, verbose=False):
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
-        Takes a filled in grid as starting grid
         """
         if self.cable_to_cable:
             self.cost = self.grid.calc_cost2()
@@ -157,19 +153,23 @@ class Hill_climber:
             self.surplus = self.grid.calc_surplus()
             
         self.iterations = iterations
+
+        # for later plotting
         self.cost_list = list()
+
+        # save after every 10k iterations
         self.checkpoints = list(range(10000, self.iterations, 10000))
 
         for iteration in range(iterations):
 
             # Nice trick to only print if variable is set to True
             if self.minimalize_surplus:
-                print(f'Iteration {iteration}/{iterations}, valid? {self.grid.is_valid()}, current surplus: {self.surplus}, current cost: {self.cost}') if verbose else None
+                print(f'Iteration {iteration}/{iterations}, current surplus: {self.surplus}, current cost: {self.cost}') if verbose else None
                 
             else:
                 print(f'Iteration {iteration}/{iterations}, current cost: {self.cost}') if verbose else None
 
-            # Create a copy of the graph to simulate the change
+            # Create a copy of the grid to simulate the change
             new_grid = copy.deepcopy(self.grid)
 
             self.mutate_grid(new_grid)
@@ -177,19 +177,18 @@ class Hill_climber:
             # Accept it if it is better
             self.check_solution(new_grid)
 
+            # decrease mutate_house_number if requested
             if self.decreasing_mutate_house_number == True:
                 self.update_mutate_house_number()
 
             if self.with_checkpoints:
 
                 if iteration in self.checkpoints and self.grid.is_valid():
+                    # NOTE: YOU HAVE TO CHANGE THIS YOURSELF!
                     file_name = f"SmartGrid/data/solutions/10k_or_greedy_ctc_dis1_{iteration}_hc_fix_ctc.pickle"
 
                     with open(file_name, 'wb') as handle:
                         pickle.dump(self, handle)
-                    
-                    print(f"checkpoint: {iteration}")
-            
             
             self.cost_list.append(self.cost)
 

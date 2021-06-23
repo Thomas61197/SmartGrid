@@ -8,18 +8,18 @@ import pickle
 import copy
 
 if __name__ == "__main__":
-    district_number = "1"
-    greedy_version = 4 # Choices are None, 1, 2, or 3
+    district_number = "3"
+    greedy_version = None # Choices are "baseline" for baseline, 1 for original_greedy, 2 for greedy2, or 3 for greedy3. None if you don't want any of these to run
     run_simulated_annealing = "no"
     run_hill_climber = "no"
     generate_output = "no"
 
     # Load in the data files
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    # battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    # house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     empty_grid = grid.Grid(house_file, battery_file)
 
@@ -34,8 +34,7 @@ if __name__ == "__main__":
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_solution_yet_dis1_sa_valid.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_it_or_greedy_ctc_dis2_1mil_it_simanneal_37_ctc.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_or_greedy_ctc_dis3_100k_sa_38_ctc.pickle"
-    # file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final_sa_valid_dis{district_number}.pickle"
-    file_name = f"/home/ysanne/SmartGrid/data/solutions/best_greedy2_100k_dis1.pickle"
+    file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final2_sa_valid_dis{district_number}.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
@@ -44,13 +43,11 @@ if __name__ == "__main__":
         # best_base = pickle.load(handle)
         greedy2_not_shared = pickle.load(handle)
 
-    # best_original_greedy.grid.print_status_batteries()
-
     # save as
     grid_name = f"final2_sa_valid_dis{district_number}"
 
     # --------------------------- baseline --------------------------
-    if greedy_version == None:
+    if greedy_version == "baseline":
         """
         Baseline, connects random house to random battery that is not yet full
         """
@@ -154,7 +151,7 @@ if __name__ == "__main__":
         # with open(file_name, 'wb') as handle:
         #     pickle.dump(best_greedy2_100k_ctc_dis2, handle)
 
-        # --------------------------- greedy - each house to closest battery--------------------------
+        # --------------------------- greedy 3 - each house to closest battery--------------------------
     if greedy_version == 3:
         """
         Connects each house to closest battery. Lowest cost baseline.
@@ -246,8 +243,8 @@ if __name__ == "__main__":
     # visualise_cables.visualise_apart(simanneal.grid, district_number)
     # visualise_cables.visualise_house_apart(simanneal.grid, district_number)
 
-    # visualise_cables.visualise(climber.grid, district_number, grid_name=grid_name)
-    # visualise_cables.visualise_apart(climber.grid, district_number, grid_name=grid_name)
+    # visualise_cables.visualise(final_sa_valid.grid, district_number, grid_name=grid_name)
+    # visualise_cables.visualise_apart(final_sa_valid.grid, district_number, grid_name=grid_name)
 
     # visualise_cables.visualise(greedy2_dis1.grid, district_number)
     # visualise_cables.visualise_empty_grid(best_grid, district_number)
@@ -272,8 +269,8 @@ if __name__ == "__main__":
     
     if generate_output == "yes":
         output = list()
-        greedy_grid = greedy2_not_shared.grid
-        out_grid = {"district": district_number, "costs-own": greedy_grid.calc_cost2()}
+        greedy_grid = final_sa_valid.grid
+        out_grid = {"district": district_number, "costs-shared": greedy_grid.calc_cost2()}
         output.append(out_grid)
 
         for battery in greedy_grid.batteries.values():
@@ -295,7 +292,7 @@ if __name__ == "__main__":
 
             output.append(out_battery)
 
-        with open('/home/ysanne/SmartGrid/docs/output.json', 'w') as outfile:
+        with open(f'SmartGrid/docs/output.json', 'w') as outfile:
             json.dump(output, outfile)
 
 

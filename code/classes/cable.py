@@ -7,108 +7,109 @@ class Cable():
         self.house = house
         self.battery = battery
         self.cost_per_unit = 9
+
+        # if cables cannot be connected to cables from other houses
         self.length = abs(house.x - battery.x) + abs(house.y - battery.y)
 
     def cost(self):
+
+        # only used if cables cannot be connected to cables from other houses
         return self.cost_per_unit * self.length
 
     def lay_cable_to_closest_cable(self):
         """
-        cables are now allowed to be attached to eachother
+        cables are now allowed to be attached to eachother.
+        Can be used for empty and filled grids
         """
         # connect to closest cable connected to that battery 
-        # OR (to the battery itself if that is closer
-        # OR to the battery itself if there are no cables connected to that battery yet)
-
+        # or to the battery itself if that is closer or if there are no cables connected to that battery yet
         # step 1: find the closest point
-        # first get the distance between the ouse and the battery
-        # print(f"house x: {self.house.x}")
-        # print(f"house y: {self.house.y}")
+        # first get the distance between the house and the battery
+
+        # minimum distance
         min_distance = self.length
+
         connect_to = [self.battery.x, self.battery.y]
-        # print(f"connect to battery: {connect_to}")
+
+        # get the cables connected to the battery
         cable_matrix = self.battery.get_cable_matrix()
 
+        # loop through the grid coordinates
         for y in range(len(cable_matrix[0][:])):
 
             for x in range(len(cable_matrix[:][0])):
                 
-
+                # if there is a cable, calculate the distance from the house to that cable
                 if cable_matrix[x][y] == 1:
                     distance = abs(self.house.x - x) + abs(self.house.y - y)
 
+                    # if this distance is smaller than the minimum_distance, minimum_distance becomes new distance and new point to connect to is found
                     if distance < min_distance:
                         min_distance = distance
                         connect_to = [x, y]
 
-        # print(f"connect to battery or closest cable: {connect_to}")
-
         # step 2: lay cable to closest point
         self.lay_cable(connect_to[0], connect_to[1])
 
-        # now append from closest point to battery
+        # now append from closest cable to battery. This needs to be done because otherwise houses will not be connected to a battery when a house is reconnected
         second_part_of_cable_x = list()
         second_part_of_cable_y = list()
 
-        # find house with a cable which contains the coordinates of the closest point
+        # find house with a cable which contains the coordinates of the closest cable
         for house in self.battery.houses.values():
             start_appending = False
 
+            # if this house has a cable
             if house.cable is not None:
-                # loop through the cable coordinates until you find the coordinates of the closest point
+                # loop through the cable coordinates until you find the coordinates of the closest cable
                 # keep looping through the rest of the cable while adding the rest of the cable coordinates to second_part_of_cable
                 for x, y in zip(house.cable.x, house.cable.y):
 
                     if x == connect_to[0] and y == connect_to[1]:
-                        # house_of_interest = house
+                        # the house of interest has been found and we need the rest of the cable from this point onwards
                         start_appending = True
-                        # print(f"start appending")
 
                     if start_appending:
                         second_part_of_cable_x.append(x)
                         second_part_of_cable_y.append(y)
 
+                # we only need the rest of that cable once
                 if start_appending:
                     break
-
+        
+        # the closest cable would be twice in there if we didnt do this
         second_part_of_cable_x = second_part_of_cable_x[1:]
         second_part_of_cable_y = second_part_of_cable_y[1:]
-        # print(f"second part of cable x: {second_part_of_cable_x}")
-        # print(f"second part of cable y: {second_part_of_cable_y}")
 
+        # add it to the actual cable
         for x, y in zip(second_part_of_cable_x, second_part_of_cable_y):
             self.x.append(x)
             self.y.append(y)
 
-        # final_cable_x = list()
-        # final_cable_y = list()
-        # final_cable_x.append(first_part_of_cable_x)
-        # final_cable_y.append(first_part_of_cable_y)
-        # final_cable_x.append(second_part_of_cable_x)
-        # final_cable_y.append(second_part_of_cable_y)
-
-        # self.x = final_cable_x
-        # self.y = final_cable_y
-
     def lay_cable(self, connect_to_x = None, connect_to_y = None):
-        # determine cable location
+        """
+        provide connect_to_x and connect_to_y if you dont want to connect to the battery directly.
+        connects to given point with manhattan distance and only one kink in the cable.
+        """
 
+        # determine cable location
         # connect to battery if no target given
         if connect_to_x is None:
             connect_to_x = self.battery.x
             connect_to_y = self.battery.y
 
+        # start by laying the cable where the house is
         cable_head_x = self.house.x
         cable_head_y = self.house.y
 
         self.x.append(cable_head_x)
         self.y.append(cable_head_y)
 
-        # first horizontal then vertical
+        # first horizontal then vertical with a chance of 1 in 2. Why? Because the algorithm can then decide which one is better.
         if random.random() > 0.5:
             diff_x = self.house.x - connect_to_x
 
-            # if diff_x is positive, house is right of battery
+            # if diff_x is positive, house is right of battery/point of interest
             if diff_x > 0:
 
                 while cable_head_x > connect_to_x:
@@ -116,7 +117,7 @@ class Cable():
                     self.x.append(cable_head_x)
                     self.y.append(cable_head_y)
             
-            # if diff_x is negative, house is left of battery
+            # if diff_x is negative, house is left of battery/point of interest
             elif diff_x < 0:
 
                 while cable_head_x < connect_to_x:
@@ -126,7 +127,7 @@ class Cable():
 
             diff_y = self.house.y - connect_to_y
 
-            # if house is above battery
+            # if house is above battery/point of interest
             if diff_y > 0:
 
                 while cable_head_y > connect_to_y:
@@ -134,7 +135,7 @@ class Cable():
                     self.x.append(cable_head_x)
                     self.y.append(cable_head_y)
 
-            # if house is below battery
+            # if house is below battery/point of interest
             elif diff_y < 0:
 
                 while cable_head_y < connect_to_y:
@@ -146,7 +147,7 @@ class Cable():
         else:
             diff_y = self.house.y - connect_to_y
 
-            # if house is above battery
+            # if house is above battery/point of interest
             if diff_y > 0:
 
                 while cable_head_y > connect_to_y:
@@ -154,7 +155,7 @@ class Cable():
                     self.x.append(cable_head_x)
                     self.y.append(cable_head_y)
 
-            # if house is below battery
+            # if house is below battery/point of interest
             elif diff_y < 0:
 
                 while cable_head_y < connect_to_y:
@@ -164,7 +165,7 @@ class Cable():
 
             diff_x = self.house.x - connect_to_x
 
-            # if diff_x is positive, house is right of battery
+            # if diff_x is positive, house is right of battery/point of interest
             if diff_x > 0:
 
                 while cable_head_x > connect_to_x:
@@ -172,7 +173,7 @@ class Cable():
                     self.x.append(cable_head_x)
                     self.y.append(cable_head_y)
             
-            # if diff_x is negative, house is left of battery
+            # if diff_x is negative, house is left of battery/point of interest
             elif diff_x < 0:
 
                 while cable_head_x < connect_to_x:
@@ -182,76 +183,18 @@ class Cable():
 
 
     def lay_cable_to_random_house(self):
+        """
+        lays cable to a random house connected to that battery.
+        """
         random_house = random.choice(list(self.battery.houses.values()))
+
+        # lay cable to random house
         self.lay_cable(connect_to_x=random_house.x, connect_to_y = random_house.y)
 
+        # add the random house cable to the cable, otherwise the house will not be connected to a battery if a house is reconnected
         for x, y in zip(random_house.cable.x, random_house.cable.y):
             self.x.append(x)
             self.y.append(y)
-
-
-    # def lay_cable_to_random_house(self):
-    #     # from all houses connected to that battery and the battery itself
-    #     # choose a random one
-    #     to_pick_from = list()
-    #     to_pick_from.append(self.battery)
-    #     to_pick_from.append(self.battery.houses.values())
-    #     picked = random.choice(to_pick_from)
-        
-    #     # if it's a battery
-    #     if picked == self.battery:
-    #         # lay cable directly from house to battery
-    #         self.x, self.y = self.lay_cable(self.battery.x, self.battery.y)
-
-    #     # if it's a house
-    #     else:
-    #         random_house = picked
-    #         final_cable_x_list = list()
-    #         final_cable_y_list = list()
-    #         # lay a cable from the given house to the random house
-    #         # call it green
-    #         green_x_list, green_y_list = self.lay_cable(random_house.x, random_house.y)
-    #         # get the cable from the random house
-    #         # call it orange
-    #         orange_x_list = random_house.cable.x
-    #         orange_y_list = random_house.cable.y
-
-    #         # _______________
-
-    #         # final_cable.append(green not in orange)
-    #         # shared = green in orange
-    #         shared_x_list = list()
-    #         shared_y_list = list()
-
-    #         for green_x, green_y in zip(green_x_list, green_y_list):
-    #             green_in_orange = False
-
-    #             for orange_x, orange_y in zip(orange_x_list, orange_y_list):
-
-    #                 if orange_x == green_x and orange_y == green_y:
-    #                     green_in_orange = True
-    #                     shared_x_list.append(green_x)
-    #                     shared_y_list.append(green_y)
-
-    #             if not green_in_orange:
-    #                 final_cable_x_list.append(green_x)
-    #                 final_cable_y_list.append(green_y)
-
-    #         # final_cable.append(orange not in shared)
-    #         for orange_x, orange_y in zip(orange_x_list, orange_y_list):
-    #             orange_in_shared = False
-
-    #             for shared_x, shared_y in zip(shared_x_list, shared_y_list):
-
-    #                 if orange_x == shared_x and orange_y == shared_y:
-    #                     orange_in_shared = True
-
-    #             if not orange_in_shared:
-    #                 final_cable_x_list.append(orange_x)
-    #                 final_cable_y_list.append(orange_y)
-    #         # __________________
-
-    #         # eerst links rechts, dan boven beneden of andersom, random bepaald
 
     
     
