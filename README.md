@@ -76,6 +76,9 @@ In main.py kan ook gekozen worden welke visualisatie er wordt gerund. Om het <i>
 - visualise_cables.visualise(naam algoritme) om alle batterijen met hun connecties in één grid te weergeven
 - visualise_cables.visualise_apart(naam algoritme) om voor elke batterij apart een figuur met de batterij en zijn connecties te produceren.
 Om de <i>kosten van dealgoritmes te weergeven</i> zijn er drie keuzes:
+- visualise_costs(kostenlijst, algo). Een scatterplot van de kosten van verschillende iteraties van een algoritme
+- histogram_costs(kostenlijst, algo, nbins). Een histogram met de frequenties van de verschillende kosten bij de iteraties van een algoritme
+- compare_costs(kostenlijst1, algo1, kostenlijst2, algo2). Een barplot die de gemiddelde kosten van twee algoritmen weergeeft
 
 
 #### Een voorbeeldje kan gerund worden door aanroepen van:
