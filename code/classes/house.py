@@ -1,4 +1,7 @@
 class House():
+    """
+    Dataclass containing house
+    """
     def __init__(self, x, y, max_output, id):
         self.x = x
         self.y = y
@@ -10,6 +13,9 @@ class House():
         self.battery = None
     
     def add_cable(self, cable):
+        """
+        Add a cable to the collection of cables for a house
+        """
         self.cable = cable
 
 
