@@ -25,9 +25,7 @@ Daarnaast zijn er twee scenario's voor het leggen van de kabels:<br>
 
 ### Vereisten
 Deze codebase is geschreven in Python 3.7. Alle benodigde packages zijn beschreven in requirements.txt 
-
 Onderstaand zijn de instructies beschreven om deze te installerenn en de code succesvol te draaien:
-
 
 Via pip:
 
@@ -48,13 +46,17 @@ Bij het aanroepen van main.py heb je bovenin, onder de kop 'arguments', de mogel
 
 - greedy_version = None, baseline, 1, 2, of 3. <b>Hierbij is 2 het best presterende algoritme</b>
 - run_simulated_annealing = "yes" of "no"
-- run_hill_climber = "yes" of "no". De argumenten die aangepast kunnen worden zijn:
-final_sa_valid.grid, mutate_house_number = 3, cable_to_cable = True
-        , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
-        , decreasing_mutate_house_number = False
+- run_hill_climber = "yes" of "no".<br> De argumenten die aangepast kunnen worden zijn:
+  - final_sa_valid.grid, mutate_house_number = 3
+  -  cable_to_cable = True
+  -  minimalize_surplus = True
+  -  with_checkpoints = False
+  -  lay_cable = "to_closest_cable"
+  -   cost_and_surplus=True
+  -   decreasing_mutate_house_number = False
 - generate_output = "yes" of "no". <i>Dit genereert de JSON output</i>
 
-Daarnaast kan je kiezen welk district het algoritme moet optimaliseren: district_number = "1", "2" of "3"
+Daarnaast zijn er verschillende wijken te selecteren om de kabel configuratie te optimaliseren: district_number = "1", "2" of "3"
 
 Als laatste kan je kiezen voor scenario 1 (elk huis een eigen kabel) en scenario 2 (kabels van huizen aan dezelfde batterij mogen aan elkaar liggen). Hiervoor moet in het algoritme naar keuze de calc.cost() functie verandert worden naar calc.cost2().
 
@@ -62,7 +64,7 @@ Als laatste kan je kiezen voor scenario 1 (elk huis een eigen kabel) en scenario
  Het beste simulated_annealing resultaat is behaald door het volgende te doen:
  - run original_greedy (ongeveer 5k keer) met cable_to_cable = True
  - run simulated_annealing (ongeveer 100k iteraties) met de input argumenten zoals ze nu zijn. original_greedy.grid is de start grid. 
- - run hill_climber (tot de surplus 0 is) met als start grid simulated_annealing.grid en met de inputargumenten zoals ze zijn. zet: cost_and_surplus = False
+ - run hill_climber (tot de surplus 0 is) met als start grid simulated_annealing.grid en met de inputargumenten zoals ze zijn.<br> zet: cost_and_surplus = False
  - run nu hill_climber nog eens (ongeveer 100k iteraties) maar dan met hill_climber.grid als start grid en cost_and_surplus = True.
 
  ```console
