@@ -12,9 +12,9 @@ class Simulated_annealing(Hill_climber):
     Most of the functions are similar to those of the HillClimber class, which is why
     we use that as a parent class.
     """
-    def __init__(self, empty_grid, temperature=1, cooling_scheme="linear", alpha=0.99, mutate_house_number=20, cable_to_cable = True):
+    def __init__(self, grid, temperature=1, cooling_scheme="linear", alpha=0.99, mutate_house_number=3, cable_to_cable = True, lay_cable = "to_closest_cable"):
         # Use the init of the Hillclimber class
-        super().__init__(empty_grid, mutate_house_number, cable_to_cable)
+        super().__init__(grid=grid, mutate_house_number=mutate_house_number, cable_to_cable=cable_to_cable, lay_cable=lay_cable)
 
         # Starting temperature and current temperature
         self.T0 = temperature
@@ -66,6 +66,8 @@ class Simulated_annealing(Hill_climber):
         if random.random() < probability:
             self.grid = new_grid
             self.cost = new_cost
+
+        self.cost_list.append(self.cost)
 
         # Update the temperature
         self.update_temperature()

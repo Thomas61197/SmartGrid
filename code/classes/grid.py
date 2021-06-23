@@ -74,10 +74,11 @@ class Grid():
 
         return valid
 
-    def print_cum_output_per_battery(self):
+    def print_status_batteries(self):
         
         for battery in self.batteries.values():
-            print(f"battery_{battery.id}, cum_output: {battery.get_cum_output()}")
+            print(f"battery_{battery.id}, cum_output: {battery.get_cum_output()}, capacity: {battery.capacity}\
+, cum-cap: {battery.get_cum_output() - battery.capacity}")
             
     def calc_cost2(self):
         ''' 
@@ -98,4 +99,15 @@ class Grid():
             tot.append(cost_per_matrix)
 
         return sum(tot)
+
+    def calc_surplus(self):
+        surplus = 0
+
+        for battery in self.batteries.values():
+            diff = battery.get_cum_output() - battery.capacity
+
+            if diff > 0:
+                surplus += diff
+        
+        return surplus
 
