@@ -12,7 +12,7 @@ if __name__ == "__main__":
     district_number = "3"
     greedy_version = None # Choices are "baseline" for baseline, 1 for original_greedy, 2 for greedy2, or 3 for greedy3. None if you don't want any of these to run
     run_simulated_annealing = "no"
-    run_hill_climber = "no"
+    run_hill_climber = "yes"
     generate_output = "no"
 
     # Load in the data files
