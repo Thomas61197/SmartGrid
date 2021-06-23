@@ -56,7 +56,7 @@ Bij het aanroepen van main.py heb je bovenin, onder de kop 'arguments', de mogel
   -   decreasing_mutate_house_number = False
 - generate_output = "yes" of "no". <i>Dit genereert de JSON output</i>
 
-Daarnaast kan je kiezen welk district het algoritme moet optimaliseren: district_number = "1", "2" of "3"
+Daarnaast zijn er verschillende wijken te selecteren om de kabel configuratie te optimaliseren: district_number = "1", "2" of "3"
 
 Als laatste kan je kiezen voor scenario 1 (elk huis een eigen kabel) en scenario 2 (kabels van huizen aan dezelfde batterij mogen aan elkaar liggen). Hiervoor moet in het algoritme naar keuze de calc.cost() functie verandert worden naar calc.cost2().
 
