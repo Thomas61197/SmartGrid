@@ -8,15 +8,15 @@ import pickle
 import copy
 
 if __name__ == "__main__":
-    district_number = "2"
+    district_number = "3"
     greedy_version = 4
 
     # Load in the data files
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    # battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    # house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     empty_grid = grid.Grid(house_file, battery_file)
 
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_solution_yet_dis1_sa_valid.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_it_or_greedy_ctc_dis2_1mil_it_simanneal_37_ctc.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_or_greedy_ctc_dis3_100k_sa_38_ctc.pickle"
-    file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final_sa_valid_dis{district_number}.pickle"
+    file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final2_sa_valid_dis{district_number}.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
@@ -209,20 +209,20 @@ if __name__ == "__main__":
 
     # --------------------------- Hill Climber (fix) ---------------------------------
     
-    print("Setting up Hill Climber...")
-    climber = hill_climber.Hill_climber(final_sa_valid.grid, mutate_house_number = 3, cable_to_cable = True
-    , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
-    , decreasing_mutate_house_number = False)
+    # print("Setting up Hill Climber...")
+    # climber = hill_climber.Hill_climber(final_sa_valid.grid, mutate_house_number = 3, cable_to_cable = True
+    # , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
+    # , decreasing_mutate_house_number = False)
 
-    # print("Running Hill Climber...")
-    climber.run(100000, verbose=True)
+    # # print("Running Hill Climber...")
+    # climber.run(100000, verbose=True)
 
-    # print(f"Value of the configuration after Hill Climber: "
-    #       f"{climber.grid.calc_cost2()}")
+    # # print(f"Value of the configuration after Hill Climber: "
+    # #       f"{climber.grid.calc_cost2()}")
 
-    if climber.grid.is_valid():
-        climber_id = 10
-        file_name = f"SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/{grid_name}.pickle"
+    # if climber.grid.is_valid():
+    #     climber_id = 10
+    #     file_name = f"SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/{grid_name}.pickle"
 
     #     with open(file_name, 'wb') as handle:
     #         pickle.dump(climber, handle)
@@ -234,8 +234,8 @@ if __name__ == "__main__":
     # visualise_cables.visualise_apart(simanneal.grid, district_number)
     # visualise_cables.visualise_house_apart(simanneal.grid, district_number)
 
-    visualise_cables.visualise(climber.grid, district_number, grid_name=grid_name)
-    visualise_cables.visualise_apart(climber.grid, district_number, grid_name=grid_name)
+    visualise_cables.visualise(final_sa_valid.grid, district_number, grid_name=grid_name)
+    visualise_cables.visualise_apart(final_sa_valid.grid, district_number, grid_name=grid_name)
 
     # visualise_cables.visualise(greedy2_dis1.grid, district_number)
     # visualise_cables.visualise_empty_grid(best_grid, district_number)
@@ -258,32 +258,32 @@ if __name__ == "__main__":
 
     # --------------------------- output --------------------------
     
-    output = list()
-    greedy_grid = best_grid_greedy2_dis1.grid
-    out_grid = {"district": district_number, "costs-shared": greedy_grid.calc_cost2()}
-    output.append(out_grid)
+    # output = list()
+    # greedy_grid = best_grid_greedy2_dis1.grid
+    # out_grid = {"district": district_number, "costs-shared": greedy_grid.calc_cost2()}
+    # output.append(out_grid)
 
-    for battery in greedy_grid.batteries.values():
-        out_battery = {}
-        out_battery["location"] = f"{battery.x},{battery.y}"
-        out_battery["capacity"] = battery.capacity
-        out_battery["houses"] = list()
+    # for battery in greedy_grid.batteries.values():
+    #     out_battery = {}
+    #     out_battery["location"] = f"{battery.x},{battery.y}"
+    #     out_battery["capacity"] = battery.capacity
+    #     out_battery["houses"] = list()
 
-        for house in battery.houses.values():
-            out_house = {}
-            out_house["location"] = f"{house.x},{house.y}"
-            out_house["output"] = house.max_output
-            out_house["cables"] = list()
+    #     for house in battery.houses.values():
+    #         out_house = {}
+    #         out_house["location"] = f"{house.x},{house.y}"
+    #         out_house["output"] = house.max_output
+    #         out_house["cables"] = list()
 
-            for i in range(len(house.cable.x)):
-                out_house["cables"].append(f"{house.cable.x[i]},{house.cable.y[i]}")
+    #         for i in range(len(house.cable.x)):
+    #             out_house["cables"].append(f"{house.cable.x[i]},{house.cable.y[i]}")
             
-            out_battery["houses"].append(out_house)
+    #         out_battery["houses"].append(out_house)
 
-        output.append(out_battery)
+    #     output.append(out_battery)
 
-    with open('/home/ysanne/SmartGrid/docs/output.json', 'w') as outfile:
-        json.dump(output, outfile)
+    # with open('/home/ysanne/SmartGrid/docs/output.json', 'w') as outfile:
+    #     json.dump(output, outfile)
 
 
 

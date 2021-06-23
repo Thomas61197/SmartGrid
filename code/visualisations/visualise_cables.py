@@ -6,10 +6,10 @@ from code.classes import grid, house, battery, cable
 def visualise(grid, district_number, grid_name):
 
     # load data files
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    # battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    # house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     dfhouses = pd.read_csv(house_file)
     dfhouses.plot(kind='scatter', x='x', y='y')
@@ -58,8 +58,8 @@ def visualise_apart(grid, district_number, grid_name):
     for battery in grid.batteries.values():
         
         # Load house files
-        house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-        # house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+        # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+        house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
         dfhouses = pd.read_csv(house_file)
         dfhouses.plot(kind='scatter', x='x', y='y')
 
