@@ -1,14 +1,14 @@
 # SmartGrid
 
-Veel huizen hebben tegenwoordig zonnepanelen om zelf energie mee te produceren. Vaak produceren de zonnepanelen meer dan voor eigen consumptie nodig is. Dit overschot kan worden terugverkocht aan de leverancier, maar de infrastructuur (het grid) is daar veelal niet op berekend. Om de pieken in consumptie en productie te kunnen managen moeten er batterijen geplaatst worden. Voor een feasibility study zijn drie dummy-woonwijken opgesteld, met daarin vijf batterijen. De huizen hebben zonnepanelen met een maximale output en de batterijen hebben een maximale capaciteit. Exacte details zijn te vinden in [deze bestanden](https://github.com/Thomas61197/SmartGrid/tree/main/data/Huizen%26Batterijen). Kabels om huizen en batterijen te verbinden liggen op de gridlijnen. De kosten van kabels zijn afhankeljk van de lengte en kosten 9 per grid-segment. De batterijen kosten 5000 per stuk.
+Veel huizen hebben tegenwoordig zonnepanelen om zelf energie mee te produceren. Vaak produceren de zonnepanelen meer dan voor eigen consumptie nodig is. Dit overschot kan worden terugverkocht aan de leverancier, maar de infrastructuur (het grid) is daar veelal niet op berekend. Om de pieken in consumptie en productie te kunnen managen moeten er batterijen geplaatst worden. Voor een feasibility study zijn drie dummy-woonwijken opgesteld, met daarin vijf batterijen. De huizen hebben zonnepanelen met een maximale output en de batterijen hebben een maximale capaciteit. Exacte details zijn te vinden in [deze bestanden](https://github.com/Thomas61197/SmartGrid/tree/main/data/Huizen%26Batterijen). Kabels om huizen en batterijen te verbinden liggen op de gridlijnen. De kosten van kabels zijn afhankelijk van de lengte en kosten 9 per grid-segment. De batterijen kosten 5000 per stuk.
 
-Het doel van SmartGrid is om met de meest slimme configuratie van het kabel netwer, de huizen met batterijen te verbinden waarbij de kosten worden geminimaliseerd. 
+Het doel van SmartGrid is om met de meest slimme configuratie van het kabel netwerk, de huizen met batterijen te verbinden waarbij de kosten worden geminimaliseerd. 
 
 Voor een valide oplossing gelden de volgende eisen:<br>
 - De maximumcapaciteit van de huizen die van de batterijen niet mag overschrijden.
 - De afstand van een huis tot een batterij wordt berekend volgens de Manhattan distance. 
 - Kabels mogen gridpunten met een huis passeren. 
-- Batterijen mogen niet aan elkaar verbondenden zijn. Ook niet via een huis.
+- Batterijen mogen niet aan elkaar verbonden zijn. Ook niet via een huis.
 - Een huis mag niet aan meerdere batterijen verbonden zijn.
 
 
@@ -25,7 +25,7 @@ Daarnaast zijn er twee scenario's voor het leggen van de kabels:<br>
 
 ### Vereisten
 Deze codebase is geschreven in Python 3.7. Alle benodigde packages zijn beschreven in requirements.txt 
-Onderstaand zijn de instructies beschreven om deze te installerenn en de code succesvol te draaien:
+Onderstaand zijn de instructies beschreven om deze te installeren en de code succesvol te draaien:
 
 Via pip:
 
