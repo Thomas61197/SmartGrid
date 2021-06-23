@@ -144,10 +144,18 @@ if __name__ == "__main__":
         visualise_costs.visualise_costs(greedy3_costs, "greedy3")
     
     # --------------------------- Simulated Annealing --------------------------
-    # HIER!!!!!!!!!!!!
+    """
+    The SimulatedAnnealing class that changes a random node in the model to a random valid value.
+    The SimulatedAnnealing class that changes a random node in the model to a random valid value.
+    Each improvement or equivalent solution is kept for the next iteration.
+    Also sometimes accepts solutions that are worse, depending on the current temperature.
+    Most of the functions are similar to those of the HillClimber class, which is why
+    we use that as a parent class. 
+    
 
-    # Simulated annealing 2 is different from simulated annealing 1 in that this one decreases the mutate_house_number linearly with 
-    # each iteration, whereas in the other one the mutate_house_number is static.
+    Simulated annealing 2 is different from simulated annealing 1 in that this one decreases the mutate_house_number linearly with 
+    each iteration, whereas in the other one the mutate_house_number is static.
+    """
 
     # print("Setting up Simulated Annealing...")
     # simanneal = simulated_annealing.Simulated_annealing(best_greedy.grid, temperature=(51+51)*9, mutate_house_number = 3
