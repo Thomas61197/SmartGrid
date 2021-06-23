@@ -9,7 +9,10 @@ import copy
 
 if __name__ == "__main__":
     district_number = "2"
-    greedy_version = 4
+    greedy_version = 4 # Choices are None, 1, 2, or 3
+    run_simulated_annealing = "no"
+    run_hill_climber = "no"
+    generate_output = "no"
 
     # Load in the data files
     battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
@@ -84,7 +87,7 @@ if __name__ == "__main__":
     # --------------------------- original greedy--------------------------
     if greedy_version == 1:
         """
-        If battery is full, reconnects the house with the lowest cost
+        If battery is full, reconnects the house with the largest output
         """
         print('running Greedy version 1..')
 
@@ -167,71 +170,73 @@ if __name__ == "__main__":
         visualise_costs.visualise_costs(greedy3_costs, "greedy3")
     
     # --------------------------- Simulated Annealing --------------------------
-    """
-    A starting temperature of (51+51)*9 was chosen because, often, a good starting temperature for this algorithm is equal to the 
-    maximum difference in the value you are trying to maximize/minimize. In this case, the grid has a length of 51, a breadth of 51
-    and the cost of laying a piece of cable on asingle grid segment is 9.
+    if run_simulated_annealing == 'yes':
+        """
+        A starting temperature of (51+51)*9 was chosen because, often, a good starting temperature for this algorithm is equal to the 
+        maximum difference in the value you are trying to maximize/minimize. In this case, the grid has a length of 51, a breadth of 51
+        and the cost of laying a piece of cable on asingle grid segment is 9.
 
-    """
-    # print("Setting up Simulated Annealing...")
-    # simanneal = simulated_annealing.Simulated_annealing(best_greedy.grid, temperature=(51+51)*9, mutate_house_number = 3
-    # , alpha = 0.9999, cooling_scheme="exponential", cable_to_cable = True, lay_cable = "to_closest_cable", decreasing_mutate_house_number = False)
-    
-    # print("Running Simulated Annealing...")
-    # simanneal.run(100000, verbose=True)
-    
-    # print(f"Value of the configuration after Simulated Annealing: "
-    #       f"{simanneal.grid.calc_cost2()}")
+        """
+        print("Setting up Simulated Annealing...")
+        simanneal = simulated_annealing.Simulated_annealing(best_greedy.grid, temperature=(51+51)*9, mutate_house_number = 3
+        , alpha = 0.9999, cooling_scheme="exponential", cable_to_cable = True, lay_cable = "to_closest_cable", decreasing_mutate_house_number = False)
+        
+        print("Running Simulated Annealing...")
+        simanneal.run(100000, verbose=True)
+        
+        print(f"Value of the configuration after Simulated Annealing: "
+              f"{simanneal.grid.calc_cost2()}")
 
-    # simanneal_id = 38
+        simanneal_id = 38
 
-    # file_name = f"SmartGrid/data/solutions/5k_or_greedy_ctc_dis{district_number}_100k_sa_{simanneal_id}_ctc.pickle"
+        file_name = f"SmartGrid/data/solutions/5k_or_greedy_ctc_dis{district_number}_100k_sa_{simanneal_id}_ctc.pickle"
 
-    # # IMPORTANT: save simanneal object (if lots of iterations)!
-    # with open(file_name, 'wb') as handle:
-    #     pickle.dump(simanneal, handle)
+        # IMPORTANT: save simanneal object (if lots of iterations)!
+        with open(file_name, 'wb') as handle:
+            pickle.dump(simanneal, handle)
 
-    # experiments = {}
-    # experiments["object_id"] = simanneal_id
-    # experiments["district"] = district_number
-    # experiments["object_type"] = "simanneal"
-    # experiments["cost"] = simanneal.grid.calc_cost2()
-    # experiments["start_grid"] = "5k_original_greedy_ctc"
-    # experiments["temperature"] = simanneal.T0
-    # experiments["cooling_scheme"] = simanneal.cooling_scheme
-    # experiments["alpha"] = simanneal.alpha
-    # experiments["iterations"] = simanneal.iterations
-    # experiments["mutate_house_number"] = simanneal.mutate_house_number
-    # experiments["mutate_house_number_start"] = simanneal.mutate_house_number0
-    # experiments["cable_to_cable"] = simanneal.cable_to_cable
+        experiments = {}
+        experiments["object_id"] = simanneal_id
+        experiments["district"] = district_number
+        experiments["object_type"] = "simanneal"
+        experiments["cost"] = simanneal.grid.calc_cost2()
+        experiments["start_grid"] = "5k_original_greedy_ctc"
+        experiments["temperature"] = simanneal.T0
+        experiments["cooling_scheme"] = simanneal.cooling_scheme
+        experiments["alpha"] = simanneal.alpha
+        experiments["iterations"] = simanneal.iterations
+        experiments["mutate_house_number"] = simanneal.mutate_house_number
+        experiments["mutate_house_number_start"] = simanneal.mutate_house_number0
+        experiments["cable_to_cable"] = simanneal.cable_to_cable
 
-    # df_experiments = pd.DataFrame(experiments, index=[experiments['object_id']])
-    # df_experiments_old = pd.read_csv("/home/thomas61197/SmartGrid/data/experiments.csv")
-    # df_experiments_new = pd.concat([df_experiments_old.reset_index(drop=True), df_experiments.reset_index(drop=True)]
-    # , ignore_index=True)
-    # df_experiments_new.set_index('object_id')
-    # print(df_experiments_new)
-    # df_experiments_new.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", header = True, index = False)
+        df_experiments = pd.DataFrame(experiments, index=[experiments['object_id']])
+        df_experiments_old = pd.read_csv("/home/thomas61197/SmartGrid/data/experiments.csv")
+        df_experiments_new = pd.concat([df_experiments_old.reset_index(drop=True), df_experiments.reset_index(drop=True)]
+        , ignore_index=True)
+        df_experiments_new.set_index('object_id')
+        print(df_experiments_new)
+        df_experiments_new.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", header = True, index = False)
 
     # --------------------------- Hill Climber (fix) ---------------------------------
     
-    print("Setting up Hill Climber...")
-    climber = hill_climber.Hill_climber(final_sa_valid.grid, mutate_house_number = 3, cable_to_cable = True
-    , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
-    , decreasing_mutate_house_number = False)
+    if run_hill_climber == "yes":
+        print("Setting up Hill Climber...")
+        climber = hill_climber.Hill_climber(final_sa_valid.grid, mutate_house_number = 3, cable_to_cable = True
+        , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
+        , decreasing_mutate_house_number = False)
 
-    # print("Running Hill Climber...")
-    climber.run(100000, verbose=True)
+        # print("Running Hill Climber...")
+        climber.run(100000, verbose=True)
 
-    # print(f"Value of the configuration after Hill Climber: "
-    #       f"{climber.grid.calc_cost2()}")
+        # print(f"Value of the configuration after Hill Climber: "
+        #       f"{climber.grid.calc_cost2()}")
 
-    if climber.grid.is_valid():
-        climber_id = 10
-        file_name = f"SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/{grid_name}.pickle"
+        if climber.grid.is_valid():
+            climber_id = 10
+            file_name = f"SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/{grid_name}.pickle"
 
-    #     with open(file_name, 'wb') as handle:
-    #         pickle.dump(climber, handle)
+        #     with open(file_name, 'wb') as handle:
+        #         pickle.dump(climber, handle)
 
     # --------------------------- visualisation --------------------------
     # visualise_cables.visualise(greedy3.grid)
@@ -264,32 +269,33 @@ if __name__ == "__main__":
 
     # --------------------------- output --------------------------
     
-    output = list()
-    greedy_grid = best_grid_greedy2_dis1.grid
-    out_grid = {"district": district_number, "costs-shared": greedy_grid.calc_cost2()}
-    output.append(out_grid)
+    if generate_output == "yes":
+        output = list()
+        greedy_grid = best_grid_greedy2_dis1.grid
+        out_grid = {"district": district_number, "costs-shared": greedy_grid.calc_cost2()}
+        output.append(out_grid)
 
-    for battery in greedy_grid.batteries.values():
-        out_battery = {}
-        out_battery["location"] = f"{battery.x},{battery.y}"
-        out_battery["capacity"] = battery.capacity
-        out_battery["houses"] = list()
+        for battery in greedy_grid.batteries.values():
+            out_battery = {}
+            out_battery["location"] = f"{battery.x},{battery.y}"
+            out_battery["capacity"] = battery.capacity
+            out_battery["houses"] = list()
 
-        for house in battery.houses.values():
-            out_house = {}
-            out_house["location"] = f"{house.x},{house.y}"
-            out_house["output"] = house.max_output
-            out_house["cables"] = list()
+            for house in battery.houses.values():
+                out_house = {}
+                out_house["location"] = f"{house.x},{house.y}"
+                out_house["output"] = house.max_output
+                out_house["cables"] = list()
 
-            for i in range(len(house.cable.x)):
-                out_house["cables"].append(f"{house.cable.x[i]},{house.cable.y[i]}")
-            
-            out_battery["houses"].append(out_house)
+                for i in range(len(house.cable.x)):
+                    out_house["cables"].append(f"{house.cable.x[i]},{house.cable.y[i]}")
+                
+                out_battery["houses"].append(out_house)
 
-        output.append(out_battery)
+            output.append(out_battery)
 
-    with open('/home/ysanne/SmartGrid/docs/output.json', 'w') as outfile:
-        json.dump(output, outfile)
+        with open('/home/ysanne/SmartGrid/docs/output.json', 'w') as outfile:
+            json.dump(output, outfile)
 
 
 
