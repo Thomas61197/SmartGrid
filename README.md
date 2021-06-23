@@ -46,10 +46,14 @@ Bij het aanroepen van main.py heb je bovenin, onder de kop 'arguments', de mogel
 
 - greedy_version = None, baseline, 1, 2, of 3. <b>Hierbij is 2 het best presterende algoritme</b>
 - run_simulated_annealing = "yes" of "no"
-- run_hill_climber = "yes" of "no". De argumenten die aangepast kunnen worden zijn:
-final_sa_valid.grid, mutate_house_number = 3, cable_to_cable = True
-        , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
-        , decreasing_mutate_house_number = False
+- run_hill_climber = "yes" of "no".<br> De argumenten die aangepast kunnen worden zijn:
+  - final_sa_valid.grid, mutate_house_number = 3
+  -  cable_to_cable = True
+  -  minimalize_surplus = True
+  -  with_checkpoints = False
+  -  lay_cable = "to_closest_cable"
+  -   cost_and_surplus=True
+  -   decreasing_mutate_house_number = False
 - generate_output = "yes" of "no". <i>Dit genereert de JSON output</i>
 
 Daarnaast kan je kiezen welk district het algoritme moet optimaliseren: district_number = "1", "2" of "3"
