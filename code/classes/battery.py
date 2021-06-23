@@ -63,12 +63,13 @@ class Battery():
 
                     for x, y in zip(house.cable.x, house.cable.y):
                         
-                        # for some reason, x and y are sometimes lists in object best_greedy
-                        if type(x) == list:
+                        # # for some reason, x and y are sometimes lists in object best_greedy
+                        # if type(x) == list:
 
-                            for x2, y2 in zip(x, y):
-                                matrix[x2][y2] = int(1)
-                        else:
-                            matrix[x][y] = int(1)
+                        #     for x2, y2 in zip(x, y):
+                        #         matrix[x2][y2] = int(1)
+                        # else:
+                        
+                        matrix[x][y] = int(1)
                 
         return matrix

@@ -8,9 +8,8 @@ import pickle
 import copy
 
 if __name__ == "__main__":
-    # Enter district number and which Greedy you want. Choices: None(=baseline), 1, 2, and 3(=cheapest Greedy Baseline)
-    district_number = "1"
-    greedy_version = 2
+    district_number = "2"
+    greedy_version = 4
 
     # Load in the data files
     battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
@@ -29,17 +28,22 @@ if __name__ == "__main__":
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/10k_it_or_greedy_ctc_dis1.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_baseline_100k.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/10k_it_or_greedy_ctc_dis1_1mil_it_simanneal_36_ctc.pickle"
-    # file_name = "/home/ysanne/SmartGrid/data/solutions/best_greedy2_100k_dis1.pickle"
-    file_name = "/home/ysanne/SmartGrid/data/solutions/Greedy2_100k_dis1_hc_fix_sur_ctc.pickle"
+    # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_solution_yet_dis1_sa_valid.pickle"
+    # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_it_or_greedy_ctc_dis2_1mil_it_simanneal_37_ctc.pickle"
+    # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_or_greedy_ctc_dis3_100k_sa_38_ctc.pickle"
+    file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final_sa_valid_dis{district_number}.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
         # best_original_greedy = pickle.load(handle)
-        best_grid_greedy2_dis1 = pickle.load(handle)
+        # simanneal_cable_to_cable = pickle.load(handle)
         # best_base = pickle.load(handle)
-        handle.close()
+        final_sa_valid = pickle.load(handle)
 
     # best_original_greedy.grid.print_status_batteries()
+
+    # save as
+    grid_name = f"final2_sa_valid_dis{district_number}"
 
     # --------------------------- baseline --------------------------
     if greedy_version == None:
@@ -164,24 +168,17 @@ if __name__ == "__main__":
     
     # --------------------------- Simulated Annealing --------------------------
     """
-    The SimulatedAnnealing class that changes a random node in the model to a random valid value.
-    The SimulatedAnnealing class that changes a random node in the model to a random valid value.
-    Each improvement or equivalent solution is kept for the next iteration.
-    Also sometimes accepts solutions that are worse, depending on the current temperature.
-    Most of the functions are similar to those of the HillClimber class, which is why
-    we use that as a parent class. 
-    
+    A starting temperature of (51+51)*9 was chosen because, often, a good starting temperature for this algorithm is equal to the 
+    maximum difference in the value you are trying to maximize/minimize. In this case, the grid has a length of 51, a breadth of 51
+    and the cost of laying a piece of cable on asingle grid segment is 9.
 
-    Simulated annealing 2 is different from simulated annealing 1 in that this one decreases the mutate_house_number linearly with 
-    each iteration, whereas in the other one the mutate_house_number is static.
     """
-
     # print("Setting up Simulated Annealing...")
     # simanneal = simulated_annealing.Simulated_annealing(best_greedy.grid, temperature=(51+51)*9, mutate_house_number = 3
-    # , alpha = 0.9999, cooling_scheme="exponential", cable_to_cable = True, lay_cable = "to_closest_cable")
+    # , alpha = 0.9999, cooling_scheme="exponential", cable_to_cable = True, lay_cable = "to_closest_cable", decreasing_mutate_house_number = False)
     
     # print("Running Simulated Annealing...")
-    # simanneal.run(100000, verbose=True, decreasing_mutate_house_number = False)
+    # simanneal.run(100000, verbose=True)
     
     # print(f"Value of the configuration after Simulated Annealing: "
     #       f"{simanneal.grid.calc_cost2()}")
@@ -218,19 +215,20 @@ if __name__ == "__main__":
 
     # --------------------------- Hill Climber (fix) ---------------------------------
     
-    # print("Setting up Hill Climber...")
-    # climber = hill_climber.Hill_climber(greedy2_dis1.grid, mutate_house_number = 3, cable_to_cable = True
-    # , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus = True)
+    print("Setting up Hill Climber...")
+    climber = hill_climber.Hill_climber(final_sa_valid.grid, mutate_house_number = 3, cable_to_cable = True
+    , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
+    , decreasing_mutate_house_number = False)
 
-    # # print("Running Hill Climber...")
-    # climber.run(100000, verbose=True)
+    # print("Running Hill Climber...")
+    climber.run(100000, verbose=True)
 
     # print(f"Value of the configuration after Hill Climber: "
     #       f"{climber.grid.calc_cost2()}")
 
-    # if climber.grid.is_valid():
-    #     climber_id = 9
-    #     file_name = f"data/solutions/Greedy2_dis{district_number}_hc_fix_sur_ctc.pickle"
+    if climber.grid.is_valid():
+        climber_id = 10
+        file_name = f"SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/{grid_name}.pickle"
 
     #     with open(file_name, 'wb') as handle:
     #         pickle.dump(climber, handle)
@@ -242,8 +240,8 @@ if __name__ == "__main__":
     # visualise_cables.visualise_apart(simanneal.grid, district_number)
     # visualise_cables.visualise_house_apart(simanneal.grid, district_number)
 
-    # visualise_cables.visualise(climber.grid, district_number)
-    # visualise_cables.visualise_apart(climber.grid, district_number)
+    visualise_cables.visualise(climber.grid, district_number, grid_name=grid_name)
+    visualise_cables.visualise_apart(climber.grid, district_number, grid_name=grid_name)
 
     # visualise_cables.visualise(greedy2_dis1.grid, district_number)
     # visualise_cables.visualise_empty_grid(best_grid, district_number)
@@ -256,6 +254,9 @@ if __name__ == "__main__":
     # visualise_cables.visualise_apart(best_grid, district_number)
     # visualise_cables.visualise(best_grid, district_number)
     # visualise_cables.visualise_house_apart(best_grid, district_number)
+
+    # visualise_cables.visualise(final_sa_valid_dis1.grid, district_number, grid_name=grid_name)
+    # visualise_cables.visualise_apart(final_sa_valid_dis1.grid, district_number, grid_name=grid_name)
 
     # --------------------------- compare --------------------------
 

@@ -8,11 +8,28 @@ from code.algorithms import original_greedy
 
 class Hill_climber:
     """
-    The HillClimber class that changes a random node in the graph to a random valid value. Each improvement or
+    The Hill_climber class that changes a random node in the graph to a random valid value. Each improvement or
     equivalent solution is kept for the next iteration.
+
+    The algorithm requires a fully filled in grid with cables where every house is connected to a battery.
+
+    mutate_house_number is the number of houses of which its connections are changed.
+
+    If cable_to_cable is set to True, houses are connected to the battery by laying a cable from the house to the closest cable that is connected
+    to the chosen battery.
+
+    If minimalize_surplus is set to True, the hill climber minimizes output surplus above battery capacity.
+
+    If with_checkpoints is set to true, instances of the class itself are saved at certain iteration intervals. Make sure the files are saved under the correct name. 
+
+    The lay_cable argument specifies how to lay the cable in case cable_to_cable is set to true. It can be "to_closest_cable" or "to_random_house".
+
+    If minimalize_surplus is set to True and cost_and_surplus is set to True, the algorithm minimizes both cost and surplus.
+    
+    If decrease_mutate_house_number is set to true, it decreases the mutate_house_number linearly with each iteration.
     """
     def __init__(self, grid, mutate_house_number = 1, cable_to_cable = True, minimalize_surplus = False, with_checkpoints = False
-    , lay_cable = None, cost_and_surplus = False):
+    , lay_cable = None, cost_and_surplus = False, decreasing_mutate_house_number = False):
         self.grid = grid
         self.mutate_house_number0 = mutate_house_number
         self.mutate_house_number = mutate_house_number
@@ -21,29 +38,34 @@ class Hill_climber:
         self.with_checkpoints = with_checkpoints
         self.lay_cable = lay_cable
         self.cost_and_surplus = cost_and_surplus
+        self.decreasing_mutate_house_number = decreasing_mutate_house_number
 
     def random_reconfigure_house(self, house, batteries):
         """
-        take a house and connect it to a random (available) battery
+        take a house, remove its cable and disconnect it from its current battery and connect it to a random (available) battery with a cable
         """
-        # detach house from battery
         old_battery = house.cable.battery
-            
+        
+        # detach house from battery
         old_battery.remove_house(house)
 
         # remove cable
         house.cable = None
 
+        # choose new battery from available batteries
         new_battery = random.choice(batteries)
 
         cable1 = cable.Cable(house = house, battery = new_battery)
 
+        # if cables from different houses are allowed to be connected to eachother
         if self.cable_to_cable:
             
+            # different ways of connecting a house to a battery
             if self.lay_cable == "to_random_house":
                 cable1.lay_cable_to_random_house()
             else:
                 cable1.lay_cable_to_closest_cable()
+        # connect the house directly to the battery
         else:
             cable1.lay_cable()
 
@@ -55,18 +77,18 @@ class Hill_climber:
 
     def mutate_single_house(self, new_grid):
         """
-        Changes the connection of a random house to a battery with a random valid connection to a different battery.
+        Changes the connection of a random house to a battery with a random close to valid connection to a different battery.
         """
         random_house = random.choice(list(new_grid.houses.values()))
         available_batteries = list()
 
         for battery in new_grid.batteries.values():
             
+            # a battery is defined as available when it has not yet reached its maximum capacity
             if not battery.capacity_reached():
                 available_batteries.append(battery)
-
         
-        # print(f"available batteries: {available_batteries}")
+        # actually bring about the change
         self.random_reconfigure_house(random_house, available_batteries)
 
     def mutate_grid(self, new_grid):
@@ -76,7 +98,7 @@ class Hill_climber:
         for _ in range(math.ceil(self.mutate_house_number)):
             self.mutate_single_house(new_grid)
 
-    def check_solution(self, new_grid, decreasing_mutate_house_number):
+    def check_solution(self, new_grid):
         """
         Checks and accepts better solutions than the current solution.
         """
@@ -114,7 +136,14 @@ class Hill_climber:
 
         # new_grid.print_status_batteries()
 
-    def run(self, iterations, verbose=False, decreasing_mutate_house_number = False):
+    
+    def update_mutate_house_number(self):
+        """
+        
+        """
+        self.mutate_house_number = (self.mutate_house_number - (self.mutate_house_number0 / self.iterations))
+
+    def run(self, iterations, verbose=False):
         """
         Runs the hillclimber algorithm for a specific amount of iterations.
         Takes a filled in grid as starting grid
@@ -146,7 +175,10 @@ class Hill_climber:
             self.mutate_grid(new_grid)
 
             # Accept it if it is better
-            self.check_solution(new_grid, decreasing_mutate_house_number)
+            self.check_solution(new_grid)
+
+            if self.decreasing_mutate_house_number == True:
+                self.update_mutate_house_number()
 
             if self.with_checkpoints:
 
