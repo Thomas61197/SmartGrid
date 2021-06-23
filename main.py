@@ -8,8 +8,8 @@ import pickle
 import copy
 
 if __name__ == "__main__":
-    district_number = "2"
-    greedy_version = 4 # Choices are None, 1, 2, or 3
+    district_number = "3"
+    greedy_version = None # Choices are "baseline" for baseline, 1 for original_greedy, 2 for greedy2, or 3 for greedy3. None if you don't want any of these to run
     run_simulated_annealing = "no"
     run_hill_climber = "no"
     generate_output = "no"
@@ -43,13 +43,11 @@ if __name__ == "__main__":
         # best_base = pickle.load(handle)
         final_sa_valid = pickle.load(handle)
 
-    # best_original_greedy.grid.print_status_batteries()
-
     # save as
     grid_name = f"final2_sa_valid_dis{district_number}"
 
     # --------------------------- baseline --------------------------
-    if greedy_version == None:
+    if greedy_version == "baseline":
         """
         Baseline, connects random house to random battery that is not yet full
         """
@@ -153,7 +151,7 @@ if __name__ == "__main__":
         # with open(file_name, 'wb') as handle:
         #     pickle.dump(best_greedy2_100k_ctc_dis2, handle)
 
-        # --------------------------- greedy - each house to closest battery--------------------------
+        # --------------------------- greedy 3 - each house to closest battery--------------------------
     if greedy_version == 3:
         """
         Connects each house to closest battery. Lowest cost baseline.
@@ -271,7 +269,7 @@ if __name__ == "__main__":
     
     if generate_output == "yes":
         output = list()
-        greedy_grid = best_grid_greedy2_dis1.grid
+        greedy_grid = final_sa_valid.grid
         out_grid = {"district": district_number, "costs-shared": greedy_grid.calc_cost2()}
         output.append(out_grid)
 
@@ -294,7 +292,7 @@ if __name__ == "__main__":
 
             output.append(out_battery)
 
-        with open('/home/ysanne/SmartGrid/docs/output.json', 'w') as outfile:
+        with open(f'SmartGrid/docs/output.json', 'w') as outfile:
             json.dump(output, outfile)
 
 
