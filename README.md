@@ -62,8 +62,31 @@ Als laatste kan je kiezen voor scenario 1 (elk huis een eigen kabel) en scenario
  Het beste simulated_annealing resultaat is behaald door het volgende te doen:
  - run original_greedy (ongeveer 5k keer) met cable_to_cable = True
  - run simulated_annealing (ongeveer 100k iteraties) met de input argumenten zoals ze nu zijn. original_greedy.grid is de start grid. 
+```console
+simanneal = simulated_annealing.Simulated_annealing(original_greedy.grid, temperature=(51+51)*9, mutate_house_number = 3
+, alpha = 0.9999, cooling_scheme="exponential", cable_to_cable = True, lay_cable = "to_closest_cable", decreasing_mutate_house_number = False)
+```
  - run hill_climber (tot de surplus 0 is) met als start grid simulated_annealing.grid en met de inputargumenten zoals ze zijn. zet: cost_and_surplus = False
+ ```console
+ climber = hill_climber.Hill_climber(simulated_annealing.grid, mutate_house_number = 3, cable_to_cable = True
+        , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=False
+        , decreasing_mutate_house_number = False)
+ ```
  - run nu hill_climber nog eens (ongeveer 100k iteraties) maar dan met hill_climber.grid als start grid en cost_and_surplus = True.
+```console
+ climber = hill_climber.Hill_climber(hill_climber.grid, mutate_house_number = 3, cable_to_cable = True
+        , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
+        , decreasing_mutate_house_number = False)
+ ```
+
+ Het beste greedy resultaat is behaald door het volgende te doen:
+ - run greedy2 (ongeveer 100k iteraties)
+ - run hill_climber (ongeveer 100k iteraties) met cost_and_surplus = True 
+ ```console
+ climber = hill_climber.Hill_climber(hill_climber.grid, mutate_house_number = 3, cable_to_cable = True
+        , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable", cost_and_surplus=True
+        , decreasing_mutate_house_number = False)
+ ```
 
  ```console
 python main.py
@@ -102,7 +125,7 @@ De hierop volgende lijst beschrijft de belangrijkste mappen en files in het proj
   - **/docs/output.json** bevat de data van het gerunde grid resultaat als json file. <br>
 
 Betekenissen afkortingen gebruikt in filenames docs map:<br>
-"it"    = itteraties
+"it"    = iteraties
 "sa"    = simulated annealing<br>
 "or"    = original greedy<br>
 "hc"    = hill climber<br>
