@@ -25,9 +25,7 @@ Daarnaast zijn er twee scenario's voor het leggen van de kabels:<br>
 
 ### Vereisten
 Deze codebase is geschreven in Python 3.7. Alle benodigde packages zijn beschreven in requirements.txt 
-
 Onderstaand zijn de instructies beschreven om deze te installerenn en de code succesvol te draaien:
-
 
 Via pip:
 
