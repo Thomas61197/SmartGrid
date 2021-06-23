@@ -31,22 +31,6 @@ Daarnaast zijn er twee scenario's voor het leggen van de kabels:<br>
 - Huizen mogen wel via eenzelfde kabel aan een batterij verbonden zijn. Ze mogen dus een kabel delen.<br><br>
 
 
-
- ## Aanpak algoritmen 
- To Do 
- 
- ```console
-python main.py
-```
-- **Baseline / greedy /simulated annealing**
-- **Scenario 1 scenario 2**
-
-- hoe de resultaten te reproduceren zijn, via een interface (command line), 
-- argumenten die meegegeven kunnen worden voor de verschillende functionaliteiten/algoritmen, 
-- of bijvoorbeeld een duidelijke uitleg welke file te runnen om welk resultaat te krijgen.<br>
-
-
-
 ## Aan de slag
 
 ### Vereisten
@@ -68,18 +52,24 @@ Of via conda:
 conda install --file requirements.txt
 ```
 
+ ## Aanpak algoritmen 
+ To Do 
+ 
+ ```console
+python main.py
+```
+- **Baseline / greedy /simulated annealing**
+- **Scenario 1 scenario 2**
 
+- hoe de resultaten te reproduceren zijn, via een interface (command line), 
+- argumenten die meegegeven kunnen worden voor de verschillende functionaliteiten/algoritmen, 
+- of bijvoorbeeld een duidelijke uitleg welke file te runnen om welk resultaat te krijgen.<br>
 
-### Gebruik
-
-To Do
 Een voorbeeldje kan gerund worden door aanroepen van:
 
 ```console
 python main.py
 ```
-
-Het bestand geeft een voorbeeld voor gebruik van de verschillende functies.
 
 ### Structuur
 
