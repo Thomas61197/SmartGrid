@@ -92,6 +92,8 @@ class Cable():
 
     def lay_cable(self, connect_to_x = None, connect_to_y = None):
         # determine cable location
+
+        # connect to battery if no target given
         if connect_to_x is None:
             connect_to_x = self.battery.x
             connect_to_y = self.battery.y
@@ -178,65 +180,78 @@ class Cable():
                     self.x.append(cable_head_x)
                     self.y.append(cable_head_y)
 
+
     def lay_cable_to_random_house(self):
-        # from all houses connected to that battery and the battery itself
-        # choose a random one
-        to_pick_from = list()
-        to_pick_from.append(self.battery)
-        to_pick_from.append(self.battery.houses.values())
-        picked = random.choice(to_pick_from)
+        random_house = random.choice(list(self.battery.houses.values()))
+        self.lay_cable(connect_to_x=random_house.x, connect_to_y = random_house.y)
+
+        for x, y in zip(random_house.cable.x, random_house.cable.y):
+            self.x.append(x)
+            self.y.append(y)
+
+
+    # def lay_cable_to_random_house(self):
+    #     # from all houses connected to that battery and the battery itself
+    #     # choose a random one
+    #     to_pick_from = list()
+    #     to_pick_from.append(self.battery)
+    #     to_pick_from.append(self.battery.houses.values())
+    #     picked = random.choice(to_pick_from)
         
-        # if it's a battery
-        if picked == self.battery:
-            # lay cable directly from house to battery
-            self.x, self.y = self.lay_cable(self.battery.x, self.battery.y)
+    #     # if it's a battery
+    #     if picked == self.battery:
+    #         # lay cable directly from house to battery
+    #         self.x, self.y = self.lay_cable(self.battery.x, self.battery.y)
 
-        # if it's a house
-        else:
-            random_house = picked
-            final_cable_x_list = list()
-            final_cable_y_list = list()
-            # lay a cable from the given house to the random house
-            # call it green
-            green_x_list, green_y_list = self.lay_cable(random_house.x, random_house.y)
-            # get the cable from the random house
-            # call it orange
-            orange_x_list = random_house.cable.x
-            orange_y_list = random_house.cable.y
+    #     # if it's a house
+    #     else:
+    #         random_house = picked
+    #         final_cable_x_list = list()
+    #         final_cable_y_list = list()
+    #         # lay a cable from the given house to the random house
+    #         # call it green
+    #         green_x_list, green_y_list = self.lay_cable(random_house.x, random_house.y)
+    #         # get the cable from the random house
+    #         # call it orange
+    #         orange_x_list = random_house.cable.x
+    #         orange_y_list = random_house.cable.y
 
-            # _______________
+    #         # _______________
 
-            # final_cable.append(green not in orange)
-            # shared = green in orange
-            shared_x_list = list()
-            shared_y_list = list()
+    #         # final_cable.append(green not in orange)
+    #         # shared = green in orange
+    #         shared_x_list = list()
+    #         shared_y_list = list()
 
-            for green_x, green_y in zip(green_x_list, green_y_list):
-                green_in_orange = False
+    #         for green_x, green_y in zip(green_x_list, green_y_list):
+    #             green_in_orange = False
 
-                for orange_x, orange_y in zip(orange_x_list, orange_y_list):
+    #             for orange_x, orange_y in zip(orange_x_list, orange_y_list):
 
-                    if orange_x == green_x and orange_y == green_y:
-                        green_in_orange = True
-                        shared_x_list.append(green_x)
-                        shared_y_list.append(green_y)
+    #                 if orange_x == green_x and orange_y == green_y:
+    #                     green_in_orange = True
+    #                     shared_x_list.append(green_x)
+    #                     shared_y_list.append(green_y)
 
-                if not green_in_orange:
-                    final_cable_x_list.append(green_x)
-                    final_cable_y_list.append(green_y)
+    #             if not green_in_orange:
+    #                 final_cable_x_list.append(green_x)
+    #                 final_cable_y_list.append(green_y)
 
-            # final_cable.append(orange not in shared)
-            for orange_x, orange_y in zip(orange_x_list, orange_y_list):
-                orange_in_shared = False
+    #         # final_cable.append(orange not in shared)
+    #         for orange_x, orange_y in zip(orange_x_list, orange_y_list):
+    #             orange_in_shared = False
 
-                for shared_x, shared_y in zip(shared_x_list, shared_y_list):
+    #             for shared_x, shared_y in zip(shared_x_list, shared_y_list):
 
-                    if orange_x == shared_x and orange_y == shared_y:
-                        orange_in_shared = True
+    #                 if orange_x == shared_x and orange_y == shared_y:
+    #                     orange_in_shared = True
 
-                if not orange_in_shared:
-                    final_cable_x_list.append(orange_x)
-                    final_cable_y_list.append(orange_y)
-            # __________________
+    #             if not orange_in_shared:
+    #                 final_cable_x_list.append(orange_x)
+    #                 final_cable_y_list.append(orange_y)
+    #         # __________________
 
-            # eerst links rechts, dan boven beneden of andersom, random bepaald
+    #         # eerst links rechts, dan boven beneden of andersom, random bepaald
+
+    
+    

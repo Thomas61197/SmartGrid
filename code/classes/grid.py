@@ -100,3 +100,14 @@ class Grid():
 
         return sum(tot)
 
+    def calc_surplus(self):
+        surplus = 0
+
+        for battery in self.batteries.values():
+            diff = battery.get_cum_output() - battery.capacity
+
+            if diff > 0:
+                surplus += diff
+        
+        return surplus
+

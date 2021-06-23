@@ -25,11 +25,13 @@ if __name__ == "__main__":
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_original_greedy.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/simanneal_cable_to_cable_34.pickle"
     file_name = "/home/thomas61197/SmartGrid/data/solutions/10k_it_or_greedy_ctc_dis1.pickle"
+    # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_baseline_100k.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
         best_original_greedy = pickle.load(handle)
         # simanneal_cable_to_cable = pickle.load(handle)
+        # best_base = pickle.load(handle)
 
     # best_original_greedy.grid.print_status_batteries()
 
@@ -59,7 +61,7 @@ if __name__ == "__main__":
 
             baseline_costs.append(baseline1.grid.calc_cost())
         
-        visualise_costs.visualise_costs(baseline_costs, "random")
+        # visualise_costs.visualise_costs(baseline_costs, "random")
 
         # file_name = f"SmartGrid/data/solutions/best_baseline.pickle"
 
@@ -180,7 +182,8 @@ if __name__ == "__main__":
 
     # df_experiments = pd.DataFrame(experiments, index=[experiments['object_id']])
     # df_experiments_old = pd.read_csv("/home/thomas61197/SmartGrid/data/experiments.csv")
-    # df_experiments_new = pd.concat([df_experiments_old.reset_index(drop=True), df_experiments.reset_index(drop=True)], ignore_index=True)
+    # df_experiments_new = pd.concat([df_experiments_old.reset_index(drop=True), df_experiments.reset_index(drop=True)]
+    # , ignore_index=True)
     # df_experiments_new.set_index('object_id')
     # print(df_experiments_new)
     # df_experiments_new.to_csv("/home/thomas61197/SmartGrid/data/experiments.csv", header = True, index = False)
@@ -188,24 +191,21 @@ if __name__ == "__main__":
     # --------------------------- Hill Climber (fix) ---------------------------------
     
     print("Setting up Hill Climber...")
-    climber = hill_climber.Hill_climber(best_original_greedy.grid, fix = True, mutate_house_number = 10, cable_to_cable = True)
+    climber = hill_climber.Hill_climber(best_original_greedy.grid, mutate_house_number = 3, cable_to_cable = True
+    , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_random_house")
 
     # print("Running Hill Climber...")
-    climber.run(100000, verbose=True)
+    climber.run(1000, verbose=True)
 
     print(f"Value of the configuration after Hill Climber: "
           f"{climber.grid.calc_cost2()}")
 
-    print("valid?")
-    print(climber.grid.is_valid())
+    # if climber.grid.is_valid():
+    #     climber_id = 12
+    #     file_name = f"SmartGrid/data/solutions/10k_or_greedy_ctc_dis1_100k_hc_fix_{climber_id}_ctc.pickle"
 
-    if climber.grid.is_valid():
-        climber_id = 11
-        file_name = f"SmartGrid/data/solutions/10k_or_greedy_ctc_dis1_100k_hc_fix_{climber_id}_ctc.pickle"
-
-        with open(file_name, 'wb') as handle:
-            pickle.dump(climber, handle)
-
+    #     with open(file_name, 'wb') as handle:
+    #         pickle.dump(climber, handle)
 
     # --------------------------- visualisation --------------------------
     # visualise_cables.visualise(greedy3.grid)
