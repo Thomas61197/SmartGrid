@@ -8,7 +8,7 @@ import pickle
 import copy
 
 if __name__ == "__main__":
-    district_number = "2"
+    district_number = "1"
     greedy_version = 4 # Choices are None, 1, 2, or 3
     run_simulated_annealing = "no"
     run_hill_climber = "no"
@@ -34,14 +34,15 @@ if __name__ == "__main__":
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_solution_yet_dis1_sa_valid.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_it_or_greedy_ctc_dis2_1mil_it_simanneal_37_ctc.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/5k_or_greedy_ctc_dis3_100k_sa_38_ctc.pickle"
-    file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final_sa_valid_dis{district_number}.pickle"
+    # file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final_sa_valid_dis{district_number}.pickle"
+    file_name = f"/home/ysanne/SmartGrid/data/solutions/best_greedy2_100k_dis1.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
         # best_original_greedy = pickle.load(handle)
         # simanneal_cable_to_cable = pickle.load(handle)
         # best_base = pickle.load(handle)
-        final_sa_valid = pickle.load(handle)
+        greedy2_not_shared = pickle.load(handle)
 
     # best_original_greedy.grid.print_status_batteries()
 
@@ -245,8 +246,8 @@ if __name__ == "__main__":
     # visualise_cables.visualise_apart(simanneal.grid, district_number)
     # visualise_cables.visualise_house_apart(simanneal.grid, district_number)
 
-    visualise_cables.visualise(climber.grid, district_number, grid_name=grid_name)
-    visualise_cables.visualise_apart(climber.grid, district_number, grid_name=grid_name)
+    # visualise_cables.visualise(climber.grid, district_number, grid_name=grid_name)
+    # visualise_cables.visualise_apart(climber.grid, district_number, grid_name=grid_name)
 
     # visualise_cables.visualise(greedy2_dis1.grid, district_number)
     # visualise_cables.visualise_empty_grid(best_grid, district_number)
@@ -271,8 +272,8 @@ if __name__ == "__main__":
     
     if generate_output == "yes":
         output = list()
-        greedy_grid = best_grid_greedy2_dis1.grid
-        out_grid = {"district": district_number, "costs-shared": greedy_grid.calc_cost2()}
+        greedy_grid = greedy2_not_shared.grid
+        out_grid = {"district": district_number, "costs-own": greedy_grid.calc_cost2()}
         output.append(out_grid)
 
         for battery in greedy_grid.batteries.values():
