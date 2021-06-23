@@ -64,6 +64,18 @@ Keuze uit: scenario 1 of scenario 2
 Wijken met district nummer 1, 2 of 3 
 
 Algoritmen: 
+ - baseline 
+ - original_greedy
+ - greedy2
+ - greedy3
+ - hill_climber
+ - simulated_annealing
+
+ Om het beste resultaat te krijgen in scenario 2 moet je het volgende doen:
+ - run original_greedy (ongeveer 5k keer) met cable_to_cable = True
+ - run simulated_annealing (ongeveer 100k iteraties) met de inputargumenten zoals ze nu zijn. original_greedy.grid is de start grid. 
+ - run hill_climber (tot de surplus 0 is) met als start grid simulated_annealing.grid en met de inputargumenten zoals ze zijn. zet: cost_and_surplus = False
+ - run nu hill_climber nog eens (ongeveer 100k iteraties) maar dan met hill_climber.grid als start grid en cost_and_surplus = True.
 
 baseline!!!
 
