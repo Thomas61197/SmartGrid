@@ -10,25 +10,38 @@ class Battery():
         self.houses = {}
 
     def add_house(self, house):
+        """
+        Add a house object to the dict of houses that this battery is connected to
+        """
         self.houses[house.id] = house
 
     def remove_house(self, house):
+        """
+        Remove a house object from the dict of houses that this batetry is connected to
+        """
         del self.houses[house.id]
     
     def capacity_reached(self):
+        """
+        Returns True if the capacity of the battery has been reached
+        """
         cum_output = self.get_cum_output()
 
-        # if capacity has been reached, return true
         if self.capacity < cum_output:
             return True
         
         return False
 
     def capacity_left(self):
-
+        """
+        Returns how much output the battery can still take
+        """
         return self.capacity - self.get_cum_output()
 
     def get_cum_output(self):
+        """
+        Add the cumulative output of all the houses connected to that battery
+        """
         cum_output = 0.0
 
         for house in self.houses.values():
@@ -37,6 +50,9 @@ class Battery():
         return cum_output
 
     def get_cable_matrix(self):
+        """
+        Creates a matrix of ones and zeroes, with ones indicating the cables connecting the houses to this battery
+        """
         matrix = np.zeros( (51, 51), dtype=int )
 
         for house in self.houses.values():

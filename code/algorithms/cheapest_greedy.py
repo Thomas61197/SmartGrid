@@ -43,7 +43,7 @@ class Greedy_cheapest:
         # Add houses to their closest battery
         self.battery_distance_list()
 
-    # Start laying cables
+        # Start laying cables
         for house in self.grid.houses.values():
             closest_battery_id = house.battery_distances[house.rank][0]
             closest_battery = self.grid.batteries[closest_battery_id]
@@ -53,10 +53,3 @@ class Greedy_cheapest:
             cable1.lay_cable()
             house.add_cable(cable1)
             
-
-        for battery in self.grid.batteries.values():
-                print(battery.get_cum_output())
-        print('Output to batteries:')
-        check_capacity = any(battery.capacity_reached() in self.grid.batteries for battery in self.grid.batteries.values())
-        if check_capacity == False:
-            print('Good')
