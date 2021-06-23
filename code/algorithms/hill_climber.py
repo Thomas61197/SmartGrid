@@ -12,7 +12,7 @@ class Hill_climber:
     equivalent solution is kept for the next iteration.
     """
     def __init__(self, grid, mutate_house_number = 1, cable_to_cable = True, minimalize_surplus = False, with_checkpoints = False
-    , lay_cable = None):
+    , lay_cable = None, cost_and_surplus = False):
         self.grid = grid
         self.mutate_house_number0 = mutate_house_number
         self.mutate_house_number = mutate_house_number
@@ -20,6 +20,7 @@ class Hill_climber:
         self.minimalize_surplus = minimalize_surplus
         self.with_checkpoints = with_checkpoints
         self.lay_cable = lay_cable
+        self.cost_and_surplus = cost_and_surplus
 
     def random_reconfigure_house(self, house, batteries):
         """
@@ -91,13 +92,19 @@ class Hill_climber:
             old_surplus = self.surplus
 
         if self.minimalize_surplus:
-            # print(f"new_surplus: {new_surplus}")
 
-            if new_surplus <= old_surplus and new_cost <= old_cost:
-            # if new_surplus < old_surplus:
-                self.grid = new_grid
-                self.surplus = new_surplus
-                self.cost = new_cost
+            if self.cost_and_surplus:
+
+                if new_surplus <= old_surplus and new_cost <= old_cost:
+                    self.grid = new_grid
+                    self.surplus = new_surplus
+                    self.cost = new_cost
+            else:
+
+                if new_surplus < old_surplus:
+                    self.grid = new_grid
+                    self.surplus = new_surplus
+                    self.cost = new_cost
 
         else:
 
