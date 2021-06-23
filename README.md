@@ -101,9 +101,9 @@ De hierop volgende lijst beschrijft de belangrijkste mappen en files in het proj
   - **/data/Huizen&Batterijen** bevat de databestanden van de verschillende wijken met huizen en batterijen
   - **/data/solutions** bevat de databestanden van resultaten opgeslagen als objecten verkregen met de algoritmen<br>
 
-- **/docs**: bevat gevisualiseerde resultaten van de grid configuraties
-  - **/docs/final** bevat visualisaties van de grid configuraties gesorteerd per district verkregen met het simulated annealling algoritme
-  - **/docs/** output.json<br>
+- **/docs**: bevat resultaten van de grid configuraties
+  - **/docs/final** bevat visualisaties van de grid configuraties gesorteerd per district
+  - **/docs/output.json** bevat de data van het gerunde grid resultaat als json file. <br>
 
 
 ## Auteurs
