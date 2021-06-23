@@ -24,13 +24,14 @@ if __name__ == "__main__":
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_greedy_100k.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_original_greedy.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/simanneal_cable_to_cable_34.pickle"
-    file_name = "/home/thomas61197/SmartGrid/data/solutions/10k_it_or_greedy_ctc_dis1.pickle"
+    # file_name = "/home/thomas61197/SmartGrid/data/solutions/10k_it_or_greedy_ctc_dis1.pickle"
     # file_name = "/home/thomas61197/SmartGrid/data/solutions/best_baseline_100k.pickle"
+    file_name = "/home/thomas61197/SmartGrid/data/solutions/10k_it_or_greedy_ctc_dis1_1mil_it_simanneal_36_ctc.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
-        best_original_greedy = pickle.load(handle)
-        # simanneal_cable_to_cable = pickle.load(handle)
+        # best_original_greedy = pickle.load(handle)
+        simanneal_cable_to_cable = pickle.load(handle)
         # best_base = pickle.load(handle)
 
     # best_original_greedy.grid.print_status_batteries()
@@ -148,15 +149,15 @@ if __name__ == "__main__":
     # Simulated annealing 2 is different from simulated annealing 1 in that this one decreases the mutate_house_number linearly with 
     # each iteration, whereas in the other one the mutate_house_number is static.
 
-    # print("Setting up Simulated Annealing...")
-    # simanneal = simulated_annealing.Simulated_annealing(best_original_greedy.grid, temperature=(51+51)*9, mutate_house_number = 3
-    # , alpha = 0.99999, cooling_scheme="exponential", cable_to_cable = True)
+    print("Setting up Simulated Annealing...")
+    simanneal = simulated_annealing.Simulated_annealing(simanneal_cable_to_cable.grid, temperature=(51+51)*9, mutate_house_number = 3
+    , alpha = 0.994, cooling_scheme="exponential", cable_to_cable = True, lay_cable = "to_random_house")
     
-    # print("Running Simulated Annealing...")
-    # simanneal.run(1000000, verbose=True, decreasing_mutate_house_number = False)
+    print("Running Simulated Annealing...")
+    simanneal.run(1000, verbose=True, decreasing_mutate_house_number = False)
     
-    # # print(f"Value of the configuration after Simulated Annealing: "
-    # #       f"{simanneal.grid.calc_cost2()}")
+    print(f"Value of the configuration after Simulated Annealing: "
+          f"{simanneal.grid.calc_cost2()}")
 
     # simanneal_id = 36
 
@@ -190,19 +191,19 @@ if __name__ == "__main__":
 
     # --------------------------- Hill Climber (fix) ---------------------------------
     
-    print("Setting up Hill Climber...")
-    climber = hill_climber.Hill_climber(best_original_greedy.grid, mutate_house_number = 3, cable_to_cable = True
-    , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_random_house")
+    # print("Setting up Hill Climber...")
+    # climber = hill_climber.Hill_climber(simanneal_cable_to_cable.grid, mutate_house_number = 3, cable_to_cable = True
+    # , minimalize_surplus = True, with_checkpoints = False, lay_cable = "to_closest_cable")
 
-    # print("Running Hill Climber...")
-    climber.run(1000, verbose=True)
+    # # print("Running Hill Climber...")
+    # climber.run(10000, verbose=True)
 
-    print(f"Value of the configuration after Hill Climber: "
-          f"{climber.grid.calc_cost2()}")
+    # print(f"Value of the configuration after Hill Climber: "
+    #       f"{climber.grid.calc_cost2()}")
 
     # if climber.grid.is_valid():
-    #     climber_id = 12
-    #     file_name = f"SmartGrid/data/solutions/10k_or_greedy_ctc_dis1_100k_hc_fix_{climber_id}_ctc.pickle"
+    #     climber_id = 7
+    #     file_name = f"SmartGrid/data/solutions/best_solution_yet2.pickle"
 
     #     with open(file_name, 'wb') as handle:
     #         pickle.dump(climber, handle)
@@ -210,12 +211,12 @@ if __name__ == "__main__":
     # --------------------------- visualisation --------------------------
     # visualise_cables.visualise(greedy3.grid)
 
-    # visualise_cables.visualise(simanneal.grid, district_number)
-    # visualise_cables.visualise_apart(simanneal.grid, district_number)
+    visualise_cables.visualise(simanneal.grid, district_number)
+    visualise_cables.visualise_apart(simanneal.grid, district_number)
     # visualise_cables.visualise_house_apart(simanneal.grid, district_number)
 
-    visualise_cables.visualise(climber.grid, district_number)
-    visualise_cables.visualise_apart(climber.grid, district_number)
+    # visualise_cables.visualise(climber.grid, district_number)
+    # visualise_cables.visualise_apart(climber.grid, district_number)
 
     # visualise_cables.visualise(best_greedy.grid, district_number)
     # visualise_cables.visualise_apart(best_greedy.grid, district_number)

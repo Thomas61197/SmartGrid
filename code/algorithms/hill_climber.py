@@ -94,7 +94,7 @@ class Hill_climber:
             # print(f"new_surplus: {new_surplus}")
 
             if new_surplus <= old_surplus and new_cost <= old_cost:
-            # if new_surplus <= old_surplus:
+            # if new_surplus < old_surplus:
                 self.grid = new_grid
                 self.surplus = new_surplus
                 self.cost = new_cost
