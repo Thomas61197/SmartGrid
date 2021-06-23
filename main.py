@@ -8,7 +8,7 @@ import pickle
 import copy
 
 if __name__ == "__main__":
-    district_number = "3"
+    district_number = "2"
     greedy_version = 2
 
     battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         best_cost = 70000
 
 
-        for i in range(100):
+        for i in range(100000):
             greedy2 = greedy.Greedy(empty_grid)
             greedy2.run_greedy()
             
@@ -98,21 +98,22 @@ if __name__ == "__main__":
                 if greedy2.grid.calc_cost2() < best_cost:
                     best_grid = greedy2.grid
                     best_cost = greedy2.grid.calc_cost2()
-                    best_greedy2_1000_ctc = greedy2
+                    best_greedy2_100k_ctc_dis2 = greedy2
             greedy2_costs.append(greedy2.grid.calc_cost2())
             # print(f'iteration {i}', greedy2.grid.calc_cost2())
 
         print('Price cheapest valid Greedy:', best_cost)
         visualise_costs.histogram_costs(greedy2_costs, "greedy2", nbins = 50)
 
-        # file_name = f"data/solutions/best_greedy2.pickle"
+        file_name = f"data/solutions/best_greedy2_100k_dis2.pickle"
 
-        # with open(file_name, 'wb') as handle:
-        #     pickle.dump(best_greedy2_1000_ctc, handle)
+        with open(file_name, 'wb') as handle:
+            pickle.dump(best_greedy2_100k_ctc_dis2, handle)
 
     # --------------------------- visualisation --------------------------
     # visualise_cables.visualise_apart(best_grid, district_number)
     # visualise_cables.visualise(best_grid, district_number)
+    # visualise_costs.histogram_costs(greedy2_costs, "greedy2", nbins = 50)
 
         # --------------------------- greedy - each house to closest battery--------------------------
     if greedy_version == 3:
