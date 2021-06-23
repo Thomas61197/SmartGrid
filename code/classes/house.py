@@ -1,6 +1,6 @@
 class House():
     """
-    Dataclass containing house
+    Dataclass containing house info
     """
     def __init__(self, x, y, max_output, id):
         self.x = x
