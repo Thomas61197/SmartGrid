@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def visualise_costs(costs, algo):
+    """
+    makes a scatterplot with cost on the y-axis and iterations on the x-axis.
+    """
     print('mean costs of', algo, 'is', sum(costs)/len(costs))
 
     plt.figure()
@@ -24,6 +27,9 @@ def histogram_costs(costs, algo, nbins):
     plt.savefig(f'docs/hist_{algo}_costs.png')
 
 def compare_costs(costs1, algo1, costs2, algo2):
+    """
+    makes a bar diagram of the mean total grid cost of the two algorithms being compared 
+    """
     plt.figure()
     plt.title("cost comparison")
     plt.xlabel("algorithm")

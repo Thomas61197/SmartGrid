@@ -14,7 +14,7 @@ class House():
     
     def add_cable(self, cable):
         """
-        Add a cable to the collection of cables for a house
+        set cable for house.
         """
         self.cable = cable
 
