@@ -1,11 +1,11 @@
 ### to do:
-"Aanpak algoritmen, Gebruik, docs toevoegen bij Structuur?
+"Aanpak algoritmen, docs toevoegen bij Structuur?
 - Alle code om de resultaten uit de presentatie te produceren is aanwezig.
 - De aanpak van de verschillende algoritmen is duidelijk beschreven in de README.
 - Het is na lezen van de README duidelijk hoe de resultaten te reproduceren zijn, via een interface (command line), argumenten die meegegeven kunnen worden voor de verschillende functionaliteiten/algoritmen, of bijvoorbeeld een duidelijke uitleg welke file te runnen om welk resultaat te krijgen.
 
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 # SmartGrid
@@ -36,7 +36,7 @@ Daarnaast zijn er twee scenario's voor het leggen van de kabels:<br>
 ### Vereisten
 Deze codebase is geschreven in Python 3.7. Alle benodigde packages zijn beschreven in requirements.txt 
 
-Onderstaand zijn de instructies bescheven om deze te installeeren en de code succesvol te draaien:
+Onderstaand zijn de instructies beschreven om deze te installerenn en de code succesvol te draaien:
 
 
 Via pip:
@@ -53,23 +53,40 @@ conda install --file requirements.txt
 ```
 
  ## Aanpak algoritmen 
- To Do 
  
- ```console
-python main.py
-```
-- **Baseline / greedy /simulated annealing**
-- **Scenario 1 scenario 2**
-
 - hoe de resultaten te reproduceren zijn, via een interface (command line), 
 - argumenten die meegegeven kunnen worden voor de verschillende functionaliteiten/algoritmen, 
 - of bijvoorbeeld een duidelijke uitleg welke file te runnen om welk resultaat te krijgen.<br>
 
-Een voorbeeldje kan gerund worden door aanroepen van:
+ 
+Keuze uit: scenario 1 of scenario 2 
 
-```console
+Wijken met district nummer 1, 2 of 3 
+
+Algoritmen: 
+
+baseline!!!
+
+- district_number: "1", "2" of "3"
+- greedy_version: None, 1, 2, of 3
+- run_simulated_annealing = "yes" of "no"
+- run_hill_climber = "yes" of "no"
+- generate_output = "yes" of "no"
+
+ ```console
 python main.py
 ```
+
+Visualisatie:
+
+
+
+#### Een voorbeeldje kan gerund worden door aanroepen van:
+
+ ```console
+python main.py
+```
+
 
 ### Structuur
 
@@ -78,12 +95,15 @@ De hierop volgende lijst beschrijft de belangrijkste mappen en files in het proj
 - **/code**: bevat alle code van dit project
   - **/code/algorithms**: bevat de code voor algoritmes
   - **/code/classes**: bevat de vier benodigde classes voor deze case
-  - **/code/visualisation**: bevat de matplotlib code voor de visualisatie
+  - **/code/visualisation**: bevat de matplotlib code voor de visualisatie<br>
+  
 - **/data**: bevat de verschillende databestanden die benodigd zijn om de algoritmen te runnen 
   - **/data/Huizen&Batterijen** bevat de databestanden van de verschillende wijken met huizen en batterijen
-  - **/data/solutions** bevat de databestanden van resultaten opgeslagen als objecten verkregen met de algoritmen
+  - **/data/solutions** bevat de databestanden van resultaten opgeslagen als objecten verkregen met de algoritmen<br>
 
-To docs? - **/docs**: 
+- **/docs**: bevat gevisualiseerde resultaten van de grid configuraties
+  - **/docs/final** bevat visualisaties van de grid configuraties gesorteerd per district verkregen met het simulated annealling algoritme
+  - **/docs/** output.json<br>
 
 
 ## Auteurs
