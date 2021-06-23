@@ -8,6 +8,7 @@ import pickle
 import copy
 
 if __name__ == "__main__":
+    # Arguments 
     district_number = "3"
     greedy_version = None # Choices are "baseline" for baseline, 1 for original_greedy, 2 for greedy2, or 3 for greedy3. None if you don't want any of these to run
     run_simulated_annealing = "no"
@@ -57,7 +58,7 @@ if __name__ == "__main__":
             baseline1.run()
             print(f"i: {i}, cost: {best_base.grid.calc_cost()}")
 
-            if baseline1.grid.calc_cost2() < best_base.grid.calc_cost2():
+            if baseline1.grid.calc_cost() < best_base.grid.calc_cost():
                 best_base = copy.deepcopy(baseline1)
 
             baseline_costs.append(baseline1.grid.calc_cost())

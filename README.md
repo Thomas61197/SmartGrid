@@ -1,13 +1,3 @@
-### to do:
-"Aanpak algoritmen, docs toevoegen bij Structuur?
-- Alle code om de resultaten uit de presentatie te produceren is aanwezig.
-- De aanpak van de verschillende algoritmen is duidelijk beschreven in de README.
-- Het is na lezen van de README duidelijk hoe de resultaten te reproduceren zijn, via een interface (command line), argumenten die meegegeven kunnen worden voor de verschillende functionaliteiten/algoritmen, of bijvoorbeeld een duidelijke uitleg welke file te runnen om welk resultaat te krijgen.
-
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 # SmartGrid
 
 Veel huizen hebben tegenwoordig zonnepanelen om zelf energie mee te produceren. Vaak produceren de zonnepanelen meer dan voor eigen consumptie nodig is. Dit overschot kan worden terugverkocht aan de leverancier, maar de infrastructuur (het grid) is daar veelal niet op berekend. Om de pieken in consumptie en productie te kunnen managen moeten er batterijen geplaatst worden. Voor een feasibility study zijn drie dummy-woonwijken opgesteld, met daarin vijf batterijen. De huizen hebben zonnepanelen met een maximale output en de batterijen hebben een maximale capaciteit. Exacte details zijn te vinden in [deze bestanden](https://github.com/Thomas61197/SmartGrid/tree/main/data/Huizen%26Batterijen). Kabels om huizen en batterijen te verbinden liggen op de gridlijnen. De kosten van kabels zijn afhankeljk van de lengte en kosten 9 per grid-segment. De batterijen kosten 5000 per stuk.
@@ -54,12 +44,7 @@ conda install --file requirements.txt
 
  ## Aanpak algoritmen 
  
-- hoe de resultaten te reproduceren zijn, via een interface (command line), 
-- argumenten die meegegeven kunnen worden voor de verschillende functionaliteiten/algoritmen, 
-- of bijvoorbeeld een duidelijke uitleg welke file te runnen om welk resultaat te krijgen.<br>
-
- 
-Keuze uit: scenario 1 of scenario 2 
+Bij het aanroepen van main.py heb je bovenin, onder de kop 'arguments', de mogelijkheid om te kiezen welk algoritme je wil draaien:
 
 Wijken met district nummer 1, 2 of 3 
 
@@ -71,27 +56,35 @@ Algoritmen:
  - hill_climber
  - simulated_annealing
 
- Om het beste resultaat te krijgen in scenario 2 moet je het volgende doen:
+- greedy_version = None, baseline, 1, 2, of 3. <b>Hierbij is 2 het best presterende algoritme</b>
+- run_simulated_annealing = "yes" of "no"
+- run_hill_climber = "yes" of "no"
+- generate_output = "yes" of "no". <i>Dit genereert de JSON output</i>
+- Daarnaast kan je kiezen welk district het algoritme moet optimaliseren:
+
+district_number = "1", "2" of "3"
+Als laatste kan je kiezen voor scenario 1 (elk huis een eigen kabel) en scenario 2 (kabels van huizen aan dezelfde batterij mogen aan elkaar liggen). Hiervoor moet in het algoritme naar keuze de calc.cost() functie verandert worden naar calc.cost2().
+
+
+ Het beste simulated_annealing resultaat is behaald door het volgende te doen:
  - run original_greedy (ongeveer 5k keer) met cable_to_cable = True
  - run simulated_annealing (ongeveer 100k iteraties) met de inputargumenten zoals ze nu zijn. original_greedy.grid is de start grid. 
  - run hill_climber (tot de surplus 0 is) met als start grid simulated_annealing.grid en met de inputargumenten zoals ze zijn. zet: cost_and_surplus = False
  - run nu hill_climber nog eens (ongeveer 100k iteraties) maar dan met hill_climber.grid als start grid en cost_and_surplus = True.
 
-baseline!!!
-
-- district_number: "1", "2" of "3"
-- greedy_version: None, 1, 2, of 3
-- run_simulated_annealing = "yes" of "no"
-- run_hill_climber = "yes" of "no"
-- generate_output = "yes" of "no"
-
  ```console
 python main.py
 ```
 
-Visualisatie:
+In main.py kan ook gekozen worden welke visualisatie er wordt gerund. Om het <i> leggen van de kabels te weergeven </i> zijn er twee keuzes:
 
+- visualise_cables.visualise(naam algoritme) om alle batterijen met hun connecties in één grid te weergeven
+- visualise_cables.visualise_apart(naam algoritme) om voor elke batterij apart een figuur met de batterij en zijn connecties te produceren. 
 
+Om de <i>kosten van de algoritmes te weergeven</i> zijn er drie keuzes:
+- visualise_costs(kostenlijst, algo). Een scatterplot van de kosten van verschillende iteraties van een algoritme
+- histogram_costs(kostenlijst, algo, nbins). Een histogram met de frequenties van de verschillende kosten bij de iteraties van een algoritme
+- compare_costs(kostenlijst1, algo1, kostenlijst2, algo2). Een barplot die de gemiddelde kosten van twee algoritmen weergeeft
 
 #### Een voorbeeldje kan gerund worden door aanroepen van:
 
@@ -115,11 +108,17 @@ De hierop volgende lijst beschrijft de belangrijkste mappen en files in het proj
   - **/docs/final** bevat visualisaties van de grid configuraties gesorteerd per district
   - **/docs/output.json** bevat de data van het gerunde grid resultaat als json file. <br>
 
-
+Betekenissen afkortingen gebruikt in filenames docs map:<br>
+"it"    = itteraties
+"sa"    = simulated annealing<br>
+"or"    = original greedy<br>
+"hc"    = hill climber<br>
+"ctc"   = cable to cable (scenario 2)<br>
+"dis"   = district<br>
+"valid" = geeft een valide oplossing volgens de maximale output van de batterijen<br>
 
 ## Auteurs
 Ysanne de Graaf <br>
 Thomas Boer <br>
 Thijs Wijnheijmer <br>
-
 
