@@ -67,6 +67,8 @@ class Simulated_annealing(Hill_climber):
             self.grid = new_grid
             self.cost = new_cost
 
+        self.cost_list.append(self.cost)
+
         # Update the temperature
         self.update_temperature()
 

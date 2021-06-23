@@ -7,10 +7,10 @@ from code.classes import grid, house, battery, cable
 def visualise(grid, district_number):
 
     # load data files
-    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    # battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    # house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     dfhouses = pd.read_csv(house_file)
     dfhouses.plot(kind='scatter', x='x', y='y')
@@ -42,13 +42,13 @@ def visualise(grid, district_number):
         elif house.cable.battery.id == 3: 
             gridcolor = "black"
         elif house.cable.battery.id == 4: 
-            gridcolor = "gray"
+            gridcolor = "purple"
 
         plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
 
     # plt.legend()
     plt.show()
-    grid_name = f"10k_it_or_greedy_ctc_dis{district_number}_1mil_it_sa_ctc"
+    grid_name = f"10k_or_greedy_ctc_dis{district_number}_100k_hc_fix_ctc"
     plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")
     # plt.savefig("docs/cable_visualisation.png")
 
@@ -88,7 +88,7 @@ def visualise_apart(grid, district_number):
         elif battery.id == 3: 
             gridcolor = "black"
         elif battery.id == 4: 
-            gridcolor = "gray"
+            gridcolor = "purple"
 
         # Plot cables 
         for house in battery.houses.values():
@@ -97,7 +97,7 @@ def visualise_apart(grid, district_number):
 
         # plt.legend()
         plt.show()
-        plt.savefig(f"SmartGrid/docs/cable_visualisation_battery{battery.id}_10k_it_or_greedy_ctc_dis{district_number}_1mil_it_sa_ctc.png")
+        plt.savefig(f"SmartGrid/docs/cable_visualisation_battery{battery.id}_10k_or_greedy_ctc_dis{district_number}_100k_hc_fix_ctc.png")
 
 
 def visualise_house_apart(grid, district_number):
@@ -136,7 +136,7 @@ def visualise_house_apart(grid, district_number):
             elif battery.id == 3: 
                 gridcolor = "black"
             elif battery.id == 4: 
-                gridcolor = "gray"
+                gridcolor = "purple"
 
             # Plot cables 
 
