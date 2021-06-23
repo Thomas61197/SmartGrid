@@ -77,18 +77,18 @@ class Hill_climber:
 
     def mutate_single_house(self, new_grid):
         """
-        Changes the connection of a random house to a battery with a random valid connection to a different battery.
+        Changes the connection of a random house to a battery with a random close to valid connection to a different battery.
         """
         random_house = random.choice(list(new_grid.houses.values()))
         available_batteries = list()
 
         for battery in new_grid.batteries.values():
             
+            # a battery is defined as available when it has not yet reached its maximum capacity
             if not battery.capacity_reached():
                 available_batteries.append(battery)
-
         
-        # print(f"available batteries: {available_batteries}")
+        # actually bring about the change
         self.random_reconfigure_house(random_house, available_batteries)
 
     def mutate_grid(self, new_grid):

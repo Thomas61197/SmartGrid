@@ -14,7 +14,6 @@ class Grid():
         """
         Load the position of the houses and their max output.
         """
-
         houses = {}
 
         with open(house_file, 'r') as in_file:
@@ -37,11 +36,15 @@ class Grid():
 
             for count, row in enumerate(reader):
                 coordinates = row['positie'].split(',')
+                # Create battery object
                 batteries[count] = Battery(x = int(coordinates[0]), y = int(coordinates[1]), capacity = float(row['capaciteit']), id = count)
 
         return batteries
 
     def calc_cost(self):
+        """
+        Calculate the cost of a grid if houses have separate cables connecting them to batteries
+        """
         tot = 0
         
         for house in self.houses.values():
@@ -51,15 +54,10 @@ class Grid():
         
         return tot 
 
-    def calc_cum_diff_from_bat_cap(self):
-        cum_diff_from_bat_cap = 0
-
-        for battery in self.grid.batteries.values():
-            cum_diff_from_bat_cap += abs(battery.capacity_left())
-
-        return cum_diff_from_bat_cap
-
     def is_valid(self):
+        """
+        Returns True if all batteries are not at maximum capacity
+        """
         valid = True
 
         for battery in self.batteries.values():
@@ -75,7 +73,9 @@ class Grid():
         return valid
 
     def print_status_batteries(self):
-        
+        """
+        Display the current cumulative output from houses to battery, and how much capacity is 'left'
+        """
         for battery in self.batteries.values():
             print(f"battery_{battery.id}, cum_output: {battery.get_cum_output()}, capacity: {battery.capacity}\
 , cum-cap: {battery.get_cum_output() - battery.capacity}")
@@ -101,6 +101,10 @@ class Grid():
         return sum(tot)
 
     def calc_surplus(self):
+        """
+        Calculates the total surplus of capacity of all the batteries, 
+        based on the max output of the houses connected to each battery
+        """
         surplus = 0
 
         for battery in self.batteries.values():
