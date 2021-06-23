@@ -2,7 +2,6 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 
 def visualise_costs(costs, algo):
     print('mean costs of', algo, 'is', sum(costs)/len(costs))
@@ -21,7 +20,7 @@ def histogram_costs(costs, algo, nbins):
     plt.xlabel("Cost")
     plt.ylabel("Frequency")
     plt.style.use('ggplot')
-    plt.hist(costs, bins=nbins)
+    plt.hist(costs, bins=nbins, color="maroon")
     plt.savefig(f'docs/hist_{algo}_costs.png')
 
 def compare_costs(costs1, algo1, costs2, algo2):
