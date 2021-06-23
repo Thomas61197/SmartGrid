@@ -48,7 +48,7 @@ def visualise(grid, district_number):
 
     # plt.legend()
     plt.show()
-    grid_name = f"10k_or_greedy_ctc_dis{district_number}_100k_hc_fix_ctc"
+    grid_name = f"5k_or_greedy_ctc_dis{district_number}_sa_ctc"
     plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")
     # plt.savefig("docs/cable_visualisation.png")
 
@@ -97,7 +97,7 @@ def visualise_apart(grid, district_number):
 
         # plt.legend()
         plt.show()
-        plt.savefig(f"SmartGrid/docs/cable_visualisation_battery{battery.id}_10k_or_greedy_ctc_dis{district_number}_100k_hc_fix_ctc.png")
+        plt.savefig(f"SmartGrid/docs/cable_visualisation_battery{battery.id}_5k_or_greedy_ctc_dis{district_number}_100k_sa_ctc.png")
 
 
 def visualise_house_apart(grid, district_number):

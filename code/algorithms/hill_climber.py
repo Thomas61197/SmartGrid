@@ -105,7 +105,6 @@ class Hill_climber:
                 self.grid = new_grid
                 self.cost = new_cost
 
-        self.cost_list.append(self.cost)
         # new_grid.print_status_batteries()
 
     def run(self, iterations, verbose=False, decreasing_mutate_house_number = False):
@@ -151,6 +150,9 @@ class Hill_climber:
                         pickle.dump(self, handle)
                     
                     print(f"checkpoint: {iteration}")
+            
+            
+            self.cost_list.append(self.cost)
 
     
 
