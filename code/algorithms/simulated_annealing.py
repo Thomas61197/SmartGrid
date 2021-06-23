@@ -6,15 +6,22 @@ from .hill_climber import Hill_climber
 
 class Simulated_annealing(Hill_climber):
     """
-    The SimulatedAnnealing class that changes a random node in the graph to a random valid value.
+    The Simulated_annealing class that changes a connection of a random house to a random available battery in the grid. This change is close to valid. 
+    In order to make the resulting grid valid, it should be combined with the hill climber algorithm which minimizes surplus above battery capacity. 
     Each improvement or equivalent solution is kept for the next iteration.
     Also sometimes accepts solutions that are worse, depending on the current temperature.
     Most of the functions are similar to those of the HillClimber class, which is why
     we use that as a parent class.
+
+    The cooling_scheme can either be "linear" or "exponential".
+
+    Alpha is the rate at which the temperature decreases. It is used when the cooling_scheme is set to "exponential".
     """
-    def __init__(self, grid, temperature=1, cooling_scheme="linear", alpha=0.99, mutate_house_number=3, cable_to_cable = True, lay_cable = "to_closest_cable"):
+    def __init__(self, grid, temperature=1, cooling_scheme="linear", alpha=0.99, mutate_house_number=3, cable_to_cable = True, lay_cable = "to_closest_cable"
+    , decreasing_mutate_house_number=False):
         # Use the init of the Hillclimber class
-        super().__init__(grid=grid, mutate_house_number=mutate_house_number, cable_to_cable=cable_to_cable, lay_cable=lay_cable)
+        super().__init__(grid=grid, mutate_house_number=mutate_house_number, cable_to_cable=cable_to_cable, lay_cable=lay_cable
+        , decreasing_mutate_house_number=decreasing_mutate_house_number)
 
         # Starting temperature and current temperature
         self.T0 = temperature
@@ -38,10 +45,7 @@ class Simulated_annealing(Hill_climber):
             self.T = self.T * self.alpha
             # where alpha can be any value below 1 but above 0
 
-    def update_mutate_house_number(self):
-        self.mutate_house_number = (self.mutate_house_number - (self.mutate_house_number0 / self.iterations))
-
-    def check_solution(self, new_grid, decreasing_mutate_house_number):
+    def check_solution(self, new_grid):
         """
         Checks and accepts better solutions than the current solution.
         Also sometimes accepts solutions that are worse, depending on the current
@@ -72,6 +76,8 @@ class Simulated_annealing(Hill_climber):
         # Update the temperature
         self.update_temperature()
 
-        if decreasing_mutate_house_number == True:
+        
+        if self.decreasing_mutate_house_number == True:
             self.update_mutate_house_number()
+
 

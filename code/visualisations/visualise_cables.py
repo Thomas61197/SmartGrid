@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 
 from code.classes import grid, house, battery, cable
 
-
-def visualise(grid, district_number):
+def visualise(grid, district_number, grid_name):
 
     # load data files
     # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
@@ -48,11 +47,10 @@ def visualise(grid, district_number):
 
     # plt.legend()
     plt.show()
-    grid_name = f"10k_or_greedy_ctc_dis{district_number}_hc_fix_sur_ctc"
-    plt.savefig(f"SmartGrid/docs/cable_visualisation_{grid_name}.png")
+    plt.savefig(f"SmartGrid/docs/final/district{district_number}/simulated_annealing/cable_visualisation_{grid_name}.png")
     # plt.savefig("docs/cable_visualisation.png")
 
-def visualise_apart(grid, district_number):
+def visualise_apart(grid, district_number, grid_name):
     """
     Visualise the connections of each battery in separate grids
     """
@@ -97,7 +95,7 @@ def visualise_apart(grid, district_number):
 
         # plt.legend()
         plt.show()
-        plt.savefig(f"SmartGrid/docs/cable_visualisation_battery{battery.id}_10k_or_greedy_ctc_dis{district_number}_hc_fix_sur_ctc.png")
+        plt.savefig(f"SmartGrid/docs/final/district{district_number}/simulated_annealing/cable_visualisation_battery{battery.id}_{grid_name}.png")
 
 
 def visualise_house_apart(grid, district_number):
