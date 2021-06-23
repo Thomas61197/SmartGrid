@@ -9,7 +9,7 @@ import copy
 
 if __name__ == "__main__":
     # Arguments 
-    district_number = "1"
+    district_number = "3"
     greedy_version = None # Choices are "baseline" for baseline, 1 for original_greedy, 2 for greedy2, or 3 for greedy3. None if you don't want any of these to run
     run_simulated_annealing = "no"
     run_hill_climber = "no"
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     empty_grid = grid.Grid(house_file, battery_file)
 
     # --------------------------- load pickled grid --------------------------
-    file_name = f"/home/ysanne/SmartGrid/data/solutions/final/district{district_number}/Greedy2_100k_dis1_hc_fix_sur_ctc.pickle"
+    file_name = f"/home/ysanne/SmartGrid/data/solutions/final/district{district_number}/best_greedy2_100k_dis3.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
