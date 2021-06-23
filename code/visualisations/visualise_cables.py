@@ -58,8 +58,8 @@ def visualise_apart(grid, district_number, grid_name):
     for battery in grid.batteries.values():
         
         # Load house files
-        # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-        house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+        house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+        # house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
         dfhouses = pd.read_csv(house_file)
         dfhouses.plot(kind='scatter', x='x', y='y')
 
@@ -95,58 +95,10 @@ def visualise_apart(grid, district_number, grid_name):
 
         # plt.legend()
         plt.show()
-        plt.savefig(f"SmartGrid/docs/final/district{district_number}/simulated_annealing/cable_visualisation_battery{battery.id}_{grid_name}.png")
+        plt.savefig(f"docs/final/district{district_number}/cable_visualisation_battery{battery.id}_{grid_name}.png")
 
 
-def visualise_house_apart(grid, district_number):
-    """
-    Visualise the connections of each house connected to battery 0 in separate grids
-    """
-    battery = grid.batteries[0]
-    for house in battery.houses.values():
-        if house.id < 30:
 
-            # Load house files
-            house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-            dfhouses = pd.read_csv(house_file)
-            dfhouses.plot(kind='scatter', x='x', y='y')
-
-            # Clear the figure
-            plt.clf()
-
-            # Plot gridlines
-            plt.title(f'SmartGrid house {house.id}')
-            plt.grid(which='minor', color='lightgrey')
-            plt.grid(which='major', color='grey')
-            plt.minorticks_on()
-
-            # Plot each house and battery in the grid
-            plt.scatter(battery.x, battery.y, color='orange', label = "Batteries")
-            plt.scatter(dfhouses.x, dfhouses.y, color='blue', label = "Houses")
-
-            # Give the connections of each battery a different colour
-            if battery.id == 0:
-                gridcolor = "blue"
-            elif battery.id == 1: 
-                gridcolor = "red"
-            elif battery.id == 2: 
-                gridcolor = "orange"
-            elif battery.id == 3: 
-                gridcolor = "black"
-            elif battery.id == 4: 
-                gridcolor = "purple"
-
-            # Plot cables 
-
-            plt.scatter(house.x, house.y, color="pink")
-            plt.plot(house.cable.x, house.cable.y, color=gridcolor, linestyle="-")
-
-            # plt.legend()
-            plt.show()
-            plt.savefig(f"SmartGrid/docs/cable_visualisation_house{house.id}_1_it_or_greedy_ctc_100_it_sa_ctc.png")
-            print(house.id, 'coordinates', house.x, house.y)
-            print(battery.id, 'coordinates', battery.x, battery.y)
-            print(house.id, 'cable', house.cable.x, house.cable.y)
 
 def visualise_empty_grid(grid, district_number):
     """

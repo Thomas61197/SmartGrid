@@ -9,30 +9,30 @@ import copy
 
 if __name__ == "__main__":
     # Arguments 
-    district_number = "3"
+    district_number = "1"
     greedy_version = None # Choices are "baseline" for baseline, 1 for original_greedy, 2 for greedy2, or 3 for greedy3. None if you don't want any of these to run
     run_simulated_annealing = "no"
     run_hill_climber = "no"
     generate_output = "no"
 
     # Load in the data files
-    # battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
-    battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    battery_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
+    # battery_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv")
 
-    # house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
-    house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    house_file = (f"data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
+    # house_file = (f"SmartGrid/data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv")
 
     empty_grid = grid.Grid(house_file, battery_file)
 
     # --------------------------- load pickled grid --------------------------
-    file_name = f"/home/thomas61197/SmartGrid/data/solutions/final/district{district_number}/simulated_annealing/final2_sa_valid_dis{district_number}.pickle"
+    file_name = f"/home/ysanne/SmartGrid/data/solutions/final/district{district_number}/Greedy2_100k_dis1_hc_fix_sur_ctc.pickle"
 
     with open(file_name, 'rb') as handle:
         # best_greedy = pickle.load(handle)
-        final_sa_valid = pickle.load(handle)
+        greedy2 = pickle.load(handle)
 
     # save as
-    grid_name = f"final2_sa_valid_dis{district_number}"
+    grid_name = f"greedy2_hc_100k_{district_number}"
 
     # --------------------------- baseline --------------------------
     if greedy_version == "baseline":
@@ -226,7 +226,7 @@ if __name__ == "__main__":
 
     # --------------------------- visualisation --------------------------
     # visualise_cables.visualise(final_sa_valid.grid, district_number, grid_name=grid_name)
-    # visualise_cables.visualise_apart(final_sa_valid.grid, district_number, grid_name=grid_name)
+    visualise_cables.visualise_apart(greedy2.grid, district_number, grid_name=grid_name)
     
     # visualise_cables.visualise(best_greedy.grid, district_number, grid_name=grid_name)
     # visualise_cables.visualise_apart(best_greedy.grid, district_number, grid_name=grid_name)
