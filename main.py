@@ -43,6 +43,9 @@ if __name__ == "__main__":
 
     # --------------------------- baseline --------------------------
     if greedy_version == None:
+        """
+        Baseline, connects random house to random battery that is not yet full
+        """
         print('Running baseline version..')
 
         # make a list which holds the cost of the grid after each iteration
@@ -76,6 +79,9 @@ if __name__ == "__main__":
     
     # --------------------------- original greedy--------------------------
     if greedy_version == 1:
+        """
+        If battery is full, reconnects the house with the lowest cost
+        """
         print('running Greedy version 1..')
 
         # Instantiate Greedy with an empty grid
@@ -110,7 +116,7 @@ if __name__ == "__main__":
     # --------------------------- greedy 2 --------------------------
     if greedy_version == 2:
         """
-        If battery is full, reconnects the house with the lowest cost
+        If battery is full, reconnects the house that costs the least to replace to another battery
         """
         print('Running Greedy version 2..')
         greedy2_costs = list()
