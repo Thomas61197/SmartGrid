@@ -15,6 +15,9 @@ def visualise_costs(costs, algo):
     plt.savefig(f'docs/{algo}_costs.png')
 
 def histogram_costs(costs, algo, nbins):
+    """
+    Make a histogram with the frequency of output costs of the algorithm, for a number of iterations
+    """
     plt.figure()
     plt.title(f"Frequency different {algo} algorithm costs for {len(costs)} iterations")
     plt.xlabel("Cost")

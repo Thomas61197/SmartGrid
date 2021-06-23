@@ -34,7 +34,7 @@ class Battery():
 
     def capacity_left(self):
         """
-        Returns how much output the battery can still take
+        Returns how much output the battery can still receive
         """
         return self.capacity - self.get_cum_output()
 

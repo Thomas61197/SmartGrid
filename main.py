@@ -70,7 +70,7 @@ if __name__ == "__main__":
             baseline1.run()
             print(f"i: {i}, cost: {best_base.grid.calc_cost()}")
 
-            if baseline1.grid.calc_cost2() < best_base.grid.calc_cost2():
+            if baseline1.grid.calc_cost() < best_base.grid.calc_cost():
                 best_base = copy.deepcopy(baseline1)
 
             baseline_costs.append(baseline1.grid.calc_cost())
