@@ -64,7 +64,7 @@ Als laatste kan je kiezen voor scenario 1 (elk huis een eigen kabel) en scenario
  Het beste simulated_annealing resultaat is behaald door het volgende te doen:
  - run original_greedy (ongeveer 5k keer) met cable_to_cable = True
  - run simulated_annealing (ongeveer 100k iteraties) met de input argumenten zoals ze nu zijn. original_greedy.grid is de start grid. 
- - run hill_climber (tot de surplus 0 is) met als start grid simulated_annealing.grid en met de inputargumenten zoals ze zijn. zet: cost_and_surplus = False
+ - run hill_climber (tot de surplus 0 is) met als start grid simulated_annealing.grid en met de inputargumenten zoals ze zijn.<br> zet: cost_and_surplus = False
  - run nu hill_climber nog eens (ongeveer 100k iteraties) maar dan met hill_climber.grid als start grid en cost_and_surplus = True.
 
  ```console
