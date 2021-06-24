@@ -40,4 +40,15 @@ def compare_costs(costs1, algo1, costs2, algo2):
     plt.bar(f"{algo1}", np.mean(costs1))
     plt.bar(f"{algo2}", np.mean(costs2))
     plt.savefig(f'SmartGrid/docs/comparison_costs.png')
-    
+
+def performance_plot(algo, grid_name, district_number):
+    """
+    plots the performance of the algorithm over the iterations 
+    """
+    plt.figure()
+    # plt.title("simulated annealing performance")
+    plt.title(f"{grid_name} performance district {district_number}")
+    plt.xlabel("algorithm")
+    plt.ylabel("average cost")
+    plt.plot(algo.grid.cost_list)
+    plt.savefig(f'SmartGrid/docs/{grid_name}_performance_dis{district_number}.png')
